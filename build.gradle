@@ -21,12 +21,12 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
     }
 }
 
 repositories {
     mavenCentral()
+    maven { url "https://jitpack.io" }
 }
 
 compileKotlin {   kotlinOptions {
