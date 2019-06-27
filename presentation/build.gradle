@@ -31,38 +31,35 @@ androidExtensions {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:multidex:1.0.3'
+    //MISC
+    implementation deps.misc.multidex
+    implementation deps.misc.facebook_sdk
+    implementation deps.misc.login_buttons
+    implementation deps.misc.constraint_layout
+    testImplementation deps.misc.junit
+    androidTestImplementation deps.atsl.runner
+    androidTestImplementation deps.espresso.core
 
-    implementation 'com.firebaseui:firebase-ui-auth:5.0.0'
-    implementation 'com.facebook.android:facebook-android-sdk:5.0.0'
+    //FIREBASE
+    implementation deps.firebase.ui_auth
+    implementation deps.firebase.firestore
+    annotationProcessor deps.firebase.admin
 
-    implementation 'com.shaishavgandhi:login-buttons:1.0.0'
+    //SUPPORT
+    implementation deps.support.app_compat
+    implementation deps.support.core_ktx
 
-    annotationProcessor 'com.google.firebase:firebase-admin:6.8.1'
-    //implementation 'com.google.firebase:firebase-admin:6.8.1'
-
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.firebase:firebase-firestore:20.0.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
-    implementation "org.jetbrains.anko:anko-common:0.8.3"
-    // Dagger
-    def dagger_version = "2.22"
-//    def dagger_version = "2.16" // version used by google samples
+    //KOTLIN
+    implementation deps.kotlin.anko_common
+    implementation deps.kotlin.stdlib
 
     // Dagger2 core
-    implementation "com.google.dagger:dagger:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    implementation deps.dagger.runtime
+    implementation deps.dagger.android
+    implementation deps.dagger.android_support
+    kapt deps.dagger.android_support_compiler
+    kapt deps.dagger.compiler
 
-    // Dagger Android
-    implementation "com.google.dagger:dagger-android:$dagger_version"
-    implementation "com.google.dagger:dagger-android-support:$dagger_version"
-    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    //LIFECYCLE
+    implementation deps.lifecycle.extensions
 }
