@@ -1,7 +1,8 @@
-package com.example.loquicleanarchitecture
+package com.example.loquicleanarchitecture.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.loquicleanarchitecture.R
 
 class MainActivity : AppCompatActivity() {
 
