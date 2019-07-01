@@ -9,6 +9,9 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 28
 
+    packagingOptions {
+        exclude 'META-INF/library-core_release.kotlin_module'
+    }
     defaultConfig {
         applicationId "com.example.loquicleanarchitecture"
         minSdkVersion 19
@@ -16,6 +19,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        android.defaultConfig.vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
     buildTypes {
@@ -36,6 +40,7 @@ dependencies {
     implementation deps.misc.facebook_sdk
     implementation deps.misc.login_buttons
     implementation deps.misc.constraint_layout
+    implementation deps.misc.materialdrawer
     testImplementation deps.misc.junit
     androidTestImplementation deps.atsl.runner
     androidTestImplementation deps.espresso.core
@@ -48,10 +53,12 @@ dependencies {
     //SUPPORT
     implementation deps.support.app_compat
     implementation deps.support.core_ktx
+    implementation deps.support.drawer_layout
 
     //KOTLIN
-    implementation deps.kotlin.anko_common
+    implementation deps.kotlin.anko_all
     implementation deps.kotlin.stdlib
+    implementation deps.kotlin.anko_constraint
 
     // Dagger2 core
     implementation deps.dagger.runtime

@@ -1,4 +1,4 @@
-package com.example.loquicleanarchitecture.di
+package com.example.loquicleanarchitecture.di.viewmodels
 
 import androidx.lifecycle.ViewModelProvider
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
