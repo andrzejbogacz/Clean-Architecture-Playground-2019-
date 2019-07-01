@@ -6,4 +6,9 @@
     <string name="facebook_status_fmt">Facebook User: %s</string>
     <string name="firebase_status_fmt">Firebase User: %s</string>
     <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="pl_unknown">Nieznane</string>
+    <string name="pl_not_specified">Dowolny</string>
+    <string name="pl_anonymous">niezdefinowiany</string>
+    <string name="pl_male">Mężczyzna</string>
+    <string name="age">18</string>
 </resources>
