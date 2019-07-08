@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_profile_details"
+    android:orientation="vertical"
+    android:paddingLeft="30dp"
+    android:paddingTop="10dp"
+    android:paddingRight="30dp"
+    android:paddingBottom="20dp">
+
+
+    <TextView
+        android:id="@+id/textView_profile_text_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/pl_profile_details_title"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView_profile_nickname_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/textView_profile_nickname_title"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/textView_profile_text_details"
+        app:layout_constraintTop_toBottomOf="@+id/textView_profile_text_details"
+        app:srcCompat="@drawable/ic_person_black" />
+
+    <View
+        style="@style/Divider"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_profile_age_range_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_profile_nickname_title" />
+
+    <TextView
+        android:id="@+id/textView_profile_nickname_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:text="@string/pl_profile_nickname_title"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_profile_nickname_icon"
+        app:layout_constraintEnd_toStartOf="@+id/textView_profile_nickname_value"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView_profile_nickname_icon"
+        app:layout_constraintTop_toTopOf="@+id/imageView_profile_nickname_icon"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="NestedWeights" />
+
+    <View
+        style="@style/Divider"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_profile_gender_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_profile_age_range_title" />
+
+    <TextView
+        android:id="@+id/textView_profile_nickname_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/pl_profile_nickname"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_profile_nickname_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView_profile_nickname_title"
+        app:layout_constraintVertical_bias="1.0" />
+
+
+    <ImageView
+        android:id="@+id/imageView_profile_gender_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="@+id/imageView_profile_age_range_icon"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_profile_age_range_icon"
+        app:srcCompat="@drawable/ic_range_age_black" />
+
+    <TextView
+        android:id="@+id/textView_profile_gender_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:text="@string/pl_profile_gender_title"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_profile_gender_icon"
+        app:layout_constraintEnd_toStartOf="@+id/textView_profile_gender_value"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/imageView_profile_gender_icon"
+        app:layout_constraintTop_toTopOf="@+id/imageView_profile_gender_icon"
+        app:layout_constraintVertical_bias="0.4"
+        tools:ignore="NestedWeights" />
+
+    <TextView
+        android:id="@+id/textView_profile_gender_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pl_not_specified"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_profile_gender_title"
+        app:layout_constraintEnd_toEndOf="@+id/textView_profile_age_range_value"
+        app:layout_constraintTop_toTopOf="@+id/textView_profile_gender_title"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageView_profile_age_range_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toStartOf="@+id/textView_profile_age_range_title"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/imageView_profile_nickname_icon"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_profile_nickname_icon"
+        app:srcCompat="@drawable/ic_gender_black" />
+
+    <TextView
+        android:id="@+id/textView_profile_age_range_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:text="@string/pl_age_title"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_profile_age_range_icon"
+        app:layout_constraintEnd_toStartOf="@+id/textView_profile_age_range_value"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView_profile_age_range_icon"
+        app:layout_constraintTop_toTopOf="@+id/imageView_profile_age_range_icon"
+        app:layout_constraintVertical_bias="0.8"
+        tools:ignore="NestedWeights" />
+
+    <TextView
+        android:id="@+id/textView_profile_age_range_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pl_not_specified"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_profile_age_range_title"
+        app:layout_constraintEnd_toEndOf="@+id/textView_profile_nickname_value"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView_profile_age_range_title"
+        app:layout_constraintTop_toTopOf="@+id/textView_profile_age_range_title"
+        app:layout_constraintVertical_bias="0.0" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
