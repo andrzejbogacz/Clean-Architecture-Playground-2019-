@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <group
-            android:checkableBehavior="single">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
         <item
-                android:id="@+id/drawer_gender"
-                android:icon="@drawable/ic_gender_white"
-                app:actionLayout="@layout/menu_row_gender"
-                android:title="Gender"/>
+            android:id="@+id/drawer_gender"
+            android:icon="@drawable/ic_gender_white"
+            android:title="Gender"
+            app:actionLayout="@layout/menu_row_gender" />
         <item
-                android:id="@+id/drawer_age_range"
-                android:icon="@drawable/ic_range_age_black"
-                app:actionLayout="@layout/menu_row_age_range"
-                android:title="Age range"/>
+            android:id="@+id/drawer_age_range"
+            android:icon="@drawable/ic_range_age_black"
+            android:title="Age range"
+            app:actionLayout="@layout/menu_row_age_range" />
 
     </group>
 </menu>

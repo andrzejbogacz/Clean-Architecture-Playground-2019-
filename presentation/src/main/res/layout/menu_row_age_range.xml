@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_gravity="center_vertical"
-              android:orientation="horizontal"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:gravity="center_vertical|end">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical|end"
+    android:orientation="horizontal">
 
-        <TextView
-                android:text="@string/pl_not_specified"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView_menu_genderValue"/>
-    </LinearLayout>
+    <TextView
+        android:id="@+id/textView_menu_genderValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pl_not_specified" />
+</LinearLayout>
