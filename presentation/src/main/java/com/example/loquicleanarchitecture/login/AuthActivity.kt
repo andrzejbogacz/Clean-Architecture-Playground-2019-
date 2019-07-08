@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.loquicleanarchitecture.BaseActivity
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
+import com.example.loquicleanarchitecture.main.MainActivity
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -25,6 +26,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_auth.*
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.newTask
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
@@ -69,6 +73,7 @@ class AuthActivity : BaseActivity(), View.OnClickListener {
             override fun onSuccess(loginResult: LoginResult) {
                 Log.d(TAG, "facebook:onSuccess:$loginResult")
                 handleFacebookAccessToken(loginResult.accessToken)
+                //startActivity<MainActivity>()
             }
 
             override fun onCancel() {
@@ -150,6 +155,7 @@ class AuthActivity : BaseActivity(), View.OnClickListener {
                 hideProgressDialog()
                 // [END_EXCLUDE]
             }
+        startActivity(intentFor<MainActivity>().newTask())
     }
     // [END auth_with_facebook]
 
@@ -193,7 +199,8 @@ class AuthActivity : BaseActivity(), View.OnClickListener {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     val user = auth.currentUser
-                    updateUI(user)
+                    startActivity(intentFor<MainActivity>().newTask())
+                    toast("isSuccessful")
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
