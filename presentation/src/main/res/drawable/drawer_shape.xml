@@ -4,6 +4,7 @@
         android:angle="45"
         android:endColor="#4B6CD6"
         android:startColor="#6441A5" />
-    <stroke android:color="@color/md_black_1000"
-            android:width="0.5dp"/>
+    <stroke
+        android:width="0.5dp"
+        android:color="@color/md_black_1000" />
 </shape>
