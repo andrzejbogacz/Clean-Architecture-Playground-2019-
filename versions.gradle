@@ -33,6 +33,8 @@ versions.anko_common = "0.8.3"
 versions.materialdrawer = "7.0.0-rc01"
 versions.anko_version = '0.10.8'
 versions.drawer_layout = '1.0.0'
+versions.album = '2.1.3'
+versions.percent = '1.0.0'
 
 versions.apache_commons = "2.5"
 versions.arch_core = "2.0.1"
@@ -82,6 +84,7 @@ misc.login_buttons = "com.shaishavgandhi:login-buttons:$versions.login_buttons"
 misc.constraint_layout = "androidx.constraintlayout:constraintlayout:$versions.constraint_layout"
 misc.junit = "junit:junit:$versions.junit"
 misc.materialdrawer = "com.mikepenz:materialdrawer:$versions.materialdrawer"
+misc.album = "com.yanzhenjie:album:$versions.album"
 
 deps.misc = misc
 
@@ -109,6 +112,7 @@ support.fragment_runtime = "androidx.fragment:fragment:$versions.fragment"
 support.fragment_runtime_ktx = "androidx.fragment:fragment-ktx:$versions.fragment"
 support.fragment_testing = "androidx.fragment:fragment-testing:$versions.fragment"
 support.drawer_layout =  "androidx.drawerlayout:drawerlayout:$versions.drawer_layout"
+support.percent =  "androidx.percentlayout:percentlayout:$versions.percent"
 deps.support = support
 
 def room = [:]

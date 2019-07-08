@@ -41,6 +41,9 @@ dependencies {
     implementation deps.misc.login_buttons
     implementation deps.misc.constraint_layout
     implementation deps.misc.materialdrawer
+    implementation deps.misc.album
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation deps.misc.junit
     androidTestImplementation deps.atsl.runner
     androidTestImplementation deps.espresso.core
@@ -54,6 +57,7 @@ dependencies {
     implementation deps.support.app_compat
     implementation deps.support.core_ktx
     implementation deps.support.drawer_layout
+    implementation deps.support.percent
 
     //KOTLIN
     implementation deps.kotlin.anko_all
@@ -69,4 +73,6 @@ dependencies {
 
     //LIFECYCLE
     implementation deps.lifecycle.extensions
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+
 }
