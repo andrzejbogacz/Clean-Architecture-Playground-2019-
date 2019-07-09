@@ -10,7 +10,7 @@ import java.util.Date
 /*
  * Created by troy379 on 12.12.16.
  */
-class MessagesFixtures private constructor() : FixturesData() {
+internal class MessagesFixtures private constructor() : FixturesData() {
     init {
         throw AssertionError()
     }
