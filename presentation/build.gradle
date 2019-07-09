@@ -40,9 +40,11 @@ dependencies {
     implementation deps.misc.facebook_sdk
     implementation deps.misc.login_buttons
     implementation deps.misc.constraint_layout
-    implementation deps.misc.materialdrawer
-    implementation deps.misc.album
     implementation deps.misc.chatkit
+    implementation deps.misc.picasso
+    implementation deps.misc.interceptor
+    implementation deps.misc.timber
+    implementation deps.misc.okhttp3
 
     testImplementation deps.misc.junit
     androidTestImplementation deps.atsl.runner
@@ -57,7 +59,6 @@ dependencies {
     implementation deps.support.app_compat
     implementation deps.support.core_ktx
     implementation deps.support.drawer_layout
-    implementation deps.support.percent
 
     //KOTLIN
     implementation deps.kotlin.anko_all
@@ -73,6 +74,5 @@ dependencies {
 
     //LIFECYCLE
     implementation deps.lifecycle.extensions
-    implementation 'androidx.gridlayout:gridlayout:1.0.0'
 
 }
