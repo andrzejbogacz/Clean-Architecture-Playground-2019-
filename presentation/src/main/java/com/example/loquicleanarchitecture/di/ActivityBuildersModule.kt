@@ -4,12 +4,13 @@ import com.example.loquicleanarchitecture.di.auth.AuthModule
 import com.example.loquicleanarchitecture.di.auth.AuthScope
 import com.example.loquicleanarchitecture.di.auth.AuthViewModelsModule
 import com.example.loquicleanarchitecture.di.chat.ChatModule
+import com.example.loquicleanarchitecture.di.chat.ChatScope
 import com.example.loquicleanarchitecture.di.chat.ChatViewModelsModule
 import com.example.loquicleanarchitecture.di.main.MainModule
 import com.example.loquicleanarchitecture.di.main.MainScope
 import com.example.loquicleanarchitecture.di.main.MainViewModelsModule
-import com.example.loquicleanarchitecture.login.AuthActivity
-import com.example.loquicleanarchitecture.login.ChatActivity
+import com.example.loquicleanarchitecture.auth.AuthActivity
+import com.example.loquicleanarchitecture.auth.ChatActivity
 import com.example.loquicleanarchitecture.main.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -26,7 +27,7 @@ abstract class ActivityBuildersModule {
     internal abstract fun contributeMainActivity(): MainActivity
 
 
-    @MainScope
+    @ChatScope
     @ContributesAndroidInjector(modules = [ChatModule::class, ChatViewModelsModule::class])
     internal abstract fun contributeChatActivity(): ChatActivity
 
