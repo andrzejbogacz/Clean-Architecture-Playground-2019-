@@ -11,7 +11,7 @@ import java.util.Date
 /*
  * Created by Anton Bevza on 07.09.16.
  */
-class DialogsFixtures private constructor() : FixturesData() {
+internal class DialogsFixtures private constructor() : FixturesData() {
     init {
         throw AssertionError()
     }
