@@ -42,7 +42,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.AuthActivity">
+        <activity android:name=".auth.AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,7 +57,7 @@
             </intent-filter>
         </activity>
 	    <activity android:name=".chat.AuthActivity"/>
-	    <activity android:name=".login.ChatActivity"/>
+	    <activity android:name=".auth.ChatActivity"/>
     </application>
 
 </manifest>
