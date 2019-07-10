@@ -2,7 +2,7 @@ package com.example.loquicleanarchitecture.di.main
 
 import android.app.Application
 import com.google.firebase.auth.FirebaseAuth
-import com.jakewharton.picasso.OkHttp3Downloader
+import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import dagger.Module
 import dagger.Provides
@@ -25,7 +25,7 @@ class MainModule {
     @MainScope
     @Provides
     internal fun providePicasso(context: Application, okHttp3Downloader: OkHttp3Downloader): Picasso {
-        return Picasso.Builder(context).downloader(okHttp3Downloader).build()
+        return Picasso.Builder(context).build()
     }
 
     @Provides
