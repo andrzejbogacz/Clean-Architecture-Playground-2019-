@@ -1,12 +1,8 @@
 package com.example.loquicleanarchitecture.fixtures
 
 import java.security.SecureRandom
-import java.util.ArrayList
-import java.util.UUID
+import java.util.*
 
-/*
- * Created by Anton Bevza on 1/13/17.
- */
 internal abstract class FixturesData {
     companion object {
 
