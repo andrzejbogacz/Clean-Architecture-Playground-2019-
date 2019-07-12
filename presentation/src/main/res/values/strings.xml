@@ -8,6 +8,9 @@
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="age">18</string>
 
+    <string name="drawer_open">Drawer Opened</string>
+    <string name="drawer_close">Drawer Closed</string>
+
     // Polish
     <string name="pl_unknown">Nieznane</string>
     <string name="pl_age_title">Wiek</string>
