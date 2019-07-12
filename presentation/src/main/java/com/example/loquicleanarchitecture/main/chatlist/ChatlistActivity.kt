@@ -3,7 +3,6 @@ package com.example.loquicleanarchitecture.main.chatlist
 import android.os.Bundle
 import android.view.Menu
 import com.example.loquicleanarchitecture.BaseActivity
-import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.chat.ChatActivity
 import com.example.loquicleanarchitecture.model.Dialog
 import com.example.loquicleanarchitecture.utils.AppUtils
@@ -31,11 +30,6 @@ abstract class ChatlistActivity : BaseActivity(), DialogsListAdapter.OnDialogCli
             ImageLoader { imageView, url, payload -> picasso.load(url).into(imageView) }
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.drawer, menu)
-        return super.onPrepareOptionsMenu(menu)
-
-    }
 
     override fun onDialogLongClick(dialog: Dialog) {
         AppUtils.showToast(
