@@ -2,7 +2,7 @@ package com.example.loquicleanarchitecture.di.chatlist
 
 import androidx.lifecycle.ViewModel
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelKey
-import com.example.loquicleanarchitecture.main.chatlist.ChatlistViewModel
+import com.example.loquicleanarchitecture.view.main.chatlist.ChatlistViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

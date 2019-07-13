@@ -1,7 +1,7 @@
 package com.example.loquicleanarchitecture.di.chat
 
 import androidx.lifecycle.ViewModel
-import com.example.loquicleanarchitecture.chat.ChatViewModel
+import com.example.loquicleanarchitecture.view.chat.ChatViewModel
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelKey
 import dagger.Binds
 import dagger.Module

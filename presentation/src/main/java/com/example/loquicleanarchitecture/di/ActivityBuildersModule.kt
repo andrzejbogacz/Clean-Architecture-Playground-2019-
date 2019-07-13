@@ -1,6 +1,6 @@
 package com.example.loquicleanarchitecture.di
 
-import com.example.loquicleanarchitecture.chat.ChatActivity
+import com.example.loquicleanarchitecture.view.chat.ChatActivity
 import com.example.loquicleanarchitecture.di.auth.AuthModule
 import com.example.loquicleanarchitecture.di.auth.AuthScope
 import com.example.loquicleanarchitecture.di.auth.AuthViewModelsModule
@@ -16,10 +16,10 @@ import com.example.loquicleanarchitecture.di.main.MainViewModelsModule
 import com.example.loquicleanarchitecture.di.profile.ProfileModule
 import com.example.loquicleanarchitecture.di.profile.ProfileScope
 import com.example.loquicleanarchitecture.di.profile.ProfileViewModelsModule
-import com.example.loquicleanarchitecture.login.AuthActivity
-import com.example.loquicleanarchitecture.main.MainActivity
-import com.example.loquicleanarchitecture.main.chatlist.ChatlistActivity
-import com.example.loquicleanarchitecture.profile.ProfileActivity
+import com.example.loquicleanarchitecture.view.login.AuthActivity
+import com.example.loquicleanarchitecture.view.main.MainActivity
+import com.example.loquicleanarchitecture.view.main.chatlist.ChatlistActivity
+import com.example.loquicleanarchitecture.view.profile.ProfileActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

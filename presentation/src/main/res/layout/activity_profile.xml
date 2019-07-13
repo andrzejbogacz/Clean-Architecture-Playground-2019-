@@ -10,7 +10,7 @@
     android:paddingStart="10dp"
     android:paddingEnd="10dp"
     android:paddingBottom="10dp"
-    tools:context=".profile.ProfileActivity">
+    tools:context=".view.profile.ProfileActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

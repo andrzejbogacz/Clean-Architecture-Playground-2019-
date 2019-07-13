@@ -16,7 +16,7 @@
 			android:theme="@style/AppTheme"
 			tools:ignore="AllowBackup"
 			>
-		<activity android:name=".login.AuthActivity"
+		<activity android:name="com.example.loquicleanarchitecture.view.login.AuthActivity"
 		          android:theme="@style/AppThemeNoStatus"
 				>
 			<intent-filter>
@@ -52,7 +52,7 @@
 		</activity>
 
 		<activity
-				android:name=".main.MainActivity"
+				android:name="com.example.loquicleanarchitecture.view.main.MainActivity"
 				android:theme="@style/AppTheme"
 				>
 			<intent-filter>
@@ -62,11 +62,11 @@
 			</intent-filter>
 		</activity>
 		<activity
-				android:name=".profile.ProfileActivity"
+				android:name="com.example.loquicleanarchitecture.view.profile.ProfileActivity"
 				android:theme="@style/AppTheme"
 				/>
 		<activity
-				android:name=".chat.ChatActivity"
+				android:name="com.example.loquicleanarchitecture.view.chat.ChatActivity"
 				android:theme="@style/AppTheme"
 				/>
 

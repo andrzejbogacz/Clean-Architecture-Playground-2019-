@@ -1,4 +1,4 @@
-package com.example.loquicleanarchitecture.login
+package com.example.loquicleanarchitecture.view.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.loquicleanarchitecture.BaseActivity
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
-import com.example.loquicleanarchitecture.main.MainActivity
+import com.example.loquicleanarchitecture.view.main.MainActivity
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback

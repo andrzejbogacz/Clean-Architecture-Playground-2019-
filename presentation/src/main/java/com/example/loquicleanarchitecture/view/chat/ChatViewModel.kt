@@ -1,4 +1,4 @@
-package com.example.loquicleanarchitecture.chat
+package com.example.loquicleanarchitecture.view.chat
 
 import androidx.lifecycle.ViewModel
 import javax.inject.Inject

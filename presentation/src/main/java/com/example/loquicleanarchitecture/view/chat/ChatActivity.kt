@@ -1,4 +1,4 @@
-package com.example.loquicleanarchitecture.chat
+package com.example.loquicleanarchitecture.view.chat
 
 import android.os.Bundle
 import android.os.Handler

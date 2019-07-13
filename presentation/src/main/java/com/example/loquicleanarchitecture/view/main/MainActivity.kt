@@ -1,4 +1,4 @@
-package com.example.loquicleanarchitecture.main
+package com.example.loquicleanarchitecture.view.main
 
 import android.os.Bundle
 import android.view.Menu
@@ -7,11 +7,14 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.fixtures.DialogsFixtures
-import com.example.loquicleanarchitecture.main.chatlist.ChatlistActivity
+import com.example.loquicleanarchitecture.view.main.chatlist.ChatlistActivity
+import com.example.loquicleanarchitecture.view.profile.ProfileActivity
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 
-class MainActivity : ChatlistActivity() {
+class MainActivity : ChatlistActivity(), View.OnClickListener {
 
 
     private lateinit var mDrawerToggle: ActionBarDrawerToggle
@@ -20,9 +23,11 @@ class MainActivity : ChatlistActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        navigation_view.getHeaderView(0).setOnClickListener { startActivity<ProfileActivity>() }
         initToolbar()
         initAdapter()
     }
+
 
     private fun initToolbar() {
         // Setup Actionbar / Toolbar
@@ -67,4 +72,9 @@ class MainActivity : ChatlistActivity() {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
+
+    override fun onClick(v: View?) {
+        v?.id?.let { toast(it) }
+    }
+
 }

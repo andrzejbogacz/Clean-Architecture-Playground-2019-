@@ -1,4 +1,4 @@
-package com.example.loquicleanarchitecture.main.chatlist
+package com.example.loquicleanarchitecture.view.main.chatlist
 
 import androidx.lifecycle.ViewModel
 

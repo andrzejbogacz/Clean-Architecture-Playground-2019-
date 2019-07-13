@@ -1,4 +1,4 @@
-package com.example.loquicleanarchitecture.login
+package com.example.loquicleanarchitecture.view.login
 
 import androidx.lifecycle.ViewModel
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.example.loquicleanarchitecture.profile
+package com.example.loquicleanarchitecture.view.profile
 
 import android.os.Bundle
 import android.view.View

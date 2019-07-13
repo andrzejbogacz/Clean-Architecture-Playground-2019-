@@ -1,4 +1,4 @@
-package com.example.loquicleanarchitecture.main
+package com.example.loquicleanarchitecture.view.main
 
 import org.jetbrains.anko.AnkoComponent
 import org.jetbrains.anko.AnkoContext

@@ -16,11 +16,6 @@ import java.io.File
 @Module
 class MainModule {
 
-    @MainScope
-    @Provides
-    internal fun provideFirestoreAuth(): FirebaseAuth {
-        return FirebaseAuth.getInstance()
-    }
 
     @MainScope
     @Provides

@@ -1,9 +1,8 @@
-package com.example.loquicleanarchitecture.main.chatlist
+package com.example.loquicleanarchitecture.view.main.chatlist
 
 import android.os.Bundle
-import android.view.Menu
 import com.example.loquicleanarchitecture.BaseActivity
-import com.example.loquicleanarchitecture.chat.ChatActivity
+import com.example.loquicleanarchitecture.view.chat.ChatActivity
 import com.example.loquicleanarchitecture.model.Dialog
 import com.example.loquicleanarchitecture.utils.AppUtils
 import com.squareup.picasso.Picasso
