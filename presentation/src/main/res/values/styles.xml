@@ -12,6 +12,10 @@
 
 
 
+    <style name="AppThemeNoStatus" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
     <style name="FacebookLoginButton">
         <item name="android:textSize">14sp</item>
         <item name="android:layout_marginTop">10dp</item>
