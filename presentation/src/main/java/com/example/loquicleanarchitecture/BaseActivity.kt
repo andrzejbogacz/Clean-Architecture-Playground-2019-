@@ -3,13 +3,14 @@ package com.example.loquicleanarchitecture
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.VisibleForTesting
 import com.google.firebase.FirebaseApp
 import dagger.android.support.DaggerAppCompatActivity
 
-open class BaseActivity: DaggerAppCompatActivity() {
+abstract class BaseActivity : DaggerAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         FirebaseApp.initializeApp(this)
         super.onCreate(savedInstanceState)
@@ -41,5 +42,6 @@ open class BaseActivity: DaggerAppCompatActivity() {
         super.onStop()
         hideProgressDialog()
     }
+
 
 }
