@@ -41,6 +41,13 @@ class ChatActivity : BaseActivity(), MessageInput.InputListener,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
+
+        input.setAttachmentsListener( MessageInput.AttachmentsListener() {
+            fun onAddAttachments() {
+               //Todo select attachments
+           }
+        });
+
         initToolbar()
 
         imageLoader =

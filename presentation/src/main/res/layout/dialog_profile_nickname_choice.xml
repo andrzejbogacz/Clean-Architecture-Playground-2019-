@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   android:layout_marginEnd="32dp"
+                                                   android:id="@+id/constraint"
+		>
+
+
+	<TextView
+			android:text="@string/pl_profile_dialog_nickname_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/profile_dialog_nickname_title"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			android:layout_marginStart="24dp"
+			android:textSize="18sp"
+			android:textStyle="bold"
+			android:layout_marginTop="32dp"
+			/>
+
+	<TextView
+			android:text="@string/pl_cancel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/nickname_dialog_cancel"
+			android:textSize="18sp"
+			android:textStyle="bold"
+			app:layout_constraintEnd_toStartOf="@+id/nickname_dialog_confirm"
+			android:layout_marginEnd="32dp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			android:layout_marginBottom="24dp"
+			app:layout_constraintTop_toBottomOf="@+id/editText_profile_nickname_value"
+			android:layout_marginTop="32dp"
+			app:layout_constraintStart_toEndOf="@+id/editText_profile_nickname_value"
+			android:layout_marginStart="8dp"
+			/>
+
+	<TextView
+			android:text="@string/pl_confirm"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/nickname_dialog_confirm"
+			android:textSize="18sp"
+			android:textStyle="bold"
+			app:layout_constraintEnd_toEndOf="parent"
+			android:layout_marginEnd="8dp"
+			app:layout_constraintTop_toTopOf="@+id/nickname_dialog_cancel"
+			app:layout_constraintBottom_toBottomOf="@+id/nickname_dialog_cancel"
+			/>
+
+	<EditText
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:inputType="textPersonName"
+			android:ems="10"
+			android:id="@+id/editText_profile_nickname_value"
+			app:layout_constraintTop_toBottomOf="@+id/profile_dialog_nickname_title"
+			app:layout_constraintStart_toStartOf="@+id/profile_dialog_nickname_title"
+			android:hint="Pseudonim"
+			/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
