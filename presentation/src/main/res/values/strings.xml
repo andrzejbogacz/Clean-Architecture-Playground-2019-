@@ -22,6 +22,8 @@
 
     // Polish
     <string name="pl_unknown">Nieznane</string>
+    <string name="pl_cancel">Anuluj</string>
+    <string name="pl_confirm">OK</string>
     <string name="pl_age_title">Wiek</string>
     <string name="pl_not_specified">Nieokreślone</string>
     <string name="pl_anonymous">niezdefinowiany</string>
@@ -31,7 +33,15 @@
     <string name="pl_profile_nickname">Anonim</string>
     <string name="pl_profile_nickname_title">Nickname</string>
     <string name="pl_profile_details_title">Dane profilowe:</string>
+    <string name="pl_profile_iam_title">Jestem:</string>
     <string name="action_logout">logout</string>
+	<string name="pl_drawer_dialog_genderTitle">Szukaj:</string>
+	<string name="pl_drawer_dialog_genderMale">Mężczyzna</string>
+	<string name="pl_drawer_dialog_genderFemale">Kobieta</string>
+	<string name="pl_drawer_dialog_genderBoth">Kobieta lub Mężczyzna</string>
+	<string name="pl_drawer_dialog_ageRangeTitle">Zakres wyszukiwania:</string>
+	<string name="pl_profile_dialog_nickname_title">Twój pseudonim:</string>
+	<string name="pl_profile_age_title">Twój wiek:</string>
 
 
 </resources>
