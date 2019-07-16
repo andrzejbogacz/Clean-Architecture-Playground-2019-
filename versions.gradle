@@ -40,6 +40,7 @@ versions.picasso = '2.71828'
 versions.interceptor = '3.12.1'
 versions.timber = '4.7.1'
 versions.okhttp3 = '1.1.0'
+versions.image_cropper = '2.8.+'
 
 versions.apache_commons = "2.5"
 versions.arch_core = "2.0.1"
@@ -95,6 +96,7 @@ misc.picasso = "com.squareup.picasso:picasso:$versions.picasso"
 misc.interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.interceptor"
 misc.timber = "com.jakewharton.timber:timber:$versions.timber"
 misc.okhttp3 = "com.jakewharton.picasso:picasso2-okhttp3-downloader:$versions.okhttp3"
+misc.image_cropper = "com.theartofdev.edmodo:android-image-cropper:$versions.image_cropper"
 
 deps.misc = misc
 
@@ -106,6 +108,8 @@ kotlin.allopen = "org.jetbrains.kotlin:kotlin-allopen:$versions.kotlin"
 kotlin.anko_common = "org.jetbrains.anko:anko-common:$versions.anko_common"
 kotlin.anko_all = "org.jetbrains.anko:anko:$versions.anko_version"
 kotlin.anko_constraint = "org.jetbrains.anko:anko-constraint-layout:$versions.anko_version"
+
+
 
 deps.kotlin = kotlin
 
