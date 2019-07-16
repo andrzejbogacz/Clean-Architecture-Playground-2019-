@@ -1,6 +1,5 @@
 package com.example.loquicleanarchitecture.view.main
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,14 +10,17 @@ import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.fixtures.DialogsFixtures
 import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchAgeRange
 import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchGender
+import com.example.loquicleanarchitecture.view.login.AuthActivity
 import com.example.loquicleanarchitecture.view.main.chatlist.ChatlistActivity
 import com.example.loquicleanarchitecture.view.profile.ProfileActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.newTask
 import org.jetbrains.anko.startActivity
 
 class MainActivity : ChatlistActivity() {
-
 
     private lateinit var mDrawerToggle: ActionBarDrawerToggle
 
@@ -28,6 +30,7 @@ class MainActivity : ChatlistActivity() {
         initNavigationDrawer()
         initToolbar()
         initAdapter()
+
     }
 
     private fun initNavigationDrawer() {
@@ -43,14 +46,12 @@ class MainActivity : ChatlistActivity() {
     }
 
     private fun displayGenderAlert(): Boolean {
-       //val genderSearchDialog : GenderSearchDialog = Gender
-       DialogDrawerSearchGender(this).show()
+        DialogDrawerSearchGender(this).show()
         return true
     }
 
     private fun displayaAgeRangeAlert(): Boolean {
-       //val genderSearchDialog : GenderSearchDialog = Gender
-       DialogDrawerSearchAgeRange(this).show()
+        DialogDrawerSearchAgeRange(this).show()
         return true
     }
 
@@ -99,14 +100,14 @@ class MainActivity : ChatlistActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId) {
-            R.id.action_logout -> return  true //todo logout
+        when (item?.itemId) {
+            R.id.action_logout -> logout()
         }
         return true
     }
 
-    /*override fun onClick(v: View?) {
-        v?.id?.let { toast(it) }
-    }*/
-
+    fun logout() {
+        FirebaseAuth.getInstance().signOut()
+        startActivity(intentFor<AuthActivity>().newTask())
+    }
 }
