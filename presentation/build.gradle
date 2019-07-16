@@ -47,7 +47,7 @@ dependencies {
     implementation deps.misc.timber
     implementation deps.misc.okhttp3
     implementation deps.misc.chatkit
-    implementation("com.squareup.okhttp3:okhttp:4.0.0")
+    implementation deps.misc.image_cropper
 
     testImplementation deps.misc.junit
     androidTestImplementation deps.atsl.runner
