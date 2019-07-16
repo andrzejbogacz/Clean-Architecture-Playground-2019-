@@ -1,5 +1,6 @@
 package com.example.loquicleanarchitecture.view.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log.d
 import android.view.View
@@ -14,10 +15,20 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.view_profile_user_details.*
 import org.jetbrains.anko.toast
+import android.app.Activity
+import android.net.Uri
+import android.graphics.drawable.Drawable
+import android.widget.ImageView
+import com.squareup.picasso.Picasso
+import org.jetbrains.anko.image
+import android.view.ViewGroup
+import com.example.loquicleanarchitecture.helper.ImageTransformation
+import org.jetbrains.anko.contentView
+
 
 class ProfileActivity : AppCompatActivity(), View.OnClickListener {
 
-    var currentViewHolder: View? = null
+    var currentViewHolder: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +49,11 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
 
         // Reset previous listener
         currentViewHolder?.setOnClickListener(this)
-        this.currentViewHolder = v
+        currentViewHolder?.scaleType = ImageView.ScaleType.FIT_CENTER
+        this.currentViewHolder = v as ImageView
     }
+
+
 
     private fun initListeners() {
         constraintLayoutNickname.setOnClickListener(this)
@@ -53,9 +67,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun loadImagePicker(v: View) {
-        toast("placeholder")
         CropImage.activity()
-            .setGuidelines(CropImageView.Guidelines.ON)
+            .setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1,1)
             .start(this);
     }
 
@@ -64,11 +77,32 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
             R.id.constraintLayoutNickname -> DialogProfileNicknameChoice(this).show()
             R.id.constraintLayoutGender -> DialogProfileGenderChoice(this).show()
             R.id.constraintLayoutAge -> DialogProfileAgeRangeChoice(this).show()
-            R.id.image1 -> swapView(v)
-            R.id.image2 -> swapView(v)
-            R.id.image3 -> swapView(v)
-            R.id.image4 -> swapView(v)
+            R.id.image1, R.id.image2, R.id.image3 , R.id.image4-> swapView(v)
+
             else -> toast(placeholder1.content.id)
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data)
+            if (resultCode == Activity.RESULT_OK) {
+                val resultUri = result.uri
+                setPhoto(resultUri)
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                val error = result.error
+            }
+        }
+    }
+
+
+    private fun setPhoto(resultUri: Uri?) {
+        Picasso.get()
+            .load(resultUri)
+            .transform(ImageTransformation.transformation)
+            .into(currentViewHolder)
+    }
+
+
 }
