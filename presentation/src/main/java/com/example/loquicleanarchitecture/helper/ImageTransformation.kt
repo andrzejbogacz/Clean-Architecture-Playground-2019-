@@ -3,8 +3,6 @@ package com.example.loquicleanarchitecture.helper
 import android.graphics.Color
 import com.makeramen.roundedimageview.RoundedTransformationBuilder
 
-
-
 object ImageTransformation {
     var transformation = RoundedTransformationBuilder()
         .borderColor(Color.GRAY)
