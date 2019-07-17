@@ -16,19 +16,20 @@ import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.view_profile_user_details.*
 import org.jetbrains.anko.toast
 import android.app.Activity
+import android.graphics.Bitmap
 import android.net.Uri
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import com.example.loquicleanarchitecture.helper.ImageTransformation
-import org.jetbrains.anko.imageURI
-import java.io.File
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class ProfileActivity : AppCompatActivity(), View.OnClickListener {
 
     var currentViewHolder: ImageView? = null
-    var image1path : Uri? = null
-    var image2file : File? = null
+    var imageBig : Bitmap? = null
+    var imageSmall : Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,35 +44,42 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
         d("Swap", v.id.toString())
         TransitionManager.beginDelayedTransition(layout)
 
-        resizePlus(placeholder1.content as ImageView)
         placeholder1.setContentId(v.id)
 
         v.setOnClickListener { loadImagePicker(v) }
 
         // Reset previous listener
         currentViewHolder?.setOnClickListener(this)
-
-        currentViewHolder?.run { resizeMinus(currentViewHolder) }
+        currentViewHolder?.setImageBitmap(imageSmall)
         this.currentViewHolder = v as ImageView
     }
 
-    private fun resizeMinus(currentViewHolder: ImageView?) {
-        Picasso.get()
-            .load(image2file!!).resize(currentViewHolder!!.width, currentViewHolder.height)
-            .transform(ImageTransformation.transformation)
-            .into(image3)
+
+//    private fun resizeMinus(currentViewHolder: ImageView?) {
+//        Picasso.get()
+//            .load(image2file!!).resize(currentViewHolder!!.width, currentViewHolder.height)
+//            .transform(ImageTransformation.transformation)
+//            .into(currentViewHolder)
+//
+//    }
+
+//    private fun resizePlus(v: ImageView) {
+//        Picasso.get()
+//            .load(image2file!!)
+//            .resize(v.width, v.height)
+//            .transform(ImageTransformation.transformation)
+//            .into(v)
+//        v.invalidate()
+//    }
+
+    override fun onBackPressed() {
+        toast("backpressed")
+            image2.setImageBitmap(imageSmall)
+            image3.setImageBitmap(imageSmall)
+            image4.setImageBitmap(imageSmall)
+        image4.set
+
     }
-
-    private fun resizePlus(v: ImageView) {
-        Picasso.get()
-            .load(image2file!!)
-            .resize(v.width, v.height)
-            .transform(ImageTransformation.transformation)
-            .into(v)
-        v.invalidate()
-    }
-
-
     private fun initListeners() {
         constraintLayoutNickname.setOnClickListener(this)
         constraintLayoutGender.setOnClickListener(this)
@@ -106,12 +114,28 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
                 val resultUri = result.uri
-                image2file = File(resultUri.path)
+                convertImages(resultUri)
                 setPhoto(resultUri)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
             }
         }
+    }
+
+    private fun convertImages(path: Uri) {
+         GlobalScope.launch{
+             d("width", image4.width.toString())
+            imageSmall = Picasso.get()
+            .load(path).resize(image4.width,image4.height)
+            .transform(ImageTransformation.transformation)
+            .get()
+
+        imageBig = Picasso.get()
+            .load(path).resize(placeholder1.width,placeholder1.height)
+            .transform(ImageTransformation.transformation)
+            .get()
+        }
+
     }
 
 
