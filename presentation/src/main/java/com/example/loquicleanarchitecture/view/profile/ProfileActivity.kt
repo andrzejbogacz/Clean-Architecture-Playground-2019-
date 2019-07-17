@@ -17,25 +17,24 @@ import kotlinx.android.synthetic.main.view_profile_user_details.*
 import org.jetbrains.anko.toast
 import android.app.Activity
 import android.net.Uri
-import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
-import org.jetbrains.anko.image
-import android.view.ViewGroup
 import com.example.loquicleanarchitecture.helper.ImageTransformation
-import org.jetbrains.anko.contentView
+import org.jetbrains.anko.imageURI
+import java.io.File
 
 
 class ProfileActivity : AppCompatActivity(), View.OnClickListener {
 
     var currentViewHolder: ImageView? = null
+    var image1path : Uri? = null
+    var image2file : File? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         initListeners()
         swapView(image1)
-
         // TODO Add delete button for photos https://github.com/stfalcon-studio/ChatKit/blob/master/docs/COMPONENT_MESSAGE_INPUT.MD
         // Todo Add save button on toolbar
     }
@@ -43,16 +42,34 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
     fun swapView(v: View) {
         d("Swap", v.id.toString())
         TransitionManager.beginDelayedTransition(layout)
+
+        resizePlus(placeholder1.content as ImageView)
         placeholder1.setContentId(v.id)
 
         v.setOnClickListener { loadImagePicker(v) }
 
         // Reset previous listener
         currentViewHolder?.setOnClickListener(this)
-        currentViewHolder?.scaleType = ImageView.ScaleType.FIT_CENTER
+
+        currentViewHolder?.run { resizeMinus(currentViewHolder) }
         this.currentViewHolder = v as ImageView
     }
 
+    private fun resizeMinus(currentViewHolder: ImageView?) {
+        Picasso.get()
+            .load(image2file!!).resize(currentViewHolder!!.width, currentViewHolder.height)
+            .transform(ImageTransformation.transformation)
+            .into(image3)
+    }
+
+    private fun resizePlus(v: ImageView) {
+        Picasso.get()
+            .load(image2file!!)
+            .resize(v.width, v.height)
+            .transform(ImageTransformation.transformation)
+            .into(v)
+        v.invalidate()
+    }
 
 
     private fun initListeners() {
@@ -89,6 +106,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
                 val resultUri = result.uri
+                image2file = File(resultUri.path)
                 setPhoto(resultUri)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
