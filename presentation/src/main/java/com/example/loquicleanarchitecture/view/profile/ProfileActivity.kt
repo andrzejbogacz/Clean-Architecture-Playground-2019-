@@ -1,58 +1,45 @@
 package com.example.loquicleanarchitecture.view.profile
 
+import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log.d
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.transition.TransitionManager
 import com.example.loquicleanarchitecture.R
+import com.example.loquicleanarchitecture.helper.ImageTransformation
 import com.example.loquicleanarchitecture.view.dialogs.DialogProfileAgeRangeChoice
 import com.example.loquicleanarchitecture.view.dialogs.DialogProfileGenderChoice
 import com.example.loquicleanarchitecture.view.dialogs.DialogProfileNicknameChoice
+import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.view_profile_user_details.*
-import org.jetbrains.anko.toast
-import android.app.Activity
-import android.graphics.Bitmap
-import android.net.Uri
-import android.widget.ImageView
-import com.squareup.picasso.Picasso
-import com.example.loquicleanarchitecture.helper.ImageTransformation
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.jetbrains.anko.toast
 
 
 class ProfileActivity : AppCompatActivity(), View.OnClickListener {
 
     var currentViewHolder: ImageView? = null
-    var imageBig : Bitmap? = null
-    var imageSmall : Bitmap? = null
+    var imageBig: Bitmap? = null
+    var imageSmall: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         initListeners()
-        swapView(image1)
         // TODO Add delete button for photos https://github.com/stfalcon-studio/ChatKit/blob/master/docs/COMPONENT_MESSAGE_INPUT.MD
         // Todo Add save button on toolbar
     }
 
-    fun swapView(v: View) {
-        d("Swap", v.id.toString())
-        TransitionManager.beginDelayedTransition(layout)
 
-        placeholder1.setContentId(v.id)
-
-        v.setOnClickListener { loadImagePicker(v) }
-
-        // Reset previous listener
-        currentViewHolder?.setOnClickListener(this)
-        currentViewHolder?.setImageBitmap(imageSmall)
-        this.currentViewHolder = v as ImageView
-    }
 
 
 //    private fun resizeMinus(currentViewHolder: ImageView?) {
@@ -74,27 +61,29 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onBackPressed() {
         toast("backpressed")
-            image2.setImageBitmap(imageSmall)
-            image3.setImageBitmap(imageSmall)
-            image4.setImageBitmap(imageSmall)
-        image4.set
+        iv_photo4.setImageBitmap(imageSmall)
+        iv_photo1.setImageBitmap(imageSmall)
+        iv_photo3.setImageBitmap(imageSmall)
 
     }
+
     private fun initListeners() {
         constraintLayoutNickname.setOnClickListener(this)
         constraintLayoutGender.setOnClickListener(this)
         constraintLayoutAge.setOnClickListener(this)
-        placeholder1.setOnClickListener(this)
-        image1.setOnClickListener(this)
-        image2.setOnClickListener(this)
-        image3.setOnClickListener(this)
-        image4.setOnClickListener(this)
+        iv_photo1.setOnClickListener(this)
+        iv_photo2.setOnClickListener(this)
+        iv_photo3.setOnClickListener(this)
+        iv_photo4.setOnClickListener(this)
+        iv_photo5.setOnClickListener(this)
+        iv_photo6.setOnClickListener(this)
     }
 
     private fun loadImagePicker(v: View) {
         CropImage.activity()
-            .setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1,1)
+            .setGuidelines(CropImageView.Guidelines.ON).setAspectRatio(1, 1)
             .start(this);
+        currentViewHolder = v as ImageView
     }
 
     override fun onClick(v: View?) {
@@ -102,9 +91,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
             R.id.constraintLayoutNickname -> DialogProfileNicknameChoice(this).show()
             R.id.constraintLayoutGender -> DialogProfileGenderChoice(this).show()
             R.id.constraintLayoutAge -> DialogProfileAgeRangeChoice(this).show()
-            R.id.image1, R.id.image2, R.id.image3 , R.id.image4-> swapView(v)
+            R.id.iv_photo1, R.id.iv_photo2, R.id.iv_photo3, R.id.iv_photo4,  R.id.iv_photo5,  R.id.iv_photo6  -> loadImagePicker(v)
 
-            else -> toast(placeholder1.content.id)
         }
     }
 
@@ -114,7 +102,6 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
                 val resultUri = result.uri
-                convertImages(resultUri)
                 setPhoto(resultUri)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
@@ -122,18 +109,10 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun convertImages(path: Uri) {
-         GlobalScope.launch{
-             d("width", image4.width.toString())
-            imageSmall = Picasso.get()
-            .load(path).resize(image4.width,image4.height)
-            .transform(ImageTransformation.transformation)
-            .get()
+    private fun uploadImages(path: Uri) {
+        GlobalScope.launch {
+           //Todo Upload Images to Firebase
 
-        imageBig = Picasso.get()
-            .load(path).resize(placeholder1.width,placeholder1.height)
-            .transform(ImageTransformation.transformation)
-            .get()
         }
 
     }
