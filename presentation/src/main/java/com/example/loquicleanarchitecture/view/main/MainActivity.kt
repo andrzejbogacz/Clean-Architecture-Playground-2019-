@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.fixtures.DialogsFixtures
-import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchAgeRange
+import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchAge
 import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchGender
 import com.example.loquicleanarchitecture.view.login.AuthActivity
 import com.example.loquicleanarchitecture.view.main.chatlist.ChatlistActivity
@@ -19,10 +20,16 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 
-class MainActivity : ChatlistActivity() {
+
+class MainActivity : ChatlistActivity(),
+    DialogDrawerSearchAge.AgeRangeListener,
+    DialogDrawerSearchGender.GenderListener {
 
     private lateinit var mDrawerToggle: ActionBarDrawerToggle
+    lateinit var textView_ageRange: TextView
+    lateinit var textView_genderValue: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +37,29 @@ class MainActivity : ChatlistActivity() {
         initNavigationDrawer()
         initToolbar()
         initAdapter()
+        initMenuReferences()
 
+    }
+
+    override fun applyAgeRange(ageRange: String) {
+        textView_ageRange.text = ageRange
+    }
+
+    override fun applyGender(gender: Int) {
+        textView_genderValue.setText(gender)
+    }
+
+    private fun initMenuReferences() {
+        textView_ageRange = navigation_view.menu.findItem(R.id.item_drawer_age_range)
+            .actionView.findViewById(R.id.textView_menu_ageRangeValue)
+        textView_genderValue = navigation_view.menu.findItem(R.id.item_drawer_gender)
+            .actionView.findViewById(R.id.textView_menu_genderValue)
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
     }
 
     private fun initNavigationDrawer() {
@@ -42,17 +71,15 @@ class MainActivity : ChatlistActivity() {
             }
             return@setNavigationItemSelectedListener false
         }
-
     }
 
-    private fun displayGenderAlert(): Boolean {
-        DialogDrawerSearchGender(this).show()
-        return true
+    private fun displayGenderAlert() {
+        DialogDrawerSearchGender().show(supportFragmentManager, "gender")
     }
 
-    private fun displayaAgeRangeAlert(): Boolean {
-        DialogDrawerSearchAgeRange(this).show()
-        return true
+    private fun displayaAgeRangeAlert() {
+
+        DialogDrawerSearchAge().show(supportFragmentManager, "ageRange")
     }
 
     private fun initToolbar() {
@@ -94,11 +121,6 @@ class MainActivity : ChatlistActivity() {
         dialogsList.setAdapter(super.dialogsAdapter)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return true
-    }
-
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_logout -> logout()
@@ -106,8 +128,13 @@ class MainActivity : ChatlistActivity() {
         return true
     }
 
+    fun showId(v: View) {
+        toast(v.id)
+    }
+
     fun logout() {
         FirebaseAuth.getInstance().signOut()
         startActivity(intentFor<AuthActivity>().newTask())
     }
+
 }

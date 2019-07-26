@@ -99,7 +99,7 @@
 				app:layout_constraintStart_toEndOf="@+id/imageView_profile_age_range_icon"
 				app:layout_constraintTop_toTopOf="parent"
 				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintEnd_toStartOf="@+id/textView_profile_age_range_value"
+				app:layout_constraintEnd_toStartOf="@+id/textView_profile_age_value"
 				android:layout_marginEnd="8dp"
 				/>
 
@@ -117,8 +117,8 @@
 				/>
 
 		<TextView
-				android:id="@+id/textView_profile_age_range_value"
-				android:layout_width="0dp"
+				android:id="@+id/textView_profile_age_value"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="@string/pl_not_specified"
 				app:layout_constraintTop_toTopOf="parent"

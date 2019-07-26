@@ -2,17 +2,14 @@ package com.example.loquicleanarchitecture.view.profile
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log.d
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.transition.TransitionManager
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.helper.ImageTransformation
-import com.example.loquicleanarchitecture.view.dialogs.DialogProfileAgeRangeChoice
+import com.example.loquicleanarchitecture.view.dialogs.DialogProfileAgeChoice
 import com.example.loquicleanarchitecture.view.dialogs.DialogProfileGenderChoice
 import com.example.loquicleanarchitecture.view.dialogs.DialogProfileNicknameChoice
 import com.squareup.picasso.Picasso
@@ -22,49 +19,23 @@ import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.view_profile_user_details.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.jetbrains.anko.toast
 
 
-class ProfileActivity : AppCompatActivity(), View.OnClickListener {
+class ProfileActivity : AppCompatActivity(),
+    View.OnClickListener,
+    DialogProfileNicknameChoice.NicknameListener,
+    DialogProfileAgeChoice.AgeListener,
+    DialogProfileGenderChoice.ProfileGenderListener {
 
     var currentViewHolder: ImageView? = null
-    var imageBig: Bitmap? = null
-    var imageSmall: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         initListeners()
+
         // TODO Add delete button for photos https://github.com/stfalcon-studio/ChatKit/blob/master/docs/COMPONENT_MESSAGE_INPUT.MD
         // Todo Add save button on toolbar
-    }
-
-
-
-
-//    private fun resizeMinus(currentViewHolder: ImageView?) {
-//        Picasso.get()
-//            .load(image2file!!).resize(currentViewHolder!!.width, currentViewHolder.height)
-//            .transform(ImageTransformation.transformation)
-//            .into(currentViewHolder)
-//
-//    }
-
-//    private fun resizePlus(v: ImageView) {
-//        Picasso.get()
-//            .load(image2file!!)
-//            .resize(v.width, v.height)
-//            .transform(ImageTransformation.transformation)
-//            .into(v)
-//        v.invalidate()
-//    }
-
-    override fun onBackPressed() {
-        toast("backpressed")
-        iv_photo4.setImageBitmap(imageSmall)
-        iv_photo1.setImageBitmap(imageSmall)
-        iv_photo3.setImageBitmap(imageSmall)
-
     }
 
     private fun initListeners() {
@@ -88,10 +59,12 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.constraintLayoutNickname -> DialogProfileNicknameChoice(this).show()
-            R.id.constraintLayoutGender -> DialogProfileGenderChoice(this).show()
-            R.id.constraintLayoutAge -> DialogProfileAgeRangeChoice(this).show()
-            R.id.iv_photo1, R.id.iv_photo2, R.id.iv_photo3, R.id.iv_photo4,  R.id.iv_photo5,  R.id.iv_photo6  -> loadImagePicker(v)
+            R.id.constraintLayoutNickname -> DialogProfileNicknameChoice().show(supportFragmentManager, "nickname")
+            R.id.constraintLayoutGender -> DialogProfileGenderChoice().show(supportFragmentManager, "gender")
+            R.id.constraintLayoutAge -> DialogProfileAgeChoice().show(supportFragmentManager, "age")
+            R.id.iv_photo1, R.id.iv_photo2, R.id.iv_photo3, R.id.iv_photo4, R.id.iv_photo5, R.id.iv_photo6 -> loadImagePicker(
+                v
+            )
 
         }
     }
@@ -109,13 +82,30 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    override fun applyGender(gender: Int?) {
+        gender?.run {
+            textView_profile_gender_value.setText(gender)
+        }
+    }
+
+    override fun applyAge(age: Int?) {
+        textView_profile_age_value.text = age.toString()
+    }
+
+
+    override fun applyNickname(nickname: String) {
+        if (nickname.isNotBlank())
+            textView_profile_nickname_value.text = nickname
+    }
+
     private fun uploadImages(path: Uri) {
         GlobalScope.launch {
-           //Todo Upload Images to Firebase
+            //Todo Upload Images to Firebase
 
         }
 
     }
+
 
 
     private fun setPhoto(resultUri: Uri?) {

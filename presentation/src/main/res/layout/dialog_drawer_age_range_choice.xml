@@ -5,73 +5,35 @@
                                                    android:layout_width="match_parent"
                                                    android:layout_height="wrap_content"
                                                    android:layout_marginEnd="32dp"
-                                                   android:id="@+id/sad"
 		>
 
-
-	<TextView
-			android:text="@string/pl_confirm"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:id="@+id/drawer_age_range_dialog_confirm"
-			android:textSize="18sp"
-			android:textStyle="bold"
-			android:layout_marginEnd="16dp"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toTopOf="@+id/drawer_age_range_dialog_cancel"
-			app:layout_constraintBottom_toBottomOf="@+id/drawer_age_range_dialog_cancel"
-			/>
-
-	<TextView
-			android:text="@string/pl_cancel"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:id="@+id/drawer_age_range_dialog_cancel"
-			android:textSize="18sp"
-			android:textStyle="bold"
-			app:layout_constraintTop_toBottomOf="@+id/drawer_age_range_picker_second"
-			android:layout_marginTop="32dp"
-			app:layout_constraintStart_toStartOf="@+id/drawer_age_range_picker_second"
-			app:layout_constraintBottom_toBottomOf="parent"
-			android:layout_marginBottom="32dp"
-			app:layout_constraintEnd_toStartOf="@+id/drawer_age_range_dialog_confirm"
-			android:layout_marginEnd="32dp"
-			/>
 
 	<NumberPicker
 			android:id="@+id/drawer_age_range_picker_second"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			app:layout_constraintBottom_toBottomOf="@+id/drawer_age_range_picker_first"
-			app:layout_constraintTop_toTopOf="@+id/drawer_age_range_picker_first"
-			app:layout_constraintVertical_bias="0.0"
-			app:layout_constraintStart_toEndOf="@+id/drawer_age_range_picker_first"
-			app:layout_constraintHorizontal_bias="0.5"
-			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="@+id/guideline2"
+			android:layout_marginStart="8dp"
+			android:layout_marginTop="8dp"
+			app:layout_constraintTop_toTopOf="parent"
 			/>
 
 	<NumberPicker
 			android:id="@+id/drawer_age_range_picker_first"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintHorizontal_bias="0.5"
-			app:layout_constraintEnd_toStartOf="@+id/drawer_age_range_picker_second"
-			app:layout_constraintTop_toBottomOf="@+id/textView"
-			android:layout_marginTop="16dp"
+			app:layout_constraintEnd_toStartOf="@+id/guideline2"
+			android:layout_marginEnd="8dp"
+			android:layout_marginTop="8dp"
+			app:layout_constraintTop_toTopOf="parent"
 			/>
 
-	<TextView
-			android:text="@string/pl_drawer_dialog_ageRangeTitle"
+	<androidx.constraintlayout.widget.Guideline
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:id="@+id/textView"
-			android:textSize="18sp"
-			android:textStyle="bold"
-			android:layout_marginTop="32dp"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			android:layout_marginStart="24dp"
+			android:id="@+id/guideline2"
+			android:orientation="vertical"
+			app:layout_constraintGuide_percent="0.5"
 			/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

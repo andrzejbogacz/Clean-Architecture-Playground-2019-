@@ -42,6 +42,7 @@
 	<string name="pl_drawer_dialog_ageRangeTitle">Zakres wyszukiwania:</string>
 	<string name="pl_profile_dialog_nickname_title">Twój pseudonim:</string>
 	<string name="pl_profile_age_title">Twój wiek:</string>
+    <string name="pl_profile_nickname_hint">pseudonim</string>
 
 
 </resources>
