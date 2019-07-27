@@ -26,16 +26,18 @@ class DialogDrawerSearchAge : DialogFragment() {
 
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_drawer_age_range_choice, null)
 
-        view.drawer_age_range_picker_first.maxValue = 99
-        view.drawer_age_range_picker_first.minValue = 1
-        view.drawer_age_range_picker_first.value = 18
+        with(view) {
+            drawer_age_range_picker_first.maxValue = 99
+            drawer_age_range_picker_first.minValue = 1
+            drawer_age_range_picker_first.value = 18
 
-        view.drawer_age_range_picker_second.maxValue = 99
-        view.drawer_age_range_picker_second.minValue = 1
-        view.drawer_age_range_picker_second.value = 45
+            drawer_age_range_picker_second.maxValue = 99
+            drawer_age_range_picker_second.minValue = 1
+            drawer_age_range_picker_second.value = 45
 
-        view.drawer_age_range_picker_first.setOnValueChangedListener { _, _, newVal -> firstValue = newVal }
-        view.drawer_age_range_picker_second.setOnValueChangedListener { _, _, newVal -> secondValue = newVal }
+            drawer_age_range_picker_first.setOnValueChangedListener { _, _, newVal -> firstValue = newVal }
+            drawer_age_range_picker_second.setOnValueChangedListener { _, _, newVal -> secondValue = newVal }
+        }
 
         return activity?.let {
             // Use the Builder class for convenient dialog construction

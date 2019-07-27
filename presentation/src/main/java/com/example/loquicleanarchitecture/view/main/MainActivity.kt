@@ -43,10 +43,12 @@ class MainActivity : ChatlistActivity(),
 
     override fun applyAgeRange(ageRange: String) {
         textView_ageRange.text = ageRange
+        //todo db update for AgeRange
     }
 
     override fun applyGender(gender: Int) {
         textView_genderValue.setText(gender)
+        //todo db update for for gender
     }
 
     private fun initMenuReferences() {

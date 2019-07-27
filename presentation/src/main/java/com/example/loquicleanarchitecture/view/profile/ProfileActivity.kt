@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.example.loquicleanarchitecture.R
+import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
 import com.example.loquicleanarchitecture.helper.ImageTransformation
 import com.example.loquicleanarchitecture.view.dialogs.DialogProfileAgeChoice
 import com.example.loquicleanarchitecture.view.dialogs.DialogProfileGenderChoice
@@ -15,17 +18,27 @@ import com.example.loquicleanarchitecture.view.dialogs.DialogProfileNicknameChoi
 import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.view_profile_user_details.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class ProfileActivity : AppCompatActivity(),
+class ProfileActivity : DaggerAppCompatActivity(),
     View.OnClickListener,
     DialogProfileNicknameChoice.NicknameListener,
     DialogProfileAgeChoice.AgeListener,
     DialogProfileGenderChoice.ProfileGenderListener {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProviderFactory
+
+    @Inject
+    lateinit var viewModel: ProfileViewModel
+
+
 
     var currentViewHolder: ImageView? = null
 
@@ -33,6 +46,8 @@ class ProfileActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         initListeners()
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ProfileViewModel::class.java)
 
         // TODO Add delete button for photos https://github.com/stfalcon-studio/ChatKit/blob/master/docs/COMPONENT_MESSAGE_INPUT.MD
         // Todo Add save button on toolbar
@@ -85,17 +100,20 @@ class ProfileActivity : AppCompatActivity(),
     override fun applyGender(gender: Int?) {
         gender?.run {
             textView_profile_gender_value.setText(gender)
+            //todo db update
         }
     }
 
     override fun applyAge(age: Int?) {
         textView_profile_age_value.text = age.toString()
+        //todo db update
     }
 
 
     override fun applyNickname(nickname: String) {
         if (nickname.isNotBlank())
-            textView_profile_nickname_value.text = nickname
+            textView_profile_nickname_value.text = nickname        //todo db update
+
     }
 
     private fun uploadImages(path: Uri) {
