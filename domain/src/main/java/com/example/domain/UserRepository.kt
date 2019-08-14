@@ -1,15 +1,20 @@
 package com.example.domain
 
+import arrow.core.Either
+import arrow.core.Failure
+
 interface UserRepository {
 
-    fun saveAge()
+    suspend fun saveAge()
 
-    fun saveNickname()
+    suspend fun saveNickname()
 
-    fun saveGender()
+    suspend fun saveGender()
 
-    fun uploadPhoto()
+    suspend fun uploadPhoto()
 
-    fun loadUser()
+    suspend fun loadUser()
+
+    fun createUser() : Either<Failure,String>
 
 }

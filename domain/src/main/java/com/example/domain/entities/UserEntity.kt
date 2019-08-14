@@ -1,12 +1,12 @@
 package com.example.domain.entities
 
 data class UserEntity(
-    var id: Int,
-    var nickname: String,
+    var id: String,
+    var nickname: String? = null,
     var gender: Gender = Gender.MALE,
-    var age: Int,
+    var age: Int = 18,
     var preferences_gender: Gender = Gender.FEMALE,
-    var preferences_age_range: IntRange = 1..10,
-    var photos: Any
+    var preferences_age_range: Int = 20,
+    var photos: Any? = null
 )
 

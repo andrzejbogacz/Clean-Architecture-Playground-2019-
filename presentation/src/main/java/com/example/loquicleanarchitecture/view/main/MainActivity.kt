@@ -7,7 +7,9 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
 import com.example.loquicleanarchitecture.R
+import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
 import com.example.loquicleanarchitecture.fixtures.DialogsFixtures
 import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchAge
 import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchGender
@@ -21,6 +23,7 @@ import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
+import javax.inject.Inject
 
 
 class MainActivity : ChatlistActivity(),
@@ -31,6 +34,14 @@ class MainActivity : ChatlistActivity(),
     lateinit var textView_ageRange: TextView
     lateinit var textView_genderValue: TextView
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProviderFactory
+
+    @Inject
+    lateinit var auth: FirebaseAuth
+
+    private lateinit var mainViewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -39,6 +50,8 @@ class MainActivity : ChatlistActivity(),
         initAdapter()
         initMenuReferences()
 
+        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+        mainViewModel.createUser()
     }
 
     override fun applyAgeRange(ageRange: String) {
