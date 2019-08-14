@@ -15,13 +15,15 @@ import javax.inject.Singleton
     modules = [
         AndroidSupportInjectionModule::class,
         ActivityBuildersModule::class,
-        ViewModelFactoryModule::class
+        ViewModelFactoryModule::class,
+        FirebaseModule::class,
+        AppModule::class
     ]
 )
 interface AppComponent : AndroidInjector<BaseApplication> {
 
     @Component.Builder
-    interface Builder{
+    interface Builder {
 
         @BindsInstance
         fun application(application: Application): Builder

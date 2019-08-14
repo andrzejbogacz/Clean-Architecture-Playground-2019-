@@ -14,11 +14,6 @@ import javax.inject.Named
 
 @Module
 class AuthModule {
-    @AuthScope
-    @Provides
-    internal fun provideFirestoreAuth(): FirebaseAuth {
-        return FirebaseAuth.getInstance()
-    }
 
     @AuthScope
     @Provides

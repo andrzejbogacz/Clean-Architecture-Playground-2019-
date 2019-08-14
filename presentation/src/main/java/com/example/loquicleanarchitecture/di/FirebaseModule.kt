@@ -2,6 +2,8 @@ package com.example.loquicleanarchitecture.di
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import dagger.Module
 import dagger.Provides
 
@@ -19,8 +21,8 @@ class FirebaseModule {
     }
 
     @Provides
-    internal fun provideFirestoreAuth(): FirebaseAuth {
-        return FirebaseAuth.getInstance()
+    internal fun provideFirebaseStorage(): StorageReference {
+        return FirebaseStorage.getInstance().reference.child("REF")
     }
 
 
