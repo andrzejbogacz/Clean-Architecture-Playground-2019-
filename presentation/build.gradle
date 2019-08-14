@@ -51,7 +51,7 @@ dependencies {
     implementation deps.misc.okhttp3
     implementation deps.misc.chatkit
     implementation deps.misc.image_cropper
-    // compile 'com.makeramen:roundedimageview:2.3.0'
+    implementation deps.misc.rounded_image_view
 
     testImplementation deps.misc.junit
     androidTestImplementation deps.atsl.runner
