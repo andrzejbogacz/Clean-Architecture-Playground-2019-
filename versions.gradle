@@ -24,9 +24,12 @@ def versions = [:]
 versions.android_gradle_plugin = '3.4.1'
 versions.multidex = '1.0.3'
 versions.google_services = '4.2.0'
+//Firebase
 versions.ui_auth = '5.0.0'
 versions.admin = '6.8.1'
 versions.firestore = '20.1.0'
+versions.storage = '18.1.1'
+//MISC
 versions.facebook_sdk = '5.0.0'
 versions.login_buttons = '1.0.0'
 versions.anko_common = "0.8.3"
@@ -80,6 +83,7 @@ def firebase = [:]
 firebase.ui_auth = "com.firebaseui:firebase-ui-auth:$versions.ui_auth"
 firebase.firestore = "com.google.firebase:firebase-firestore:$versions.firestore"
 firebase.admin = "com.google.firebase:firebase-admin:$versions.admin"
+firebase.storage = "com.google.firebase:firebase-storage:$versions.storage"
 deps.firebase = firebase
 
 def misc = [:]
@@ -110,8 +114,15 @@ kotlin.anko_all = "org.jetbrains.anko:anko:$versions.anko_version"
 kotlin.anko_constraint = "org.jetbrains.anko:anko-constraint-layout:$versions.anko_version"
 
 
-
-deps.kotlin = kotlin
+def arrow = [:]
+arrow.data = "io.arrow-kt:arrow-core-data:$versions.arrow_version"
+arrow.extensions= "io.arrow-kt:arrow-core-extensions:$versions.arrow_version"
+arrow.syntax ="io.arrow-kt:arrow-syntax:$versions.arrow_version"
+arrow.typeclasses =  "io.arrow-kt:arrow-typeclasses:$versions.arrow_version"
+arrow.extras_data= "io.arrow-kt:arrow-extras-data:$versions.arrow_version"
+arrow.extras_extensions= "io.arrow-kt:arrow-extras-extensions:$versions.arrow_version"
+arrow.meta=  "io.arrow-kt:arrow-meta:$versions.arrow_version"
+deps.arrow = arrow
 
 def support = [:]
 support.annotations = "androidx.annotation:annotation:$versions.support"
@@ -157,7 +168,6 @@ dagger.android = "com.google.dagger:dagger-android:$versions.dagger"
 dagger.android_support = "com.google.dagger:dagger-android-support:$versions.dagger"
 dagger.compiler = "com.google.dagger:dagger-compiler:$versions.dagger"
 dagger.android_support_compiler = "com.google.dagger:dagger-android-processor:$versions.dagger"
-
 deps.dagger = dagger
 
 def espresso = [:]

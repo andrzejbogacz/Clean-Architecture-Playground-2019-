@@ -1,9 +1,30 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    //Functional Programming
+    implementation deps.arrow.data
+    implementation deps.arrow.extensions
+    implementation deps.arrow.syntax
+    implementation deps.arrow.typeclasses
+    implementation deps.arrow.extras_data
+    implementation deps.arrow.extras_extensions
+    kapt deps.arrow.meta
+
+    // Dagger2 core
+    implementation deps.dagger.runtime
+    implementation deps.dagger.android
+    implementation deps.dagger.android_support
+    kapt deps.dagger.android_support_compiler
+    kapt deps.dagger.compiler
+
+    // Kotlin
+    implementation deps.kotlin.coroutines
+    implementation deps.kotlin.stdlib8
+
 }
 
 sourceCompatibility = "7"
