@@ -1,8 +1,6 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 
@@ -75,6 +73,7 @@ dependencies {
     implementation deps.kotlin.anko_all
     implementation deps.kotlin.stdlib
     implementation deps.kotlin.anko_constraint
+    implementation deps.kotlin.coroutines
 
     // Dagger2 core
     implementation deps.dagger.runtime

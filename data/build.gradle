@@ -7,15 +7,12 @@ android {
     compileSdkVersion 28
     buildToolsVersion "29.0.1"
 
-
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -24,14 +21,48 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    // Misc
+    implementation deps.support.app_compat
+    implementation deps.support.core_ktx
+    testImplementation deps.junit
+    androidTestImplementation deps.atsl.runner
+    androidTestImplementation deps.espresso.core
+
+    // Firebase
+    implementation deps.firebase.ui_auth
+    implementation deps.firebase.firestore
+    implementation deps.firebase.storage
+    annotationProcessor deps.firebase.admin
+
+    //Functional Programming
+    implementation deps.arrow.data
+    implementation deps.arrow.extensions
+    implementation deps.arrow.syntax
+    implementation deps.arrow.typeclasses
+    implementation deps.arrow.extras_data
+    implementation deps.arrow.extras_extensions
+    kapt deps.arrow.meta
+
+    // Dagger2 core
+    implementation deps.dagger.runtime
+    implementation deps.dagger.android
+    implementation deps.dagger.android_support
+    kapt deps.dagger.android_support_compiler
+    kapt deps.dagger.compiler
+
+    // Kotlin
+    implementation deps.kotlin.anko_all
+    implementation deps.kotlin.stdlib
+    implementation deps.kotlin.anko_constraint
+    implementation deps.kotlin.coroutines
+
+    implementation project(':domain')
+}
+repositories {
+    mavenCentral()
 }
