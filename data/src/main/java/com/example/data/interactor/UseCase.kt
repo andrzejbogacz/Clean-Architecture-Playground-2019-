@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers.Main as Main1
 
 abstract class UseCase<out Type, in Params> where Type : Any {
 
-    abstract suspend fun run(params: Params): Either<Try.Failure, Type>
+    abstract suspend fun run(params: Params): Either<Failure, Type>
 
     operator fun invoke(params: Params, onResult: (Either<Failure, Type>) -> Unit = {}) {
         val job = GlobalScope.async(Default) { run(params) }

@@ -10,6 +10,9 @@ import dagger.Provides
 @Module
 class FirebaseModule {
 
+
+
+
     @Provides
     internal fun provideFirebaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()

@@ -15,7 +15,10 @@
  */
 package com.example.loquicleanarchitecture.view
 
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import arrow.core.Failure
 
 /**
  * Base ViewModel class with default Failure handling.
@@ -26,9 +29,9 @@ abstract class BaseViewModel : ViewModel() {
 
 
     // TODO handling failuires ans sucesses
-/*    var failure: MutableLiveData<Failure> = MutableLiveData()
+    var failure: MutableLiveData<Failure> = MutableLiveData()
 
     protected fun handleFailure(failure: Failure) {
-        this.failure.value = failure
-    }*/
+        Log.d("TESTING", failure.exception.toString())
+    }
 }
