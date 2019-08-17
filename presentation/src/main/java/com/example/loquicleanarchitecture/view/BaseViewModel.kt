@@ -26,7 +26,6 @@ import arrow.core.Failure
  */
 abstract class BaseViewModel : ViewModel() {
 
-
     // TODO handling failuires ans sucesses
     var failure: MutableLiveData<Failure> = MutableLiveData()
 
