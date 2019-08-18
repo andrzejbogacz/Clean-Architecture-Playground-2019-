@@ -2,6 +2,7 @@ package com.example.domain
 
 import arrow.core.Either
 import arrow.core.Failure
+import com.example.domain.entities.UserEntity
 
 interface UserRepository {
 
@@ -13,8 +14,8 @@ interface UserRepository {
 
     suspend fun uploadPhoto()
 
-    suspend fun loadUser()
+    suspend fun loadUser(): Either<Failure, UserEntity?>
 
-    fun createUser() : Either<Failure,String>
+    suspend fun createUser(): Either<Failure, UserEntity>
 
 }

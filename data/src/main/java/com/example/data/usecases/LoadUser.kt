@@ -11,7 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
 import javax.inject.Inject
 
-class CreateUser @Inject constructor(var userRepository: UserRepository) : UseCase<UserEntity, None>() {
+class LoadUser @Inject constructor(var userRepository: UserRepository) : UseCase<UserEntity?, None>() {
 
     private val TAG: String? = this.javaClass.name
     @Inject
@@ -23,6 +23,6 @@ class CreateUser @Inject constructor(var userRepository: UserRepository) : UseCa
     @Inject
     lateinit var storageRef: StorageReference
 
-    override suspend fun run(params: None): Either<Failure, UserEntity> = userRepository.createUser()
+    override suspend fun run(params: None): Either<Failure, UserEntity?> = userRepository.loadUser()
 }
 

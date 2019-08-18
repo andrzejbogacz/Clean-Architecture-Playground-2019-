@@ -1,12 +1,14 @@
 package com.example.loquicleanarchitecture.view.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
@@ -29,6 +31,8 @@ import javax.inject.Inject
 class MainActivity : ChatlistActivity(),
     DialogDrawerSearchAge.AgeRangeListener,
     DialogDrawerSearchGender.GenderListener {
+    private val TAG: String? = this.javaClass.name
+
 
     private lateinit var mDrawerToggle: ActionBarDrawerToggle
     lateinit var textView_ageRange: TextView
@@ -51,7 +55,9 @@ class MainActivity : ChatlistActivity(),
         initMenuReferences()
 
         mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        mainViewModel.createUser()
+        mainViewModel.userData.observe(this, Observer { Log.d(TAG, "UserData has changed... updating UI") })
+
+        mainViewModel.loadUser()
     }
 
     override fun applyAgeRange(ageRange: String) {
@@ -113,13 +119,6 @@ class MainActivity : ChatlistActivity(),
                 R.string.drawer_close
             ) {
 
-                override fun onDrawerOpened(drawerView: View) {
-                    super.onDrawerOpened(drawerView)
-                }
-
-                override fun onDrawerClosed(drawerView: View) {
-                    super.onDrawerClosed(drawerView)
-                }
             }
         drawer_layout.addDrawerListener(mDrawerToggle)
 

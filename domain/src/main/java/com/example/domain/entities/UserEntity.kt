@@ -1,7 +1,7 @@
 package com.example.domain.entities
 
 data class UserEntity(
-    var id: String,
+    var id: String? = null,
     var nickname: String? = null,
     var gender: Gender = Gender.MALE,
     var age: Int = 18,
