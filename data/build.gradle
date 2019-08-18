@@ -60,6 +60,7 @@ dependencies {
     implementation deps.kotlin.stdlib
     implementation deps.kotlin.anko_constraint
     implementation deps.kotlin.coroutines
+    implementation deps.kotlin.coroutines_play_services
 
     implementation project(':domain')
 }
