@@ -1,18 +1,19 @@
 package com.example.loquicleanarchitecture.view.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import com.example.domain.entities.UserEntity
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
 import com.example.loquicleanarchitecture.fixtures.DialogsFixtures
+import com.example.loquicleanarchitecture.helper.failure
+import com.example.loquicleanarchitecture.helper.observe
+import com.example.loquicleanarchitecture.helper.viewModel
 import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchAge
 import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchGender
 import com.example.loquicleanarchitecture.view.login.AuthActivity
@@ -21,6 +22,8 @@ import com.example.loquicleanarchitecture.view.profile.ProfileActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.drawer_header.*
+import kotlinx.android.synthetic.main.menu_row_gender.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 import org.jetbrains.anko.startActivity
@@ -54,10 +57,23 @@ class MainActivity : ChatlistActivity(),
         initAdapter()
         initMenuReferences()
 
-        mainViewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        mainViewModel.userData.observe(this, Observer { Log.d(TAG, "UserData has changed... updating UI") })
+        mainViewModel = viewModel(viewModelFactory) {
+            observe(userData, ::updateUserUI)
+            failure(failure, ::handleFailure)
+        }
+
+
 
         mainViewModel.loadUser()
+    }
+
+    fun updateUserUI(user: UserEntity) {
+        textView_header_nickname.text = user.nickname
+        textView_header_gender.text = user.gender.toString()
+        textView_header_age.text = user.age.toString()
+
+        textView_menu_genderValue.text = user.preferences_gender.toString()
+        // textView_menu_ageRangeValue.text = "{${user.preferences_age_range_min }"
     }
 
     override fun applyAgeRange(ageRange: String) {
