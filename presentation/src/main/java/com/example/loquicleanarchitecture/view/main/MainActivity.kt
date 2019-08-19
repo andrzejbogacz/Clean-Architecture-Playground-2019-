@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import com.example.domain.entities.UserEntity
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
@@ -31,11 +33,16 @@ import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 
-class MainActivity : ChatlistActivity(),
-    DialogDrawerSearchAge.AgeRangeListener,
-    DialogDrawerSearchGender.GenderListener {
+class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
     private val TAG: String? = this.javaClass.name
 
+    private val appViewModelStore: ViewModelStore by lazy {
+        ViewModelStore()
+    }
+
+    override fun getViewModelStore(): ViewModelStore {
+        return appViewModelStore
+    }
 
     private lateinit var mDrawerToggle: ActionBarDrawerToggle
     lateinit var textView_ageRange: TextView
@@ -62,8 +69,6 @@ class MainActivity : ChatlistActivity(),
             failure(failure, ::handleFailure)
         }
 
-
-
         mainViewModel.loadUser()
     }
 
@@ -73,41 +78,6 @@ class MainActivity : ChatlistActivity(),
         textView_header_age.text = user.age.toString()
 
         textView_menu_genderValue.text = user.preferences_gender.toString()
-        // textView_menu_ageRangeValue.text = "{${user.preferences_age_range_min }"
-    }
-
-    override fun applyAgeRange(ageRange: String) {
-        textView_ageRange.text = ageRange
-        //todo db update for AgeRange
-    }
-
-    override fun applyGender(gender: Int) {
-        textView_genderValue.setText(gender)
-        //todo db update for for gender
-    }
-
-    private fun initMenuReferences() {
-        textView_ageRange = navigation_view.menu.findItem(R.id.item_drawer_age_range)
-            .actionView.findViewById(R.id.textView_menu_ageRangeValue)
-        textView_genderValue = navigation_view.menu.findItem(R.id.item_drawer_gender)
-            .actionView.findViewById(R.id.textView_menu_genderValue)
-
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return true
-    }
-
-    private fun initNavigationDrawer() {
-        navigation_view.getHeaderView(0).setOnClickListener { startActivity<ProfileActivity>() }
-        navigation_view.setNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.item_drawer_gender -> displayGenderAlert()
-                R.id.item_drawer_age_range -> displayaAgeRangeAlert()
-            }
-            return@setNavigationItemSelectedListener false
-        }
     }
 
     private fun displayGenderAlert() {
@@ -117,6 +87,11 @@ class MainActivity : ChatlistActivity(),
     private fun displayaAgeRangeAlert() {
 
         DialogDrawerSearchAge().show(supportFragmentManager, "ageRange")
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
     }
 
     private fun initToolbar() {
@@ -149,6 +124,25 @@ class MainActivity : ChatlistActivity(),
         super.dialogsAdapter.setOnDialogLongClickListener(this)
 
         dialogsList.setAdapter(super.dialogsAdapter)
+    }
+
+    private fun initNavigationDrawer() {
+        navigation_view.getHeaderView(0).setOnClickListener { startActivity<ProfileActivity>() }
+        navigation_view.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.item_drawer_gender -> displayGenderAlert()
+                R.id.item_drawer_age_range -> displayaAgeRangeAlert()
+            }
+            return@setNavigationItemSelectedListener false
+        }
+    }
+
+    private fun initMenuReferences() {
+        textView_ageRange = navigation_view.menu.findItem(R.id.item_drawer_age_range)
+            .actionView.findViewById(R.id.textView_menu_ageRangeValue)
+        textView_genderValue = navigation_view.menu.findItem(R.id.item_drawer_gender)
+            .actionView.findViewById(R.id.textView_menu_genderValue)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

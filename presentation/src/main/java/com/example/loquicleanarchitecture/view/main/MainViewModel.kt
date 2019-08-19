@@ -37,8 +37,8 @@ class MainViewModel @Inject constructor(
     }
 
     fun handleSuccess(s: UserEntity?) {
-        Log.d(TAG, "handleSuccess : User Loaded Successfully")
         userData.value = s
+        Log.d(TAG, "handleSuccess : User Loaded Successfully with data : ${userData.value.toString()}")
     }
 }
 

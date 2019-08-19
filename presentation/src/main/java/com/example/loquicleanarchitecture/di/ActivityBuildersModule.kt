@@ -16,6 +16,7 @@ import com.example.loquicleanarchitecture.di.main.MainViewModelsModule
 import com.example.loquicleanarchitecture.di.profile.ProfileModule
 import com.example.loquicleanarchitecture.di.profile.ProfileScope
 import com.example.loquicleanarchitecture.di.profile.ProfileViewModelsModule
+import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchAge
 import com.example.loquicleanarchitecture.view.login.AuthActivity
 import com.example.loquicleanarchitecture.view.main.MainActivity
 import com.example.loquicleanarchitecture.view.main.chatlist.ChatlistActivity
@@ -34,6 +35,9 @@ abstract class ActivityBuildersModule {
     @ContributesAndroidInjector(modules = [MainModule::class, MainViewModelsModule::class])
     internal abstract fun contributeMainActivity(): MainActivity
 
+    @ContributesAndroidInjector(modules = [ChatlistModule::class, MainViewModelsModule::class])
+    internal abstract fun contributeSearchAgeDialog(): DialogDrawerSearchAge
+
     @ChatScope
     @ContributesAndroidInjector(modules = [ChatModule::class, ChatViewModelsModule::class])
     internal abstract fun contributeChatActivity(): ChatActivity
@@ -45,6 +49,4 @@ abstract class ActivityBuildersModule {
     @ChatlistScope
     @ContributesAndroidInjector(modules = [ChatlistModule::class, ChatlistViewModelsModule::class])
     internal abstract fun contributeChatlistActivity(): ChatlistActivity
-
-
 }
