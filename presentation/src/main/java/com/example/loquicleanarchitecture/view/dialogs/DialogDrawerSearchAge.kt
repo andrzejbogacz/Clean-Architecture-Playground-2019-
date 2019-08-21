@@ -23,9 +23,10 @@ class DialogDrawerSearchAge : DaggerDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         mainViewModel = ViewModelProvider(activity!!.viewModelStore, viewModelFactory).get(MainViewModel::class.java)
-        var userData = mainViewModel.userData.value
 
-        var firstValue: Int = userData!!.preferences_age_range_min
+        val userData = mainViewModel.getUserDataLiveData().value!!
+
+        var firstValue: Int = userData.preferences_age_range_min
         var secondValue: Int = userData.preferences_age_range_max
 
         Log.d(TAG, userData.toString())
@@ -50,15 +51,12 @@ class DialogDrawerSearchAge : DaggerDialogFragment() {
         return activity?.let {
             // Use the Builder class for convenient dialog construction
 
-            //Todo
             val builder = AlertDialog.Builder(it).setView(view)
             builder.setTitle(R.string.pl_drawer_dialog_ageRangeTitle)
                 .setPositiveButton(
                     R.string.pl_confirm
                 ) { _, _ ->
-                        userData.preferences_age_range_min = firstValue
-                        userData.preferences_age_range_max = secondValue
-
+                    mainViewModel.changeUserAgePreference(Pair(firstValue, secondValue))
                 }
                 .setNegativeButton(
                     R.string.pl_cancel

@@ -19,7 +19,7 @@ interface UserRepository {
 
     suspend fun createUser(): Either<Failure, FirebaseResult>
 
-    suspend fun updateAgePreference(min:Int , max: Int): Either<Failure, FirebaseResult>
+    suspend fun updateAgePreference(preferenceRange : Pair<Int,Int>): Either<Failure, FirebaseResult>
 
     suspend fun updateGenderPreference(): Either<Failure, UserEntity>
 

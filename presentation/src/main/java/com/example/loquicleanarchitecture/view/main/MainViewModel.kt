@@ -8,6 +8,7 @@ import com.example.data.usecases.ChangeUserAgePreference
 import com.example.data.usecases.CreateUser
 import com.example.data.usecases.LoadUser
 import com.example.domain.entities.UserEntity
+import com.example.domain.exception.FirebaseResult
 import com.example.domain.exception.FirebaseResult.ExistingUserLoaded
 import com.example.domain.exception.FirebaseResult.NewUserCreated
 import com.example.domain.exception.UserFirebaseException
@@ -21,15 +22,18 @@ class MainViewModel @Inject constructor(
     val createUser: CreateUser, val loadUser: LoadUser, val changeUserAgePreference: ChangeUserAgePreference
 ) : BaseViewModel() {
 
-    init { listenToUserChanges() }
+    init {
+        listenToUserChanges()
+    }
 
     private val TAG: String? = this.javaClass.name
 
     private val userData: MutableLiveData<UserEntity> = MutableLiveData()
 
-    fun createUser() = createUser(None) { it.fold(::handleFailure, ::handleSuccess) }
+    private fun createUser() = createUser(None) { it.fold(::handleFailure, ::handleSuccess) }
     fun loadUser() = loadUser(None) { it.fold(::handleFailure, ::handleSuccess) }
-   // fun changeUserAgePreference() = changeUserAgePreference(Pair<Int,Int>) { it.fold(::handleFailure, ::handleSuccess) }
+    fun changeUserAgePreference(pair: Pair<Int, Int>) =
+        changeUserAgePreference(pair) { it.fold(::handleFailure, ::handleSuccess) }
 
     fun handleFailure(e: Failure) {
         Log.d(TAG, "Failed Loading user with Exception: ${e.exception.javaClass.simpleName}")
@@ -47,7 +51,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun listenToUserChanges() {
+    private fun listenToUserChanges() {
         val userDocument =
             FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
         userDocument.addSnapshotListener { snapshot, e ->
@@ -66,11 +70,18 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun handleSuccess(s: Any?) {
+    private fun handleSuccess(s: Any?) {
         when (s) {
             is NewUserCreated -> Log.d(TAG, "handleSuccess: Successfully saved new user to remote database")
             is ExistingUserLoaded -> Log.d(TAG, "handleSuccess: Successfully loaded existing user")
+            is FirebaseResult.UserAgePreferencesChanged -> Log.d(
+                TAG,
+                "handleSuccess: Successfully changed user age preference"
+            )
         }
     }
-    fun getUserDataLiveData(): MutableLiveData<UserEntity> { return userData}
+
+    fun getUserDataLiveData(): MutableLiveData<UserEntity> {
+        return userData
+    }
 }

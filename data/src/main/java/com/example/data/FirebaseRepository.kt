@@ -1,7 +1,6 @@
 package com.example.data
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import arrow.core.Either
 import arrow.core.Failure
 import arrow.core.Left
@@ -22,16 +21,16 @@ class FirebaseRepository @Inject constructor(firebaseFirestore: FirebaseFirestor
 
     var userDocument = firebaseFirestore.collection("Users").document(fbAuth.currentUser!!.uid)
 
-    override suspend fun updateAgePreference(min: Int, max: Int): Either<Failure, FirebaseResult> {
+    override suspend fun updateAgePreference(preferenceRange: Pair<Int, Int>): Either<Failure, FirebaseResult> {
         var isSuccess = false
 
         userDocument
             .update(
-                "preferences_age_range_min", min,
-                "preferences_age_range_max", max
+                "preferences_age_range_min", preferenceRange.first,
+                "preferences_age_range_max", preferenceRange.second
             )
             .addOnFailureListener { printUnknownException(it) }
-            .addOnSuccessListener { Log.d(TAG, "User Created Successfully"); isSuccess = true }
+            .addOnSuccessListener { isSuccess = true }
             .await()
 
         return when (isSuccess) {
