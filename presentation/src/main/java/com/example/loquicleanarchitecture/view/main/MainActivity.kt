@@ -1,6 +1,7 @@
 package com.example.loquicleanarchitecture.view.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -25,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_header.*
+import kotlinx.android.synthetic.main.menu_row_age_range.*
 import kotlinx.android.synthetic.main.menu_row_gender.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
@@ -65,7 +67,7 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
         initMenuReferences()
 
         mainViewModel = viewModel(viewModelFactory) {
-            observe(userData, ::updateUserUI)
+            observe(getUserDataLiveData(), ::updateUserUI)
             failure(failure, ::handleFailure)
         }
 
@@ -73,11 +75,13 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
     }
 
     fun updateUserUI(user: UserEntity) {
+        Log.d(TAG, "UpdateUserUI")
         textView_header_nickname.text = user.nickname
         textView_header_gender.text = user.gender.toString()
         textView_header_age.text = user.age.toString()
 
         textView_menu_genderValue.text = user.preferences_gender.toString()
+        textView_menu_ageRangeValue.text = getString(R.string.preferences_age_range, user.preferences_age_range_min, user.preferences_age_range_max)
     }
 
     private fun displayGenderAlert() {
