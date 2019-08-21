@@ -1,5 +1,5 @@
 package com.example.domain.entities
 
 enum class Gender {
-    FEMALE,MALE
+    FEMALE,MALE,BOTH
 }

@@ -14,6 +14,12 @@ dependencies {
     implementation deps.arrow.extras_extensions
     kapt deps.arrow.meta
 
+    // Firebase
+    implementation deps.firebase.ui_auth
+    implementation deps.firebase.firestore
+    implementation deps.firebase.storage
+    annotationProcessor deps.firebase.admin
+
     // Dagger2 core
     implementation deps.dagger.runtime
     implementation deps.dagger.android
