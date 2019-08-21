@@ -4,24 +4,32 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import arrow.core.Failure
 import arrow.core.None
-import com.example.data.FirebaseRepository
+import com.example.data.usecases.ChangeUserAgePreference
 import com.example.data.usecases.CreateUser
 import com.example.data.usecases.LoadUser
 import com.example.domain.entities.UserEntity
+import com.example.domain.exception.FirebaseResult.ExistingUserLoaded
+import com.example.domain.exception.FirebaseResult.NewUserCreated
 import com.example.domain.exception.UserFirebaseException
 import com.example.loquicleanarchitecture.view.BaseViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject
 
+
 class MainViewModel @Inject constructor(
-    val createUser: CreateUser, val loadUser: LoadUser, val firebaseRepository: FirebaseRepository
+    val createUser: CreateUser, val loadUser: LoadUser, val changeUserAgePreference: ChangeUserAgePreference
 ) : BaseViewModel() {
 
+    init { listenToUserChanges() }
+
     private val TAG: String? = this.javaClass.name
-    var userData: MutableLiveData<UserEntity> = MutableLiveData()
+
+    private val userData: MutableLiveData<UserEntity> = MutableLiveData()
 
     fun createUser() = createUser(None) { it.fold(::handleFailure, ::handleSuccess) }
     fun loadUser() = loadUser(None) { it.fold(::handleFailure, ::handleSuccess) }
-
+   // fun changeUserAgePreference() = changeUserAgePreference(Pair<Int,Int>) { it.fold(::handleFailure, ::handleSuccess) }
 
     fun handleFailure(e: Failure) {
         Log.d(TAG, "Failed Loading user with Exception: ${e.exception.javaClass.simpleName}")
@@ -30,16 +38,39 @@ class MainViewModel @Inject constructor(
                 Log.d(TAG, "Starting attempt to create new User")
                 createUser()
             }
-            is UserFirebaseException.UnknownException -> {
-                Log.d(TAG, "Unknown Exception: ${e.exception.printStackTrace()}")
+
+            //todo catch and define new exception handlers
+            is UserFirebaseException.UnknownException -> Log.d(
+                TAG,
+                " Unhandled exception within FirebaseRepository: check logs"
+            )
+        }
+    }
+
+    fun listenToUserChanges() {
+        val userDocument =
+            FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
+        userDocument.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.w(TAG, "Listen failed.", e)
+                // throwable = e
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                userData.value = snapshot.toObject(UserEntity::class.java)!!
+
+            } else {
+                Log.d(TAG, "Current data: null")
             }
         }
     }
 
-    fun handleSuccess(s: UserEntity?) {
-        userData.value = s
-        Log.d(TAG, "handleSuccess : User Loaded Successfully with data : ${userData.value.toString()}")
+    fun handleSuccess(s: Any?) {
+        when (s) {
+            is NewUserCreated -> Log.d(TAG, "handleSuccess: Successfully saved new user to remote database")
+            is ExistingUserLoaded -> Log.d(TAG, "handleSuccess: Successfully loaded existing user")
+        }
     }
+    fun getUserDataLiveData(): MutableLiveData<UserEntity> { return userData}
 }
-
-
