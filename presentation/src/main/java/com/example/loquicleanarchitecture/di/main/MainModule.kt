@@ -1,7 +1,6 @@
 package com.example.loquicleanarchitecture.di.main
 
 import android.app.Application
-import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import dagger.Module
@@ -12,10 +11,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
 import java.io.File
 
-
 @Module
 class MainModule {
-
 
     @MainScope
     @Provides

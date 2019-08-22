@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import arrow.core.Failure
 import arrow.core.None
+import com.example.data.FirebaseRepository
 import com.example.data.usecases.ChangeUserAgePreference
 import com.example.data.usecases.CreateUser
 import com.example.data.usecases.LoadUser
@@ -13,13 +14,13 @@ import com.example.domain.exception.FirebaseResult.ExistingUserLoaded
 import com.example.domain.exception.FirebaseResult.NewUserCreated
 import com.example.domain.exception.UserFirebaseException
 import com.example.loquicleanarchitecture.view.BaseViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject
 
-
 class MainViewModel @Inject constructor(
-    val createUser: CreateUser, val loadUser: LoadUser, val changeUserAgePreference: ChangeUserAgePreference
+    val createUser: CreateUser,
+    val loadUser: LoadUser,
+    val changeUserAgePreference: ChangeUserAgePreference,
+    var firebaseRepository: FirebaseRepository
 ) : BaseViewModel() {
 
     init {
@@ -48,13 +49,12 @@ class MainViewModel @Inject constructor(
                 TAG,
                 " Unhandled exception within FirebaseRepository: check logs"
             )
+            //TODO implement timeout exception with retry loadinguser few times
         }
     }
 
     private fun listenToUserChanges() {
-        val userDocument =
-            FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().currentUser!!.uid)
-        userDocument.addSnapshotListener { snapshot, e ->
+        firebaseRepository.userDocument.addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Log.w(TAG, "Listen failed.", e)
                 // throwable = e
