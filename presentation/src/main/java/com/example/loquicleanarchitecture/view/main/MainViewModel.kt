@@ -6,8 +6,10 @@ import arrow.core.Failure
 import arrow.core.None
 import com.example.data.FirebaseRepository
 import com.example.data.usecases.ChangeUserAgePreference
+import com.example.data.usecases.ChangeUserGenderPreference
 import com.example.data.usecases.CreateUser
 import com.example.data.usecases.LoadUser
+import com.example.domain.entities.Gender
 import com.example.domain.entities.UserEntity
 import com.example.domain.exception.FirebaseResult
 import com.example.domain.exception.FirebaseResult.ExistingUserLoaded
@@ -20,6 +22,7 @@ class MainViewModel @Inject constructor(
     val createUser: CreateUser,
     val loadUser: LoadUser,
     val changeUserAgePreference: ChangeUserAgePreference,
+    val changeUserGenderPreference: ChangeUserGenderPreference,
     var firebaseRepository: FirebaseRepository
 ) : BaseViewModel() {
 
@@ -35,6 +38,9 @@ class MainViewModel @Inject constructor(
     fun loadUser() = loadUser(None) { it.fold(::handleFailure, ::handleSuccess) }
     fun changeUserAgePreference(pair: Pair<Int, Int>) =
         changeUserAgePreference(pair) { it.fold(::handleFailure, ::handleSuccess) }
+
+    fun changeUserGenderPreference(gender: Gender) =
+        changeUserGenderPreference(gender) { it.fold(::handleFailure, ::handleSuccess) }
 
     fun handleFailure(e: Failure) {
         Log.d(TAG, "Failed Loading user with Exception: ${e.exception.javaClass.simpleName}")

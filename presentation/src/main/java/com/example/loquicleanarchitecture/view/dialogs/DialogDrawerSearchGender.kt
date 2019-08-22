@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.RadioButton
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.domain.entities.Gender
 import com.example.loquicleanarchitecture.R
@@ -35,15 +33,16 @@ class DialogDrawerSearchGender : DaggerDialogFragment() {
 
         toast(genderPreference.name)
 
-        setCheckedRadioButton(genderPreference , view)
+        setCheckedRadioButton(genderPreference, view)
 
         return activity?.let {
 
             val builder = AlertDialog.Builder(it).setView(view)
             builder.setTitle(R.string.pl_drawer_dialog_genderTitle)
-                .setPositiveButton(R.string.pl_confirm
+                .setPositiveButton(
+                    R.string.pl_confirm
                 ) { dialog, id ->
-                    genderPreference = getSelectedGender(view)
+                    mainViewModel.changeUserGenderPreference(getSelectedGender(view))
                 }
                 .setNegativeButton(
                     R.string.pl_cancel
@@ -78,9 +77,15 @@ fun setCheckedRadioButton(genderPreference: Gender, view: View) {
     with(genderPreference.name)
     {
         when {
-            equals("FEMALE") -> {femaleId.isChecked = true ;  Log.d("MainActivity", "FEMALE")}
-            equals("MALE") -> {maleId.isChecked = true ;  Log.d("MainActivity", "MALE")}
-            else -> {bothId.isChecked = true ;  Log.d("MainActivity", "BOTH")}
+            equals("FEMALE") -> {
+                femaleId.isChecked = true; Log.d("MainActivity", "FEMALE")
+            }
+            equals("MALE") -> {
+                maleId.isChecked = true; Log.d("MainActivity", "MALE")
+            }
+            else -> {
+                bothId.isChecked = true; Log.d("MainActivity", "BOTH")
+            }
         }
     }
 }

@@ -2,7 +2,7 @@ package com.example.domain
 
 import arrow.core.Either
 import arrow.core.Failure
-import com.example.domain.entities.UserEntity
+import com.example.domain.entities.Gender
 import com.example.domain.exception.FirebaseResult
 
 interface UserRepository {
@@ -19,8 +19,8 @@ interface UserRepository {
 
     suspend fun createUser(): Either<Failure, FirebaseResult>
 
-    suspend fun updateAgePreference(preferenceRange : Pair<Int,Int>): Either<Failure, FirebaseResult>
+    suspend fun updateAgePreference(preferenceRange: Pair<Int, Int>): Either<Failure, FirebaseResult>
 
-    suspend fun updateGenderPreference(): Either<Failure, UserEntity>
+    suspend fun updateGenderPreference(preferenceGender: Gender): Either<Failure, FirebaseResult>
 
 }

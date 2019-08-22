@@ -6,9 +6,11 @@ import arrow.core.Failure
 import arrow.core.Left
 import arrow.core.Right
 import com.example.domain.UserRepository
+import com.example.domain.entities.Gender
 import com.example.domain.entities.UserEntity
 import com.example.domain.exception.FirebaseResult
 import com.example.domain.exception.FirebaseResult.UserAgePreferencesChanged
+import com.example.domain.exception.FirebaseResult.UserGenderPreferencesChanged
 import com.example.domain.exception.UserFirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,8 +41,21 @@ class FirebaseRepository @Inject constructor(firebaseFirestore: FirebaseFirestor
         }
     }
 
-    override suspend fun updateGenderPreference(): Either<Failure, UserEntity> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override suspend fun updateGenderPreference(preferenceGender: Gender): Either<Failure, FirebaseResult> {
+        var isSuccess = false
+
+        userDocument
+            .update(
+                "preferences_gender", preferenceGender.name
+            )
+            .addOnFailureListener { printUnknownException(it) }
+            .addOnSuccessListener { isSuccess = true }
+            .await()
+
+        return when (isSuccess) {
+            true -> Right(UserGenderPreferencesChanged)
+            false -> Left(Failure(UserFirebaseException.UnknownException))
+        }
     }
 
     override suspend fun loadUser(): Either<Failure, FirebaseResult> {
