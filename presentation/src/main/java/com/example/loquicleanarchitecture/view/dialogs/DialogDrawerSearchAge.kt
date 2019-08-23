@@ -52,14 +52,14 @@ class DialogDrawerSearchAge : DaggerDialogFragment() {
             // Use the Builder class for convenient dialog construction
 
             val builder = AlertDialog.Builder(it).setView(view)
-            builder.setTitle(R.string.pl_drawer_dialog_ageRangeTitle)
+            builder.setTitle(R.string.drawer_dialog_ageRangeTitle)
                 .setPositiveButton(
-                    R.string.pl_confirm
+                    R.string.confirm
                 ) { _, _ ->
                     mainViewModel.changeUserAgePreference(Pair(firstValue, secondValue))
                 }
                 .setNegativeButton(
-                    R.string.pl_cancel
+                    R.string.cancel
                 ) { _, _ ->
                     // User cancelled the dialog
                 }

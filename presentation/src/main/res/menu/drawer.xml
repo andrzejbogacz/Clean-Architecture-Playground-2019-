@@ -5,12 +5,12 @@
         <item
             android:id="@+id/item_drawer_gender"
             android:icon="@drawable/ic_gender_white"
-            android:title="@string/pl_profile_gender_title"
+            android:title="@string/profile_gender_title"
             app:actionLayout="@layout/menu_row_gender" />
         <item
             android:id="@+id/item_drawer_age_range"
             android:icon="@drawable/ic_range_age_black"
-            android:title="@string/pl_age_title"
+            android:title="@string/age_title"
             app:actionLayout="@layout/menu_row_age_range" />
 
     </group>

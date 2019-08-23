@@ -38,14 +38,14 @@ class DialogDrawerSearchGender : DaggerDialogFragment() {
         return activity?.let {
 
             val builder = AlertDialog.Builder(it).setView(view)
-            builder.setTitle(R.string.pl_drawer_dialog_genderTitle)
+            builder.setTitle(R.string.drawer_dialog_genderTitle)
                 .setPositiveButton(
-                    R.string.pl_confirm
+                    R.string.confirm
                 ) { dialog, id ->
                     mainViewModel.changeUserGenderPreference(getSelectedGender(view))
                 }
                 .setNegativeButton(
-                    R.string.pl_cancel
+                    R.string.cancel
                 ) { _, _ ->
                     // User cancelled the dialog
                 }

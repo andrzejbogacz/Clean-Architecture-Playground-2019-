@@ -19,7 +19,7 @@
 			>
 
 		<RadioButton
-				android:text="@string/pl_drawer_dialog_genderFemale"
+				android:text="@string/drawer_dialog_genderFemale"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:id="@+id/radioButton_drawer_dialog_genderFemale"
@@ -28,7 +28,7 @@
 				/>
 
 		<RadioButton
-				android:text="@string/pl_drawer_dialog_genderMale"
+				android:text="@string/drawer_dialog_genderMale"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:id="@+id/radioButton_drawer_dialog_genderMale"
@@ -36,7 +36,7 @@
 				/>
 
 		<RadioButton
-				android:text="@string/pl_drawer_dialog_genderBoth"
+				android:text="@string/drawer_dialog_genderBoth"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:id="@+id/radioButton_drawer_dialog_genderBoth"

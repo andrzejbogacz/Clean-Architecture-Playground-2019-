@@ -35,7 +35,7 @@
 			android:layout_width="wrap_content"
 
 			android:layout_height="wrap_content"
-			android:text="@string/pl_anonymous"
+			android:text="@string/anonymous"
 			android:textColor="#FFFFFF"
 			android:textStyle="bold"
 			app:layout_constraintStart_toStartOf="@+id/textView_header_gender"
@@ -47,7 +47,7 @@
 			android:id="@+id/textView_header_gender"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/pl_profile_gender_male"
+			android:text="@string/profile_gender_male"
 			android:textColor="#FFFFFF"
 			android:textStyle="bold"
 			app:layout_constraintStart_toEndOf="@+id/imageView_profile_photo"

@@ -26,12 +26,12 @@ class DialogProfileNicknameChoice : DialogFragment() {
 
             //Todo
             val builder = AlertDialog.Builder(it).setView(view)
-            builder.setTitle(R.string.pl_profile_dialog_nickname_title)
-                .setPositiveButton(R.string.pl_confirm,
+            builder.setTitle(R.string.profile_dialog_nickname_title)
+                .setPositiveButton(R.string.confirm,
                     { dialog, id ->
                         listener.applyNickname(ed_nickname.text.toString())
                     })
-                .setNegativeButton(R.string.pl_cancel,
+                .setNegativeButton(R.string.cancel,
                     { dialog, id ->
                         // User cancelled the dialog
                     })

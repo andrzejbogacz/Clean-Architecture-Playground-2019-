@@ -12,7 +12,7 @@
 			android:inputType="textPersonName"
 			android:ems="10"
 			android:id="@+id/editText_profile_nickname_value"
-			android:hint="@string/pl_profile_nickname_hint"
+			android:hint="@string/profile_nickname_hint"
 			app:layout_constraintEnd_toStartOf="@+id/guideline8"
 			android:layout_marginEnd="8dp"
 			app:layout_constraintStart_toStartOf="parent"

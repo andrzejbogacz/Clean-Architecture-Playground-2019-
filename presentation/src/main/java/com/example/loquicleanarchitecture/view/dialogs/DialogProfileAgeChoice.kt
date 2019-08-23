@@ -1,17 +1,12 @@
 package com.example.loquicleanarchitecture.view.dialogs
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.view.View
-import android.view.Window
-import android.widget.EditText
 import android.widget.NumberPicker
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.loquicleanarchitecture.R
-import kotlinx.android.synthetic.main.dialog_profile_nickname_choice.*
 
 class DialogProfileAgeChoice : DialogFragment() {
 
@@ -35,12 +30,12 @@ class DialogProfileAgeChoice : DialogFragment() {
             // Use the Builder class for convenient dialog construction
 
             val builder = AlertDialog.Builder(it).setView(view)
-            builder.setTitle(R.string.pl_profile_age_title)
-                .setPositiveButton(R.string.pl_confirm
+            builder.setTitle(R.string.profile_age_title)
+                .setPositiveButton(R.string.confirm
                 ) { dialog, id ->
                     listener.applyAge(np_ageChoice.value)
                 }
-                .setNegativeButton(R.string.pl_cancel
+                .setNegativeButton(R.string.cancel
                 ) { dialog, id ->
                     // User cancelled the dialog
                 }

@@ -13,5 +13,5 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:onClick="showId"
-        android:text="@string/pl_unknown" />
+        android:text="@string/unknown" />
 </androidx.appcompat.widget.LinearLayoutCompat>

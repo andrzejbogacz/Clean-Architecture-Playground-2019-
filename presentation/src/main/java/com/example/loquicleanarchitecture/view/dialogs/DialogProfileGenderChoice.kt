@@ -29,12 +29,12 @@ class DialogProfileGenderChoice : DialogFragment() {
 
             //Todo
             val builder = AlertDialog.Builder(it).setView(view)
-            builder.setTitle(R.string.pl_profile_iam_title)
-                .setPositiveButton(R.string.pl_confirm,
+            builder.setTitle(R.string.profile_iam_title)
+                .setPositiveButton(R.string.confirm,
                     { dialog, id ->
                         listener.applyGender(getCheckedRadioButton(view))
                     })
-                .setNegativeButton(R.string.pl_cancel,
+                .setNegativeButton(R.string.cancel,
                     { dialog, id ->
                         // User cancelled the dialog
                     })
@@ -54,8 +54,8 @@ class DialogProfileGenderChoice : DialogFragment() {
         val radioButtonID = view.radioGroup.checkedRadioButtonId
 
         when (radioButtonID) {
-            maleId -> return R.string.pl_profile_gender_male
-            femaleId -> return R.string.pl_profile_gender_female
+            maleId -> return R.string.profile_gender_male
+            femaleId -> return R.string.profile_gender_female
             else -> return null
         }
     }

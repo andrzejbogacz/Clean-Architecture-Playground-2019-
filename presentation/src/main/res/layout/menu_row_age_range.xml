@@ -10,5 +10,5 @@
         android:id="@+id/textView_menu_ageRangeValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pl_not_specified" />
+        android:text="@string/not_specified" />
 </androidx.appcompat.widget.LinearLayoutCompat>

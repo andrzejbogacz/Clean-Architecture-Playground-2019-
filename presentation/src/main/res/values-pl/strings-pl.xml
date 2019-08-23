@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">LoquiCleanArchitecture</string>
+	<string name="facebook_app_id">450002142492278</string>
+	<string name="fb_login_protocol_scheme">fb450002142492278</string>
+	<string name="loading">Wczytywanie…</string>
+	<string name="facebook_status_fmt">Facebook User: %s</string>
+	<string name="firebase_status_fmt">Firebase User: %s</string>
+	<string name="sign_in_with_google">Zaloguj z Google+</string>
+	<string name="age">18</string>
+
+	<string name="drawer_open">Drawer Opened</string>
+	<string name="drawer_close">Drawer Closed</string>
+
+	<string name="start_typing_status">Pisze</string>
+	<string name="stop_typing_status">Zatrzymano pisanie</string>
+
+	<string name="action_delete">usuń</string>
+	<string name="action_copy">skopiuj</string>
+	<string name="hint_enter_a_message">Napisz wiadomość…</string>
+	<string name="copied_message">Wiadomość skopiowana!</string>
+
+	<string name="unknown">Nieznane</string>
+	<string name="cancel">Anuluj</string>
+	<string name="confirm">OK</string>
+	<string name="age_title">Wiek</string>
+	<string name="not_specified">Nieokreślone</string>
+	<string name="anonymous">niezdefinowiany</string>
+	<string name="profile_gender_male">Mężczyzna</string>
+	<string name="profile_gender_title">Płeć</string>
+	<string name="profile_gender_female">Kobieta</string>
+	<string name="profile_nickname">Anonim</string>
+	<string name="profile_nickname_title">Nickname</string>
+	<string name="profile_details_title">Dane profilowe:</string>
+	<string name="profile_iam_title">Jestem:</string>
+	<string name="action_logout">logout</string>
+	<string name="drawer_dialog_genderTitle">Szukaj:</string>
+	<string name="drawer_dialog_genderMale">Mężczyzna</string>
+	<string name="drawer_dialog_genderFemale">Kobieta</string>
+	<string name="drawer_dialog_genderBoth">Kobieta lub Mężczyzna</string>
+	<string name="drawer_dialog_ageRangeTitle">Zakres wyszukiwania:</string>
+	<string name="profile_dialog_nickname_title">Twój pseudonim:</string>
+	<string name="profile_age_title">Twój wiek:</string>
+	<string name="profile_nickname_hint">pseudonim</string>
+</resources>
