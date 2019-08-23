@@ -10,6 +10,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
+import com.example.domain.entities.Gender
 import com.example.domain.entities.UserEntity
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
@@ -80,8 +81,13 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
         textView_header_gender.text = user.gender.toString()
         textView_header_age.text = user.age.toString()
 
-        textView_menu_genderValue.text = user.preferences_gender.toString()
-        textView_menu_ageRangeValue.text = getString(R.string.preferences_age_range, user.preferences_age_range_min, user.preferences_age_range_max)
+        when (user.preferences_gender) {
+            Gender.FEMALE -> textView_menu_genderValue.text = getString(R.string.drawer_dialog_genderFemale)
+            Gender.MALE -> textView_menu_genderValue.text = getString(R.string.drawer_dialog_genderMale)
+            Gender.BOTH -> textView_menu_genderValue.text = getString(R.string.drawer_dialog_genderBoth)
+        }
+        textView_menu_ageRangeValue.text =
+            getString(R.string.preferences_age_range, user.preferences_age_range_min, user.preferences_age_range_max)
     }
 
     private fun displayGenderAlert() {
