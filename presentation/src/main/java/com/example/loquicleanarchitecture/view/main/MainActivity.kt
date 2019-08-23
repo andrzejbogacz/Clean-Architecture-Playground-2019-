@@ -48,8 +48,8 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
     }
 
     private lateinit var mDrawerToggle: ActionBarDrawerToggle
-    lateinit var textView_ageRange: TextView
-    lateinit var textView_genderValue: TextView
+    private lateinit var textViewAgerange: TextView
+    private lateinit var textViewGenderValue: TextView
 
     @Inject
     lateinit var viewModelFactory: ViewModelProviderFactory
@@ -75,7 +75,7 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
         mainViewModel.loadUser()
     }
 
-    fun updateUserUI(user: UserEntity) {
+    private fun updateUserUI(user: UserEntity) {
         Log.d(TAG, "UpdateUserUI")
         textView_header_nickname.text = user.nickname
         textView_header_gender.text = user.gender.toString()
@@ -94,7 +94,7 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
         DialogDrawerSearchGender().show(supportFragmentManager, "gender")
     }
 
-    private fun displayaAgeRangeAlert() {
+    private fun displayAgeRangeAlert() {
 
         DialogDrawerSearchAge().show(supportFragmentManager, "ageRange")
     }
@@ -141,16 +141,16 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
         navigation_view.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.item_drawer_gender -> displayGenderAlert()
-                R.id.item_drawer_age_range -> displayaAgeRangeAlert()
+                R.id.item_drawer_age_range -> displayAgeRangeAlert()
             }
             return@setNavigationItemSelectedListener false
         }
     }
 
     private fun initMenuReferences() {
-        textView_ageRange = navigation_view.menu.findItem(R.id.item_drawer_age_range)
+        textViewAgerange = navigation_view.menu.findItem(R.id.item_drawer_age_range)
             .actionView.findViewById(R.id.textView_menu_ageRangeValue)
-        textView_genderValue = navigation_view.menu.findItem(R.id.item_drawer_gender)
+        textViewGenderValue = navigation_view.menu.findItem(R.id.item_drawer_gender)
             .actionView.findViewById(R.id.textView_menu_genderValue)
 
     }
@@ -166,7 +166,7 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
         toast(v.id)
     }
 
-    fun logout() {
+    private fun logout() {
         FirebaseAuth.getInstance().signOut()
         startActivity(intentFor<AuthActivity>().newTask())
     }
