@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
-import com.example.domain.entities.Gender
+import com.example.domain.entities.GenderPreference
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
 import com.example.loquicleanarchitecture.view.main.MainViewModel
@@ -55,19 +55,19 @@ class DialogDrawerSearchGender : DaggerDialogFragment() {
     }
 }
 
-fun getSelectedGender(view: View): Gender {
+fun getSelectedGender(view: View): GenderPreference {
     val maleId = view.findViewById<RadioButton>(R.id.radioButton_drawer_dialog_genderMale).id
     val femaleId = view.findViewById<RadioButton>(R.id.radioButton_drawer_dialog_genderFemale).id
     val radioButtonID = view.radioGroup.checkedRadioButtonId
 
     return when (radioButtonID) {
-        maleId -> Gender.MALE
-        femaleId -> Gender.FEMALE
-        else -> Gender.BOTH
+        maleId -> GenderPreference.MALE
+        femaleId -> GenderPreference.FEMALE
+        else -> GenderPreference.BOTH
     }
 }
 
-fun setCheckedRadioButton(genderPreference: Gender, view: View) {
+fun setCheckedRadioButton(genderPreference: GenderPreference, view: View) {
     val maleId = view.findViewById<RadioButton>(R.id.radioButton_drawer_dialog_genderMale)
     val femaleId = view.findViewById<RadioButton>(R.id.radioButton_drawer_dialog_genderFemale)
     val bothId = view.findViewById<RadioButton>(R.id.radioButton_drawer_dialog_genderBoth)

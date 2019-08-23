@@ -24,7 +24,7 @@
     <string name="confirm">OK</string>
     <string name="age_title">Age</string>
     <string name="not_specified">Not specified</string>
-    <string name="anonymous">anonymous</string>
+    <string name="anonymous">Anonymous</string>
     <string name="profile_gender_male">Male</string>
     <string name="profile_gender_title">Gender</string>
     <string name="profile_gender_female">Female</string>

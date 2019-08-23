@@ -6,7 +6,7 @@ import arrow.core.Failure
 import arrow.core.Left
 import arrow.core.Right
 import com.example.domain.UserRepository
-import com.example.domain.entities.Gender
+import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
 import com.example.domain.exception.FirebaseResult
 import com.example.domain.exception.FirebaseResult.UserAgePreferencesChanged
@@ -41,7 +41,7 @@ class FirebaseRepository @Inject constructor(firebaseFirestore: FirebaseFirestor
         }
     }
 
-    override suspend fun updateGenderPreference(preferenceGender: Gender): Either<Failure, FirebaseResult> {
+    override suspend fun updateGenderPreference(preferenceGender: GenderPreference): Either<Failure, FirebaseResult> {
         var isSuccess = false
 
         userDocument
@@ -81,7 +81,7 @@ class FirebaseRepository @Inject constructor(firebaseFirestore: FirebaseFirestor
 
     override suspend fun createUser(): Either<Failure, FirebaseResult> {
         var isSuccess = false
-        val newUserEntity = UserEntity().apply { id = fbAuth.currentUser!!.uid }
+        val newUserEntity = UserEntity().apply { id = fbAuth.currentUser!!.uid}
 
         userDocument
             .set(newUserEntity)

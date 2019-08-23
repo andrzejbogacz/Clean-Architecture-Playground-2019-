@@ -22,7 +22,7 @@ class DialogDrawerSearchAge : DaggerDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        mainViewModel = ViewModelProvider(viewModelStore, viewModelFactory).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(activity!!.viewModelStore, viewModelFactory).get(MainViewModel::class.java)
 
         val userData = mainViewModel.getUserDataLiveData().value!!
 

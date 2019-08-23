@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import com.example.domain.entities.Gender
+import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
@@ -78,13 +79,17 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
     private fun updateUserUI(user: UserEntity) {
         Log.d(TAG, "UpdateUserUI")
         textView_header_nickname.text = user.nickname
-        textView_header_gender.text = user.gender.toString()
         textView_header_age.text = user.age.toString()
 
         when (user.preferences_gender) {
-            Gender.FEMALE -> textView_menu_genderValue.text = getString(R.string.drawer_dialog_genderFemale)
-            Gender.MALE -> textView_menu_genderValue.text = getString(R.string.drawer_dialog_genderMale)
-            Gender.BOTH -> textView_menu_genderValue.text = getString(R.string.drawer_dialog_genderBoth)
+            GenderPreference.FEMALE -> textView_menu_genderValue.text = getString(R.string.drawer_dialog_genderFemale)
+            GenderPreference.MALE -> textView_menu_genderValue.text = getString(R.string.drawer_dialog_genderMale)
+            GenderPreference.BOTH -> textView_menu_genderValue.text = getString(R.string.drawer_dialog_genderBoth)
+        }
+
+        when (user.gender) {
+            Gender.FEMALE -> textView_header_gender.text = getString(R.string.drawer_dialog_genderFemale)
+            Gender.MALE -> textView_header_gender.text = getString(R.string.drawer_dialog_genderMale)
         }
         textView_menu_ageRangeValue.text =
             getString(R.string.preferences_age_range, user.preferences_age_range_min, user.preferences_age_range_max)

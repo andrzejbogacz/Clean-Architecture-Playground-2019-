@@ -9,7 +9,7 @@ import com.example.data.usecases.ChangeUserAgePreference
 import com.example.data.usecases.ChangeUserGenderPreference
 import com.example.data.usecases.CreateUser
 import com.example.data.usecases.LoadUser
-import com.example.domain.entities.Gender
+import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
 import com.example.domain.exception.FirebaseResult
 import com.example.domain.exception.FirebaseResult.ExistingUserLoaded
@@ -39,7 +39,7 @@ class MainViewModel @Inject constructor(
     fun changeUserAgePreference(pair: Pair<Int, Int>) =
         changeUserAgePreference(pair) { it.fold(::handleFailure, ::handleSuccess) }
 
-    fun changeUserGenderPreference(gender: Gender) =
+    fun changeUserGenderPreference(gender: GenderPreference) =
         changeUserGenderPreference(gender) { it.fold(::handleFailure, ::handleSuccess) }
 
     fun handleFailure(e: Failure) {
