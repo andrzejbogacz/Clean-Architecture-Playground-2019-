@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
@@ -26,17 +25,15 @@ class DialogProfileNicknameChoice : DaggerDialogFragment() {
 
         mainViewModel = ViewModelProvider(activity!!.viewModelStore, viewModelFactory).get(MainViewModel::class.java)
 
-        val userData = mainViewModel.getUserDataLiveData().value!!
+        val userNickname = mainViewModel.getUserDataLiveData().value!!.nickname
 
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_profile_nickname_choice, null)
         val edNickname = view.findViewById<EditText>(R.id.editText_profile_nickname_value)
 
-        edNickname.setText(userData.nickname, TextView.BufferType.EDITABLE)
+        edNickname.setText(userNickname, TextView.BufferType.EDITABLE)
 
         return activity?.let {
-            // Use the Builder class for convenient dialog construction
 
-            //Todo
             val builder = AlertDialog.Builder(it).setView(view)
             builder.setTitle(R.string.profile_dialog_nickname_title)
                 .setPositiveButton(

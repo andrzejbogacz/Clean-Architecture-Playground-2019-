@@ -6,9 +6,9 @@ import arrow.core.Failure
 import arrow.core.None
 import com.example.data.FirebaseRepository
 import com.example.data.usecases.*
+import com.example.domain.entities.Gender
 import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
-import com.example.domain.exception.FirebaseResult
 import com.example.domain.exception.FirebaseResult.*
 import com.example.domain.exception.UserFirebaseException
 import com.example.loquicleanarchitecture.view.BaseViewModel
@@ -20,6 +20,7 @@ class MainViewModel @Inject constructor(
     val changeUserAgePreference: ChangeUserAgePreference,
     val changeUserGenderPreference: ChangeUserGenderPreference,
     val changeProfileUserNickname: ChangeProfileUserNickname,
+    val changeProfileUserGender: ChangeProfileUserGender,
     var firebaseRepository: FirebaseRepository
 ) : BaseViewModel() {
 
@@ -41,6 +42,9 @@ class MainViewModel @Inject constructor(
 
     fun changeProfileUserNickname(nickname: String) =
         changeProfileUserNickname(nickname) { it.fold(::handleFailure, ::handleSuccess) }
+
+    fun changeProfileUserGender(gender: Gender) =
+        changeProfileUserGender(gender) { it.fold(::handleFailure, ::handleSuccess) }
 
     fun handleFailure(e: Failure) {
         Log.d(TAG, "Failed Loading user with Exception: ${e.exception.javaClass.simpleName}")
@@ -82,6 +86,7 @@ class MainViewModel @Inject constructor(
             is ExistingUserLoaded -> Log.d(TAG, "handleSuccess: Successfully loaded existing user")
             is UserAgePreferencesChanged -> Log.d(TAG, "handleSuccess: Successfully changed user age preference")
             is UserProfileNicknameChanged -> Log.d(TAG, "handleSuccess: Successfully changed user nickname")
+            is UserProfileGenderChanged -> Log.d(TAG, "handleSuccess: Successfully changed user gender")
         }
     }
 

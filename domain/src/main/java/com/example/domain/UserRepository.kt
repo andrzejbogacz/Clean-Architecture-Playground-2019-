@@ -8,12 +8,6 @@ import com.example.domain.exception.FirebaseResult
 
 interface UserRepository {
 
-    suspend fun saveAge()
-
-    suspend fun saveNickname()
-
-    suspend fun saveGender()
-
     suspend fun uploadPhoto()
 
     suspend fun loadUser(): Either<Failure, FirebaseResult>

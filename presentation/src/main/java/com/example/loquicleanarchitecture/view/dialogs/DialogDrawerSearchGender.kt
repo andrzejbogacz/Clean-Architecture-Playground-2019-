@@ -29,7 +29,7 @@ class DialogDrawerSearchGender : DaggerDialogFragment() {
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_drawer_gender, null)
 
         mainViewModel = ViewModelProvider(activity!!.viewModelStore, viewModelFactory).get(MainViewModel::class.java)
-        var genderPreference = mainViewModel.getUserDataLiveData().value!!.preferences_gender
+        val genderPreference = mainViewModel.getUserDataLiveData().value!!.preferences_gender
 
         toast(genderPreference.name)
 

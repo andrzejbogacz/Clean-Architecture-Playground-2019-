@@ -39,7 +39,20 @@ class FirebaseRepository @Inject constructor(firebaseFirestore: FirebaseFirestor
     }
 
     override suspend fun updateUserGender(gender: Gender): Either<Failure, FirebaseResult> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        var isSuccess = false
+
+        userDocument
+            .update(
+                "gender", gender
+            )
+            .addOnFailureListener { printUnknownException(it) }
+            .addOnSuccessListener { isSuccess = true }
+            .await()
+
+        return when (isSuccess) {
+            true -> Right(UserProfileGenderChanged)
+            false -> Left(Failure(UserFirebaseException.UnknownException))
+        }
     }
 
 
@@ -103,7 +116,7 @@ class FirebaseRepository @Inject constructor(firebaseFirestore: FirebaseFirestor
 
     override suspend fun createUser(): Either<Failure, FirebaseResult> {
         var isSuccess = false
-        val newUserEntity = UserEntity().apply { id = fbAuth.currentUser!!.uid}
+        val newUserEntity = UserEntity().apply { id = fbAuth.currentUser!!.uid }
 
         userDocument
             .set(newUserEntity)
@@ -112,21 +125,9 @@ class FirebaseRepository @Inject constructor(firebaseFirestore: FirebaseFirestor
             .await()
 
         return when (isSuccess) {
-            true -> Right(FirebaseResult.NewUserCreated)
+            true -> Right(NewUserCreated)
             false -> Left(Failure(UserFirebaseException.UnknownException))
         }
-    }
-
-    override suspend fun saveAge() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override suspend fun saveNickname() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override suspend fun saveGender() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override suspend fun uploadPhoto() {
