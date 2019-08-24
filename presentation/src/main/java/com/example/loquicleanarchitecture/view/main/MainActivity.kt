@@ -94,7 +94,7 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
         textView_menu_ageRangeValue.text =
             getString(R.string.preferences_age_range, user.preferences_age_range_min, user.preferences_age_range_max)
 
-        textView_profile_nickname_value?.text = user.nickname
+     //   textView_profile_nickname_value?.text = user.nickname
     }
 
     private fun displayGenderAlert() {

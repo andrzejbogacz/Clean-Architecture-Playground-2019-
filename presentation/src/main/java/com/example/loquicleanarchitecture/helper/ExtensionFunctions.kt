@@ -3,6 +3,7 @@ package com.example.loquicleanarchitecture.helper
 import androidx.lifecycle.*
 import arrow.core.Failure
 import com.example.loquicleanarchitecture.view.main.MainActivity
+import com.example.loquicleanarchitecture.view.profile.ProfileFragment
 import kotlin.reflect.KFunction1
 
 
@@ -13,6 +14,11 @@ fun <L : LiveData<Failure>> LifecycleOwner.failure(liveData: L, body: (Failure) 
     liveData.observe(this, Observer(body))
 
 inline fun <reified T : ViewModel> MainActivity.viewModel(factory: ViewModelProvider.Factory, body: T.() -> Unit): T {
+    val vm = ViewModelProvider(this, factory)[T::class.java]
+    vm.body()
+    return vm
+}
+inline fun <reified T : ViewModel> ProfileFragment.viewModel(factory: ViewModelProvider.Factory, body: T.() -> Unit): T {
     val vm = ViewModelProvider(this, factory)[T::class.java]
     vm.body()
     return vm

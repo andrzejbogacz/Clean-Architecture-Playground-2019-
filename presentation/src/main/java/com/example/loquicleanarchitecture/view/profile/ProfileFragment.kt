@@ -8,15 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.viewModelScope
 import com.example.domain.entities.Gender
+import com.example.domain.entities.UserEntity
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
 import com.example.loquicleanarchitecture.helper.ImageTransformation
+import com.example.loquicleanarchitecture.helper.observe
+import com.example.loquicleanarchitecture.helper.viewModel
 import com.example.loquicleanarchitecture.view.dialogs.DialogProfileAgeChoice
 import com.example.loquicleanarchitecture.view.dialogs.DialogProfileGenderChoice
 import com.example.loquicleanarchitecture.view.dialogs.DialogProfileNicknameChoice
@@ -24,10 +22,8 @@ import com.example.loquicleanarchitecture.view.main.MainViewModel
 import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import dagger.android.support.DaggerAppCompatActivity
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.activity_profile.*
-import kotlinx.android.synthetic.main.drawer_header.*
 import kotlinx.android.synthetic.main.view_profile_user_details.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -40,8 +36,7 @@ class ProfileFragment : DaggerFragment(),
     @Inject
     lateinit var viewModelFactory: ViewModelProviderFactory
 
-    @Inject
-    lateinit var viewModel: MainViewModel
+    lateinit var mainViewModel: MainViewModel
 
     var currentViewHolder: ImageView? = null
 
@@ -53,16 +48,10 @@ class ProfileFragment : DaggerFragment(),
 
         initListeners()
 
-        viewModel = ViewModelProvider(activity!!.viewModelStore, viewModelFactory).get(MainViewModel::class.java)
-        val userData = viewModel.getUserDataLiveData().value!!
-
-        textView_profile_nickname_value.text = userData.nickname
-
-        when (userData.gender) {
-            Gender.FEMALE ->  textView_profile_gender_value.text = getString(R.string.drawer_dialog_genderFemale)
-            Gender.MALE ->  textView_profile_gender_value.text = getString(R.string.drawer_dialog_genderMale)
+        mainViewModel = viewModel(viewModelFactory) {
+            observe(getUserDataLiveData(), ::updateUI)
         }
-        textView_profile_age_value.text = userData.age.toString()
+
 
         // TODO Add delete button for photos https://github.com/stfalcon-studio/ChatKit/blob/master/docs/COMPONENT_MESSAGE_INPUT.MD
         // Todo Add save button on toolbar
@@ -87,6 +76,15 @@ class ProfileFragment : DaggerFragment(),
         currentViewHolder = v as ImageView
     }
 
+    private fun updateUI(userEntity: UserEntity){
+        textView_profile_nickname_value.text = userEntity.nickname
+
+        when (userEntity.gender) {
+            Gender.FEMALE ->  textView_profile_gender_value.text = getString(R.string.drawer_dialog_genderFemale)
+            Gender.MALE ->  textView_profile_gender_value.text = getString(R.string.drawer_dialog_genderMale)
+        }
+    }
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.constraintLayoutNickname -> DialogProfileNicknameChoice().show(childFragmentManager, "nickname")
@@ -95,7 +93,6 @@ class ProfileFragment : DaggerFragment(),
             R.id.iv_photo1, R.id.iv_photo2, R.id.iv_photo3, R.id.iv_photo4, R.id.iv_photo5, R.id.iv_photo6 -> loadImagePicker(
                 v
             )
-
         }
     }
 
@@ -112,13 +109,10 @@ class ProfileFragment : DaggerFragment(),
         }
     }
 
-
     private fun uploadImages(path: Uri) {
         GlobalScope.launch {
             //Todo Upload Images to Firebase
-
         }
-
     }
 
     private fun setPhoto(resultUri: Uri?) {

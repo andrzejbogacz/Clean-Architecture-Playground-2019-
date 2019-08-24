@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
@@ -42,6 +43,7 @@ class DialogProfileNicknameChoice : DaggerDialogFragment() {
                     R.string.confirm
                 ) { _, _ ->
                     mainViewModel.changeProfileUserNickname(edNickname.text.toString())
+
                 }
                 .setNegativeButton(
                     R.string.cancel
