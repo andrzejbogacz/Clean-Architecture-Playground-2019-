@@ -5,15 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import arrow.core.Failure
 import arrow.core.None
 import com.example.data.FirebaseRepository
-import com.example.data.usecases.ChangeUserAgePreference
-import com.example.data.usecases.ChangeUserGenderPreference
-import com.example.data.usecases.CreateUser
-import com.example.data.usecases.LoadUser
+import com.example.data.usecases.*
 import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
 import com.example.domain.exception.FirebaseResult
-import com.example.domain.exception.FirebaseResult.ExistingUserLoaded
-import com.example.domain.exception.FirebaseResult.NewUserCreated
+import com.example.domain.exception.FirebaseResult.*
 import com.example.domain.exception.UserFirebaseException
 import com.example.loquicleanarchitecture.view.BaseViewModel
 import javax.inject.Inject
@@ -23,6 +19,7 @@ class MainViewModel @Inject constructor(
     val loadUser: LoadUser,
     val changeUserAgePreference: ChangeUserAgePreference,
     val changeUserGenderPreference: ChangeUserGenderPreference,
+    val changeProfileUserNickname: ChangeProfileUserNickname,
     var firebaseRepository: FirebaseRepository
 ) : BaseViewModel() {
 
@@ -41,6 +38,9 @@ class MainViewModel @Inject constructor(
 
     fun changeUserGenderPreference(gender: GenderPreference) =
         changeUserGenderPreference(gender) { it.fold(::handleFailure, ::handleSuccess) }
+
+    fun changeProfileUserNickname(nickname: String) =
+        changeProfileUserNickname(nickname) { it.fold(::handleFailure, ::handleSuccess) }
 
     fun handleFailure(e: Failure) {
         Log.d(TAG, "Failed Loading user with Exception: ${e.exception.javaClass.simpleName}")
@@ -80,10 +80,8 @@ class MainViewModel @Inject constructor(
         when (s) {
             is NewUserCreated -> Log.d(TAG, "handleSuccess: Successfully saved new user to remote database")
             is ExistingUserLoaded -> Log.d(TAG, "handleSuccess: Successfully loaded existing user")
-            is FirebaseResult.UserAgePreferencesChanged -> Log.d(
-                TAG,
-                "handleSuccess: Successfully changed user age preference"
-            )
+            is UserAgePreferencesChanged -> Log.d(TAG, "handleSuccess: Successfully changed user age preference")
+            is UserProfileNicknameChanged -> Log.d(TAG, "handleSuccess: Successfully changed user nickname")
         }
     }
 

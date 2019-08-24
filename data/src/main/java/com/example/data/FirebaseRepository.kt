@@ -6,11 +6,11 @@ import arrow.core.Failure
 import arrow.core.Left
 import arrow.core.Right
 import com.example.domain.UserRepository
+import com.example.domain.entities.Gender
 import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
 import com.example.domain.exception.FirebaseResult
-import com.example.domain.exception.FirebaseResult.UserAgePreferencesChanged
-import com.example.domain.exception.FirebaseResult.UserGenderPreferencesChanged
+import com.example.domain.exception.FirebaseResult.*
 import com.example.domain.exception.UserFirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -20,6 +20,28 @@ import javax.inject.Inject
 class FirebaseRepository @Inject constructor(firebaseFirestore: FirebaseFirestore, var fbAuth: FirebaseAuth) :
     UserRepository {
     private val TAG: String? = this.javaClass.name
+
+    override suspend fun updateProfileUserNickname(nickname: String): Either<Failure, FirebaseResult> {
+        var isSuccess = false
+
+        userDocument
+            .update(
+                "nickname", nickname
+            )
+            .addOnFailureListener { printUnknownException(it) }
+            .addOnSuccessListener { isSuccess = true }
+            .await()
+
+        return when (isSuccess) {
+            true -> Right(UserProfileNicknameChanged)
+            false -> Left(Failure(UserFirebaseException.UnknownException))
+        }
+    }
+
+    override suspend fun updateUserGender(gender: Gender): Either<Failure, FirebaseResult> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 
     var userDocument = firebaseFirestore.collection("Users").document(fbAuth.currentUser!!.uid)
 

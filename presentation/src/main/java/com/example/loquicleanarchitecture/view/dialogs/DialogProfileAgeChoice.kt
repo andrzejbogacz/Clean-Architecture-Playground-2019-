@@ -10,12 +10,6 @@ import com.example.loquicleanarchitecture.R
 
 class DialogProfileAgeChoice : DialogFragment() {
 
-    internal lateinit var listener: AgeListener
-
-    interface AgeListener {
-        fun applyAge(age: Int?)
-    }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_profile_age_choice, null)
@@ -33,7 +27,7 @@ class DialogProfileAgeChoice : DialogFragment() {
             builder.setTitle(R.string.profile_age_title)
                 .setPositiveButton(R.string.confirm
                 ) { dialog, id ->
-                    listener.applyAge(np_ageChoice.value)
+                    // todo
                 }
                 .setNegativeButton(R.string.cancel
                 ) { dialog, id ->
@@ -44,21 +38,4 @@ class DialogProfileAgeChoice : DialogFragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
 
     }
-
-    // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        // Verify that the host activity implements the callback interface
-        try {
-            // Instantiate the NoticeDialogListener so we can send events to the host
-            listener = context as AgeListener
-        } catch (e: ClassCastException) {
-            // The activity doesn't implement the interface, throw exception
-            throw ClassCastException(
-                (context.toString() +
-                        " must implement AgeListener")
-            )
-        }
-    }
-
 }

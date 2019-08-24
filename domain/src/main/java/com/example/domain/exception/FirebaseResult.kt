@@ -9,4 +9,5 @@ sealed class FirebaseResult : Result() {
     object NewUserCreated : FirebaseResult()
     object UserDataHasChanged : FirebaseResult()
     object UserGenderPreferencesChanged : FirebaseResult()
+    object UserProfileNicknameChanged : FirebaseResult()
 }

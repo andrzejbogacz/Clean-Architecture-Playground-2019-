@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_header.*
 import kotlinx.android.synthetic.main.menu_row_age_range.*
 import kotlinx.android.synthetic.main.menu_row_gender.*
+import kotlinx.android.synthetic.main.view_profile_user_details.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
 import org.jetbrains.anko.toast
@@ -92,6 +93,8 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
         }
         textView_menu_ageRangeValue.text =
             getString(R.string.preferences_age_range, user.preferences_age_range_min, user.preferences_age_range_max)
+
+        textView_profile_nickname_value?.text = user.nickname
     }
 
     private fun displayGenderAlert() {
@@ -182,5 +185,4 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
         FirebaseAuth.getInstance().signOut()
         startActivity(intentFor<AuthActivity>().newTask())
     }
-
 }
