@@ -15,8 +15,7 @@ import com.example.loquicleanarchitecture.di.main.MainScope
 import com.example.loquicleanarchitecture.di.main.MainViewModelsModule
 import com.example.loquicleanarchitecture.di.profile.ProfileModule
 import com.example.loquicleanarchitecture.di.profile.ProfileScope
-import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchAge
-import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchGender
+import com.example.loquicleanarchitecture.view.dialogs.*
 import com.example.loquicleanarchitecture.view.login.AuthActivity
 import com.example.loquicleanarchitecture.view.main.MainActivity
 import com.example.loquicleanarchitecture.view.main.chatlist.ChatlistActivity
@@ -31,11 +30,11 @@ abstract class ActivityBuildersModule {
     @ContributesAndroidInjector(modules = [AuthModule::class, AuthViewModelsModule::class])
     internal abstract fun contributeLoginActivity(): AuthActivity
 
+    /** MAIN SCOPE */
     @MainScope
     @ContributesAndroidInjector(modules = [MainModule::class, MainViewModelsModule::class])
     internal abstract fun contributeMainActivity(): MainActivity
 
-    //todo optimize dagger modules
     @MainScope
     @ContributesAndroidInjector(modules = [ChatlistModule::class, MainViewModelsModule::class])
     internal abstract fun contributeSearchAgeDialog(): DialogDrawerSearchAge
@@ -43,6 +42,19 @@ abstract class ActivityBuildersModule {
     @MainScope
     @ContributesAndroidInjector(modules = [ChatlistModule::class, MainViewModelsModule::class])
     internal abstract fun contributeSearchGenderDialog(): DialogDrawerSearchGender
+
+    @MainScope
+    @ContributesAndroidInjector(modules = [ChatlistModule::class, MainViewModelsModule::class])
+    internal abstract fun contributeChangeNicknameDialog(): DialogProfileNicknameChoice
+
+    @MainScope
+    @ContributesAndroidInjector(modules = [ChatlistModule::class, MainViewModelsModule::class])
+    internal abstract fun contributeChangeGenderDialog(): DialogProfileGenderChoice
+
+    @MainScope
+    @ContributesAndroidInjector(modules = [ChatlistModule::class, MainViewModelsModule::class])
+    internal abstract fun contributeChangeAgeDialog(): DialogProfileAgeChoice
+    /** END OF MAIN SCOPE */
 
     @ChatScope
     @ContributesAndroidInjector(modules = [ChatModule::class, ChatViewModelsModule::class])
