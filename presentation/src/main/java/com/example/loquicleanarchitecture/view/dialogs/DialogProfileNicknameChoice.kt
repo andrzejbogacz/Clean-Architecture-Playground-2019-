@@ -6,9 +6,20 @@ import android.os.Bundle
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.loquicleanarchitecture.R
+import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
+import com.example.loquicleanarchitecture.view.main.MainViewModel
+import javax.inject.Inject
 
 class DialogProfileNicknameChoice : DialogFragment() {
+
+    private val TAG: String? = this.javaClass.name
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProviderFactory
+
+    private lateinit var mainViewModel: MainViewModel
 
     internal lateinit var listener: NicknameListener
 
@@ -18,8 +29,13 @@ class DialogProfileNicknameChoice : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
+        mainViewModel = ViewModelProvider(activity!!.viewModelStore, viewModelFactory).get(MainViewModel::class.java)
+
+        val userData = mainViewModel.getUserDataLiveData().value!!
+
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_profile_nickname_choice, null)
         val ed_nickname = view.findViewById<EditText>(R.id.editText_profile_nickname_value)
+
 
         return activity?.let {
             // Use the Builder class for convenient dialog construction

@@ -23,7 +23,7 @@ import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchAge
 import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchGender
 import com.example.loquicleanarchitecture.view.login.AuthActivity
 import com.example.loquicleanarchitecture.view.main.chatlist.ChatlistActivity
-import com.example.loquicleanarchitecture.view.profile.ProfileActivity
+import com.example.loquicleanarchitecture.view.profile.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,7 +32,6 @@ import kotlinx.android.synthetic.main.menu_row_age_range.*
 import kotlinx.android.synthetic.main.menu_row_gender.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
@@ -142,7 +141,7 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
     }
 
     private fun initNavigationDrawer() {
-        navigation_view.getHeaderView(0).setOnClickListener { startActivity<ProfileActivity>() }
+        navigation_view.getHeaderView(0).setOnClickListener { startFragment() }
         navigation_view.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.item_drawer_gender -> displayGenderAlert()
@@ -150,6 +149,14 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
             }
             return@setNavigationItemSelectedListener false
         }
+    }
+
+    private fun startFragment() {
+        val manager = supportFragmentManager
+        val transaction = manager.beginTransaction()
+        transaction.add(R.id.frameLayoutMain, ProfileFragment(), "ProfileFragment")
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     private fun initMenuReferences() {

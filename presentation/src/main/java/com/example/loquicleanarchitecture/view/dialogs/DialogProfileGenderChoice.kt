@@ -13,12 +13,6 @@ import kotlinx.android.synthetic.main.dialog_drawer_gender.view.*
 
 class DialogProfileGenderChoice : DialogFragment() {
 
-    internal lateinit var listener: ProfileGenderListener
-
-    interface ProfileGenderListener {
-        fun applyGender (gender: Int?)
-    }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_profile_gender_choice, null)
@@ -32,7 +26,7 @@ class DialogProfileGenderChoice : DialogFragment() {
             builder.setTitle(R.string.profile_iam_title)
                 .setPositiveButton(R.string.confirm,
                     { dialog, id ->
-                        listener.applyGender(getCheckedRadioButton(view))
+                       //todo
                     })
                 .setNegativeButton(R.string.cancel,
                     { dialog, id ->
@@ -57,21 +51,6 @@ class DialogProfileGenderChoice : DialogFragment() {
             maleId -> return R.string.profile_gender_male
             femaleId -> return R.string.profile_gender_female
             else -> return null
-        }
-    }
-    // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        // Verify that the host activity implements the callback interface
-        try {
-            // Instantiate the NoticeDialogListener so we can send events to the host
-            listener = context as ProfileGenderListener
-        } catch (e: ClassCastException) {
-            // The activity doesn't implement the interface, throw exception
-            throw ClassCastException(
-                (context.toString() +
-                        " must implement NoticeDialogListener")
-            )
         }
     }
 

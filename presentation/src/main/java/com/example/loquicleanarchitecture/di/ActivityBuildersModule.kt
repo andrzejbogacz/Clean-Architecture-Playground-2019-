@@ -15,13 +15,12 @@ import com.example.loquicleanarchitecture.di.main.MainScope
 import com.example.loquicleanarchitecture.di.main.MainViewModelsModule
 import com.example.loquicleanarchitecture.di.profile.ProfileModule
 import com.example.loquicleanarchitecture.di.profile.ProfileScope
-import com.example.loquicleanarchitecture.di.profile.ProfileViewModelsModule
 import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchAge
 import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchGender
 import com.example.loquicleanarchitecture.view.login.AuthActivity
 import com.example.loquicleanarchitecture.view.main.MainActivity
 import com.example.loquicleanarchitecture.view.main.chatlist.ChatlistActivity
-import com.example.loquicleanarchitecture.view.profile.ProfileActivity
+import com.example.loquicleanarchitecture.view.profile.ProfileFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -50,8 +49,8 @@ abstract class ActivityBuildersModule {
     internal abstract fun contributeChatActivity(): ChatActivity
 
     @ProfileScope
-    @ContributesAndroidInjector(modules = [ProfileModule::class, ProfileViewModelsModule::class])
-    internal abstract fun contributeProfileActivity(): ProfileActivity
+    @ContributesAndroidInjector(modules = [ProfileModule::class, MainViewModelsModule::class])
+    internal abstract fun contributeProfileActivity(): ProfileFragment
 
     @ChatlistScope
     @ContributesAndroidInjector(modules = [ChatlistModule::class, ChatlistViewModelsModule::class])

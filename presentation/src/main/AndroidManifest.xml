@@ -58,7 +58,7 @@
 				>
 		</activity>
 		<activity
-				android:name="com.example.loquicleanarchitecture.view.profile.ProfileActivity"
+				android:name="com.example.loquicleanarchitecture.view.profile.ProfileFragment"
 				android:theme="@style/AppTheme"
 				/>
 		<activity
