@@ -1,41 +1,54 @@
 package com.example.loquicleanarchitecture.view.dialogs
 
 import android.app.Dialog
-import android.content.Context
 import android.os.Bundle
 import android.widget.NumberPicker
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.loquicleanarchitecture.R
+import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
+import com.example.loquicleanarchitecture.view.main.MainViewModel
+import dagger.android.support.DaggerDialogFragment
+import javax.inject.Inject
 
-class DialogProfileAgeChoice : DialogFragment() {
+class DialogProfileAgeChoice : DaggerDialogFragment() {
+
+    private val TAG: String? = this.javaClass.name
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProviderFactory
+
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
+        mainViewModel = ViewModelProvider(activity!!.viewModelStore, viewModelFactory).get(MainViewModel::class.java)
+        val userAge = mainViewModel.getUserDataLiveData().value!!.age
+
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_profile_age_choice, null)
 
-        val np_ageChoice = view.findViewById<NumberPicker>(R.id.numberPicker_age_choice)
-        np_ageChoice.minValue = 1
-        np_ageChoice.maxValue = 99
+        val numberPicker = view.findViewById<NumberPicker>(R.id.numberPicker_age_choice)
 
-        np_ageChoice.value = 18
+        numberPicker.minValue = 1
+        numberPicker.maxValue = 99
+
+        numberPicker.value = userAge
 
         return activity?.let {
-            // Use the Builder class for convenient dialog construction
 
             val builder = AlertDialog.Builder(it).setView(view)
             builder.setTitle(R.string.profile_age_title)
-                .setPositiveButton(R.string.confirm
-                ) { dialog, id ->
-                    // todo
+                .setPositiveButton(
+                    R.string.confirm
+                ) { _, _ ->
+                    mainViewModel.changeProfileUserAge(numberPicker.value)
                 }
-                .setNegativeButton(R.string.cancel
-                ) { dialog, id ->
+                .setNegativeButton(
+                    R.string.cancel
+                ) { _, _ ->
                     // User cancelled the dialog
                 }
-            // Create the AlertDialog object and return it
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
-
     }
 }

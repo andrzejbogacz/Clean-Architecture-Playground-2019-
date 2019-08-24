@@ -31,6 +31,7 @@ class DialogProfileNicknameChoice : DaggerDialogFragment() {
         val edNickname = view.findViewById<EditText>(R.id.editText_profile_nickname_value)
 
         edNickname.setText(userNickname, TextView.BufferType.EDITABLE)
+        edNickname.setSelection(edNickname.text.length)
 
         return activity?.let {
 

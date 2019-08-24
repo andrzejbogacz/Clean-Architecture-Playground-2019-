@@ -19,7 +19,27 @@ import javax.inject.Inject
 
 class FirebaseRepository @Inject constructor(firebaseFirestore: FirebaseFirestore, var fbAuth: FirebaseAuth) :
     UserRepository {
+
+
     private val TAG: String? = this.javaClass.name
+
+    override suspend fun updateUserAge(age: Int): Either<Failure, FirebaseResult> {
+        var isSuccess = false
+
+        userDocument
+            .update(
+                "age", age
+            )
+            .addOnFailureListener { printUnknownException(it) }
+            .addOnSuccessListener { isSuccess = true }
+            .await()
+
+        return when (isSuccess) {
+            true -> Right(UserProfileNicknameChanged)
+            false -> Left(Failure(UserFirebaseException.UnknownException))
+        }
+    }
+
 
     override suspend fun updateProfileUserNickname(nickname: String): Either<Failure, FirebaseResult> {
         var isSuccess = false
@@ -109,7 +129,7 @@ class FirebaseRepository @Inject constructor(firebaseFirestore: FirebaseFirestor
             .await()
 
         return when (userEntity != null) {
-            true -> Right(FirebaseResult.ExistingUserLoaded)
+            true -> Right(ExistingUserLoaded)
             false -> Left(Failure(userFirebaseException))
         }
     }
@@ -134,7 +154,7 @@ class FirebaseRepository @Inject constructor(firebaseFirestore: FirebaseFirestor
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    fun printUnknownException(e: Exception) {
+    private fun printUnknownException(e: Exception) {
         Log.e(TAG, "Unhandled firebase exception: ${Log.getStackTraceString(e)}")
     }
 }

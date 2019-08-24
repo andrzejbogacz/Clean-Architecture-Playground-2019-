@@ -21,6 +21,7 @@ class MainViewModel @Inject constructor(
     val changeUserGenderPreference: ChangeUserGenderPreference,
     val changeProfileUserNickname: ChangeProfileUserNickname,
     val changeProfileUserGender: ChangeProfileUserGender,
+    val changeProfileUserAge: ChangeProfileUserAge,
     var firebaseRepository: FirebaseRepository
 ) : BaseViewModel() {
 
@@ -33,7 +34,9 @@ class MainViewModel @Inject constructor(
     private val userData: MutableLiveData<UserEntity> = MutableLiveData()
 
     private fun createUser() = createUser(None) { it.fold(::handleFailure, ::handleSuccess) }
+
     fun loadUser() = loadUser(None) { it.fold(::handleFailure, ::handleSuccess) }
+
     fun changeUserAgePreference(pair: Pair<Int, Int>) =
         changeUserAgePreference(pair) { it.fold(::handleFailure, ::handleSuccess) }
 
@@ -45,6 +48,9 @@ class MainViewModel @Inject constructor(
 
     fun changeProfileUserGender(gender: Gender) =
         changeProfileUserGender(gender) { it.fold(::handleFailure, ::handleSuccess) }
+
+    fun changeProfileUserAge(age: Int) =
+        changeProfileUserAge(age) { it.fold(::handleFailure, ::handleSuccess) }
 
     fun handleFailure(e: Failure) {
         Log.d(TAG, "Failed Loading user with Exception: ${e.exception.javaClass.simpleName}")
@@ -87,6 +93,7 @@ class MainViewModel @Inject constructor(
             is UserAgePreferencesChanged -> Log.d(TAG, "handleSuccess: Successfully changed user age preference")
             is UserProfileNicknameChanged -> Log.d(TAG, "handleSuccess: Successfully changed user nickname")
             is UserProfileGenderChanged -> Log.d(TAG, "handleSuccess: Successfully changed user gender")
+            is UserProfileAgeChanged -> Log.d(TAG, "handleSuccess: Successfully changed user age")
         }
     }
 

@@ -31,7 +31,7 @@ import javax.inject.Inject
 
 
 class ProfileFragment : DaggerFragment(),
-    View.OnClickListener{
+    View.OnClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProviderFactory
@@ -41,7 +41,7 @@ class ProfileFragment : DaggerFragment(),
     var currentViewHolder: ImageView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.activity_profile,container,false)
+        return inflater.inflate(R.layout.activity_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,12 +76,13 @@ class ProfileFragment : DaggerFragment(),
         currentViewHolder = v as ImageView
     }
 
-    private fun updateUI(userEntity: UserEntity){
+    private fun updateUI(userEntity: UserEntity) {
         textView_profile_nickname_value.text = userEntity.nickname
+        textView_profile_age_value.text = userEntity.age.toString()
 
         when (userEntity.gender) {
-            Gender.FEMALE ->  textView_profile_gender_value.text = getString(R.string.drawer_dialog_genderFemale)
-            Gender.MALE ->  textView_profile_gender_value.text = getString(R.string.drawer_dialog_genderMale)
+            Gender.FEMALE -> textView_profile_gender_value.text = getString(R.string.drawer_dialog_genderFemale)
+            Gender.MALE -> textView_profile_gender_value.text = getString(R.string.drawer_dialog_genderMale)
         }
     }
 

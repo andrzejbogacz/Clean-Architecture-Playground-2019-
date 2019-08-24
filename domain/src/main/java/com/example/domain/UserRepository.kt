@@ -20,5 +20,7 @@ interface UserRepository {
 
     suspend fun updateUserGender(gender: Gender): Either<Failure, FirebaseResult>
 
+    suspend fun updateUserAge(age: Int): Either<Failure, FirebaseResult>
+
     suspend fun updateProfileUserNickname(nickname: String): Either<Failure, FirebaseResult>
 }

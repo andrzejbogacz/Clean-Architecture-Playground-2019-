@@ -11,4 +11,5 @@ sealed class FirebaseResult : Result() {
     object UserGenderPreferencesChanged : FirebaseResult()
     object UserProfileNicknameChanged : FirebaseResult()
     object UserProfileGenderChanged : FirebaseResult()
+    object UserProfileAgeChanged : FirebaseResult()
 }
