@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.example.loquicleanarchitecture.BaseActivity
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
@@ -26,9 +26,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_auth.*
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.newTask
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
 import javax.inject.Inject
 
 class AuthActivity : BaseActivity(), View.OnClickListener {
@@ -50,7 +48,7 @@ class AuthActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
 
-        authViewModel = ViewModelProviders.of(this, viewModelFactory).get(AuthViewModel::class.java)
+        authViewModel = ViewModelProvider(this, viewModelFactory).get(AuthViewModel::class.java)
 
         initFacebook()
         initGoogle()
@@ -67,7 +65,7 @@ class AuthActivity : BaseActivity(), View.OnClickListener {
 
         signInFacebook.setOnClickListener(this)
         btn_logout.setOnClickListener(this)
-        signInFacebook.setReadPermissions("email", "public_profile")
+        signInFacebook.setPermissions("email", "public_profile")
         signInFacebook.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
                 Log.d(TAG, "facebook:onSuccess:$loginResult")
@@ -155,15 +153,13 @@ class AuthActivity : BaseActivity(), View.OnClickListener {
                 // [END_EXCLUDE]
             }
         startActivity(intentFor<MainActivity>().newTask())
+        finish()
     }
     // [END auth_with_facebook]
 
     fun signOut() {
-
-        toast("SignOut")
         auth.signOut()
         LoginManager.getInstance().logOut()
-
         updateUI(null)
     }
 
@@ -197,9 +193,8 @@ class AuthActivity : BaseActivity(), View.OnClickListener {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
-                    val user = auth.currentUser
                     startActivity(intentFor<MainActivity>().newTask())
-                    toast("isSuccessful")
+                    this.finish()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
@@ -215,7 +210,6 @@ class AuthActivity : BaseActivity(), View.OnClickListener {
     // [END auth_with_google]
 
     override fun onClick(v: View) {
-        toast("onclick")
         val i = v.id
         when (i) {
             R.id.signInGoogle -> signIn()

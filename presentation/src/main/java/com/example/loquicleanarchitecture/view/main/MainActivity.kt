@@ -10,6 +10,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewModelScope
 import com.example.domain.entities.Gender
 import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
@@ -30,9 +31,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_header.*
 import kotlinx.android.synthetic.main.menu_row_age_range.*
 import kotlinx.android.synthetic.main.menu_row_gender.*
-import kotlinx.android.synthetic.main.view_profile_user_details.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.newTask
+import org.jetbrains.anko.noHistory
 import org.jetbrains.anko.toast
 import javax.inject.Inject
 
@@ -94,7 +97,7 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
         textView_menu_ageRangeValue.text =
             getString(R.string.preferences_age_range, user.preferences_age_range_min, user.preferences_age_range_max)
 
-     //   textView_profile_nickname_value?.text = user.nickname
+        //   textView_profile_nickname_value?.text = user.nickname
     }
 
     private fun displayGenderAlert() {
@@ -167,7 +170,6 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
             .actionView.findViewById(R.id.textView_menu_ageRangeValue)
         textViewGenderValue = navigation_view.menu.findItem(R.id.item_drawer_gender)
             .actionView.findViewById(R.id.textView_menu_genderValue)
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -183,6 +185,18 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
 
     private fun logout() {
         FirebaseAuth.getInstance().signOut()
-        startActivity(intentFor<AuthActivity>().newTask())
+        startActivity(intentFor<AuthActivity>().noHistory())
+        finish()
+    }
+
+    override fun onBackPressed() {
+        val count = supportFragmentManager.backStackEntryCount
+
+        if (count == 0) {
+            moveTaskToBack(true)
+
+        } else {
+            super.onBackPressed()
+        }
     }
 }

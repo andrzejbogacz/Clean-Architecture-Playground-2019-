@@ -25,10 +25,6 @@ class MainViewModel @Inject constructor(
     var firebaseRepository: FirebaseRepository
 ) : BaseViewModel() {
 
-    init {
-        listenToUserChanges()
-    }
-
     private val TAG: String? = this.javaClass.name
 
     private val userData: MutableLiveData<UserEntity> = MutableLiveData()
@@ -86,10 +82,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun handleSuccess(s: Any?) {
-        when (s) {
-            is NewUserCreated -> Log.d(TAG, "handleSuccess: Successfully saved new user to remote database")
-            is ExistingUserLoaded -> Log.d(TAG, "handleSuccess: Successfully loaded existing user")
+    private fun handleSuccess(firebaseResult: Any) {
+        when (firebaseResult) {
+            is NewUserCreated -> { listenToUserChanges() ;Log.d(TAG, "handleSuccess: Successfully saved new user to remote database")}
+            is ExistingUserLoaded -> {listenToUserChanges();  Log.d(TAG, "handleSuccess: Successfully loaded existing user")}
             is UserAgePreferencesChanged -> Log.d(TAG, "handleSuccess: Successfully changed user age preference")
             is UserProfileNicknameChanged -> Log.d(TAG, "handleSuccess: Successfully changed user nickname")
             is UserProfileGenderChanged -> Log.d(TAG, "handleSuccess: Successfully changed user gender")
