@@ -52,7 +52,6 @@ class ProfileFragment : DaggerFragment(),
             observe(getUserDataLiveData(), ::updateUI)
         }
 
-
         // TODO Add delete button for photos https://github.com/stfalcon-studio/ChatKit/blob/master/docs/COMPONENT_MESSAGE_INPUT.MD
         // Todo Add save button on toolbar
     }

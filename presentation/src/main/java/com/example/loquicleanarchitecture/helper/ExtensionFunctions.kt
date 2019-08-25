@@ -19,7 +19,7 @@ inline fun <reified T : ViewModel> MainActivity.viewModel(factory: ViewModelProv
     return vm
 }
 inline fun <reified T : ViewModel> ProfileFragment.viewModel(factory: ViewModelProvider.Factory, body: T.() -> Unit): T {
-    val vm = ViewModelProvider(this, factory)[T::class.java]
+    val vm = ViewModelProvider(activity!!.viewModelStore, factory)[T::class.java]
     vm.body()
     return vm
 }

@@ -65,7 +65,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun listenToUserChanges() {
+     fun listenToUserChanges() {
         firebaseRepository.userDocument.addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Log.w(TAG, "Listen failed.", e)
