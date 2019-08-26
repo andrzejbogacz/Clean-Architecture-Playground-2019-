@@ -12,7 +12,6 @@ import com.example.domain.entities.Gender
 import com.example.domain.entities.UserEntity
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
-import com.example.loquicleanarchitecture.helper.ImageTransformation
 import com.example.loquicleanarchitecture.helper.observe
 import com.example.loquicleanarchitecture.helper.viewModel
 import com.example.loquicleanarchitecture.view.dialogs.DialogProfileAgeChoice
@@ -40,7 +39,11 @@ class ProfileFragment : DaggerFragment(),
 
     var currentViewHolder: ImageView? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.activity_profile, container, false)
     }
 
@@ -58,7 +61,7 @@ class ProfileFragment : DaggerFragment(),
 
     private fun initListeners() {
         constraintLayoutNickname.setOnClickListener(this)
-        constraintLayoutGender.setOnClickListener(this)
+        layout_constraint_profile_gender.setOnClickListener(this)
         constraintLayoutAge.setOnClickListener(this)
         iv_photo1.setOnClickListener(this)
         iv_photo2.setOnClickListener(this)
@@ -80,15 +83,23 @@ class ProfileFragment : DaggerFragment(),
         textView_profile_age_value.text = userEntity.age.toString()
 
         when (userEntity.gender) {
-            Gender.FEMALE -> textView_profile_gender_value.text = getString(R.string.drawer_dialog_genderFemale)
-            Gender.MALE -> textView_profile_gender_value.text = getString(R.string.drawer_dialog_genderMale)
+            Gender.FEMALE -> textView_profile_gender_value.text =
+                getString(R.string.drawer_dialog_genderFemale)
+            Gender.MALE -> textView_profile_gender_value.text =
+                getString(R.string.drawer_dialog_genderMale)
         }
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.constraintLayoutNickname -> DialogProfileNicknameChoice().show(childFragmentManager, "nickname")
-            R.id.constraintLayoutGender -> DialogProfileGenderChoice().show(childFragmentManager, "gender")
+            R.id.constraintLayoutNickname -> DialogProfileNicknameChoice().show(
+                childFragmentManager,
+                "nickname"
+            )
+            R.id.layout_constraint_profile_gender -> DialogProfileGenderChoice().show(
+                childFragmentManager,
+                "gender"
+            )
             R.id.constraintLayoutAge -> DialogProfileAgeChoice().show(childFragmentManager, "age")
             R.id.iv_photo1, R.id.iv_photo2, R.id.iv_photo3, R.id.iv_photo4, R.id.iv_photo5, R.id.iv_photo6 -> loadImagePicker(
                 v
@@ -103,24 +114,17 @@ class ProfileFragment : DaggerFragment(),
             if (resultCode == Activity.RESULT_OK) {
                 val resultUri = result.uri
                 setPhoto(resultUri)
+                mainViewModel.uploadProfileUserPhoto(resultUri.toString())
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
             }
         }
     }
 
-    private fun uploadImages(path: Uri) {
-        GlobalScope.launch {
-            //Todo Upload Images to Firebase
-        }
-    }
-
     private fun setPhoto(resultUri: Uri?) {
         Picasso.get()
             .load(resultUri)
-            .transform(ImageTransformation.transformation)
+            .fit()
             .into(currentViewHolder)
     }
-
-
 }

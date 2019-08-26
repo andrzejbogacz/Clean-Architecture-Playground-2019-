@@ -22,6 +22,7 @@ class MainViewModel @Inject constructor(
     val changeProfileUserNickname: ChangeProfileUserNickname,
     val changeProfileUserGender: ChangeProfileUserGender,
     val changeProfileUserAge: ChangeProfileUserAge,
+    val uploadProfileUserPhoto: UploadProfileUserPhoto,
     var firebaseRepository: FirebaseRepository
 ) : BaseViewModel() {
 
@@ -48,6 +49,9 @@ class MainViewModel @Inject constructor(
     fun changeProfileUserAge(age: Int) =
         changeProfileUserAge(age) { it.fold(::handleFailure, ::handleSuccess) }
 
+    fun uploadProfileUserPhoto(imageUri: String) =
+        uploadProfileUserPhoto(imageUri) { it.fold(::handleFailure, ::handleSuccess) }
+
     fun handleFailure(e: Failure) {
         Log.d(TAG, "Failed Loading user with Exception: ${e.exception.javaClass.simpleName}")
         when (e.exception) {
@@ -65,7 +69,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-     fun listenToUserChanges() {
+    private fun listenToUserChanges() {
         firebaseRepository.userDocument.addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Log.w(TAG, "Listen failed.", e)
@@ -84,12 +88,32 @@ class MainViewModel @Inject constructor(
 
     private fun handleSuccess(firebaseResult: Any) {
         when (firebaseResult) {
-            is NewUserCreated -> { listenToUserChanges() ;Log.d(TAG, "handleSuccess: Successfully saved new user to remote database")}
-            is ExistingUserLoaded -> {listenToUserChanges();  Log.d(TAG, "handleSuccess: Successfully loaded existing user")}
-            is UserAgePreferencesChanged -> Log.d(TAG, "handleSuccess: Successfully changed user age preference")
-            is UserProfileNicknameChanged -> Log.d(TAG, "handleSuccess: Successfully changed user nickname")
-            is UserProfileGenderChanged -> Log.d(TAG, "handleSuccess: Successfully changed user gender")
+            is NewUserCreated -> {
+                listenToUserChanges();Log.d(
+                    TAG,
+                    "handleSuccess: Successfully saved new user to remote database"
+                )
+            }
+            is ExistingUserLoaded -> {
+                listenToUserChanges(); Log.d(
+                    TAG,
+                    "handleSuccess: Successfully loaded existing user"
+                )
+            }
+            is UserAgePreferencesChanged -> Log.d(
+                TAG,
+                "handleSuccess: Successfully changed user age preference"
+            )
+            is UserProfileNicknameChanged -> Log.d(
+                TAG,
+                "handleSuccess: Successfully changed user nickname"
+            )
+            is UserProfileGenderChanged -> Log.d(
+                TAG,
+                "handleSuccess: Successfully changed user gender"
+            )
             is UserProfileAgeChanged -> Log.d(TAG, "handleSuccess: Successfully changed user age")
+            is UserProfilePhotoUploaded -> Log.d(TAG, "handleSuccess: Successfully uploaded photo")
         }
     }
 

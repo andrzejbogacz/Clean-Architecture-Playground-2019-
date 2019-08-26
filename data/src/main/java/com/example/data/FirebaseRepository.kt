@@ -1,5 +1,6 @@
 package com.example.data
 
+import android.net.Uri
 import android.util.Log
 import arrow.core.Either
 import arrow.core.Failure
@@ -14,11 +15,31 @@ import com.example.domain.exception.FirebaseResult.*
 import com.example.domain.exception.UserFirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class FirebaseRepository @Inject constructor(firebaseFirestore: FirebaseFirestore, var fbAuth: FirebaseAuth) :
+class FirebaseRepository @Inject constructor(
+    firebaseFirestore: FirebaseFirestore,
+    val fbAuth: FirebaseAuth,
+    val userStorageReference: StorageReference
+) :
     UserRepository {
+    override suspend fun uploadProfileUserPhoto(uriString: String): Either<Failure, FirebaseResult> {
+
+        var isSuccess = false
+
+        val photoUri = Uri.parse(uriString)
+
+        userStorageReference.putFile(photoUri)
+            .addOnFailureListener { printUnknownException(it) }
+            .addOnSuccessListener { isSuccess = true }.await()
+
+        return when (isSuccess) {
+            true -> Right(UserProfilePhotoUploaded)
+            false -> Left(Failure(UserFirebaseException.UnknownException))
+        }
+    }
 
 
     private val TAG: String? = this.javaClass.name

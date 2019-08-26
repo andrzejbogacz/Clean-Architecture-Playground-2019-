@@ -1,5 +1,6 @@
 package com.example.loquicleanarchitecture.view.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -10,7 +11,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewModelScope
 import com.example.domain.entities.Gender
 import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
@@ -31,10 +31,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_header.*
 import kotlinx.android.synthetic.main.menu_row_age_range.*
 import kotlinx.android.synthetic.main.menu_row_gender.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.newTask
 import org.jetbrains.anko.noHistory
 import org.jetbrains.anko.toast
 import javax.inject.Inject
@@ -85,17 +82,26 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
         textView_header_age.text = user.age.toString()
 
         when (user.preferences_gender) {
-            GenderPreference.FEMALE -> textView_menu_genderValue.text = getString(R.string.drawer_dialog_genderFemale)
-            GenderPreference.MALE -> textView_menu_genderValue.text = getString(R.string.drawer_dialog_genderMale)
-            GenderPreference.BOTH -> textView_menu_genderValue.text = getString(R.string.drawer_dialog_genderBoth)
+            GenderPreference.FEMALE -> textView_menu_genderValue.text =
+                getString(R.string.drawer_dialog_genderFemale)
+            GenderPreference.MALE -> textView_menu_genderValue.text =
+                getString(R.string.drawer_dialog_genderMale)
+            GenderPreference.BOTH -> textView_menu_genderValue.text =
+                getString(R.string.drawer_dialog_genderBoth)
         }
 
         when (user.gender) {
-            Gender.FEMALE -> textView_header_gender.text = getString(R.string.drawer_dialog_genderFemale)
-            Gender.MALE -> textView_header_gender.text = getString(R.string.drawer_dialog_genderMale)
+            Gender.FEMALE -> textView_header_gender.text =
+                getString(R.string.drawer_dialog_genderFemale)
+            Gender.MALE -> textView_header_gender.text =
+                getString(R.string.drawer_dialog_genderMale)
         }
         textView_menu_ageRangeValue.text =
-            getString(R.string.preferences_age_range, user.preferences_age_range_min, user.preferences_age_range_max)
+            getString(
+                R.string.preferences_age_range,
+                user.preferences_age_range_min,
+                user.preferences_age_range_max
+            )
 
         //   textView_profile_nickname_value?.text = user.nickname
     }
@@ -198,5 +204,12 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val fragment = supportFragmentManager.findFragmentByTag("ProfileFragment")
+        fragment!!.onActivityResult(requestCode, resultCode, data)
+
     }
 }

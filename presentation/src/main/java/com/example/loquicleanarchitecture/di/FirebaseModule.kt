@@ -15,23 +15,30 @@ class FirebaseModule {
 
     @Singleton
     @Provides
-    fun provideUserRepository(firebaseFirestore: FirebaseFirestore, firebaseAuth: FirebaseAuth): UserRepository {
-        return FirebaseRepository(firebaseFirestore, firebaseAuth)
+    fun provideUserRepository(
+        firebaseFirestore: FirebaseFirestore,
+        firebaseAuth: FirebaseAuth,
+        firebaseStorage: StorageReference
+    ): UserRepository {
+        return FirebaseRepository(firebaseFirestore, firebaseAuth, firebaseStorage)
     }
 
+    @Singleton
     @Provides
     internal fun provideFirebaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()
     }
 
+    @Singleton
     @Provides
     internal fun provideFirebaseFirestore(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
     }
 
+    @Singleton
     @Provides
-    internal fun provideFirebaseStorage(): StorageReference {
-        return FirebaseStorage.getInstance().reference.child("REF")
+    fun provideFirebaseStorage(firebaseAuth: FirebaseAuth): StorageReference {
+        return FirebaseStorage.getInstance().reference.child(firebaseAuth.currentUser.toString())
     }
 
 
