@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:id="@+id/mobile_navigation"
+		app:startDestination="@id/chatlistFragment">
+
+	<fragment
+			android:id="@+id/profileFragmentNav"
+			android:name="com.example.loquicleanarchitecture.view.profile.ProfileFragment"
+			android:label="Profile"
+			tools:layout="@layout/fragment_profile">
+		<action
+				android:id="@+id/action_profileFragmentNav_to_chatlistFragment"
+				app:destination="@id/chatlistFragment"
+				app:popUpTo="@+id/chatlistFragment" />
+	</fragment>
+	<fragment
+			android:id="@+id/chatlistFragment"
+			android:name="com.example.loquicleanarchitecture.view.main.chatlist.ChatlistFragment"
+			android:label="Home"
+			tools:layout="@layout/fragment_chatlist">
+		<action
+				android:id="@+id/action_chatlistFragment_to_profileFragmentNav"
+				app:destination="@+id/profileFragmentNav"
+				app:enterAnim="@anim/nav_default_pop_enter_anim"
+				app:exitAnim="@anim/nav_default_pop_exit_anim"
+				app:popEnterAnim="@anim/fragment_open_enter"
+				app:popExitAnim="@anim/fragment_open_exit"
+				app:popUpTo="@+id/profileFragmentNav" />
+	</fragment>
+	<dialog
+			android:id="@+id/dialogDrawerSearchGender"
+			android:name="com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchGender"
+			android:label="DialogDrawerSearchGender"
+			tools:layout="@layout/dialog_drawer_gender" />
+</navigation>

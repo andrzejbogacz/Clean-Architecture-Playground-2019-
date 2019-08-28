@@ -13,12 +13,19 @@ fun <T : Any, L : LiveData<T>> LifecycleOwner.observe(liveData: L, body: KFuncti
 fun <L : LiveData<Failure>> LifecycleOwner.failure(liveData: L, body: (Failure) -> Unit) =
     liveData.observe(this, Observer(body))
 
-inline fun <reified T : ViewModel> MainActivity.viewModel(factory: ViewModelProvider.Factory, body: T.() -> Unit): T {
+inline fun <reified T : ViewModel> MainActivity.viewModel(
+    factory: ViewModelProvider.Factory,
+    body: T.() -> Unit
+): T {
     val vm = ViewModelProvider(this, factory)[T::class.java]
     vm.body()
     return vm
 }
-inline fun <reified T : ViewModel> ProfileFragment.viewModel(factory: ViewModelProvider.Factory, body: T.() -> Unit): T {
+
+inline fun <reified T : ViewModel> ProfileFragment.viewModel(
+    factory: ViewModelProvider.Factory,
+    body: T.() -> Unit
+): T {
     val vm = ViewModelProvider(activity!!.viewModelStore, factory)[T::class.java]
     vm.body()
     return vm

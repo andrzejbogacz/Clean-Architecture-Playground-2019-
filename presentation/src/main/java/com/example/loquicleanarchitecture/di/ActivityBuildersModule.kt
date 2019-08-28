@@ -1,6 +1,5 @@
 package com.example.loquicleanarchitecture.di
 
-import com.example.loquicleanarchitecture.view.chat.ChatActivity
 import com.example.loquicleanarchitecture.di.auth.AuthModule
 import com.example.loquicleanarchitecture.di.auth.AuthScope
 import com.example.loquicleanarchitecture.di.auth.AuthViewModelsModule
@@ -15,10 +14,11 @@ import com.example.loquicleanarchitecture.di.main.MainScope
 import com.example.loquicleanarchitecture.di.main.MainViewModelsModule
 import com.example.loquicleanarchitecture.di.profile.ProfileModule
 import com.example.loquicleanarchitecture.di.profile.ProfileScope
+import com.example.loquicleanarchitecture.view.chat.ChatActivity
 import com.example.loquicleanarchitecture.view.dialogs.*
 import com.example.loquicleanarchitecture.view.login.AuthActivity
 import com.example.loquicleanarchitecture.view.main.MainActivity
-import com.example.loquicleanarchitecture.view.main.chatlist.ChatlistActivity
+import com.example.loquicleanarchitecture.view.main.chatlist.ChatlistFragment
 import com.example.loquicleanarchitecture.view.profile.ProfileFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -54,6 +54,7 @@ abstract class ActivityBuildersModule {
     @MainScope
     @ContributesAndroidInjector(modules = [ChatlistModule::class, MainViewModelsModule::class])
     internal abstract fun contributeChangeAgeDialog(): DialogProfileAgeChoice
+
     /** END OF MAIN SCOPE */
 
     @ChatScope
@@ -66,5 +67,5 @@ abstract class ActivityBuildersModule {
 
     @ChatlistScope
     @ContributesAndroidInjector(modules = [ChatlistModule::class, ChatlistViewModelsModule::class])
-    internal abstract fun contributeChatlistActivity(): ChatlistActivity
+    internal abstract fun contributeChatlistActivity(): ChatlistFragment
 }

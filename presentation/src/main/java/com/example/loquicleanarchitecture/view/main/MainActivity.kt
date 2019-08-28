@@ -8,25 +8,26 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI.setupWithNavController
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.domain.entities.Gender
 import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
-import com.example.loquicleanarchitecture.fixtures.DialogsFixtures
-import com.example.loquicleanarchitecture.helper.failure
-import com.example.loquicleanarchitecture.helper.observe
-import com.example.loquicleanarchitecture.helper.viewModel
 import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchAge
 import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchGender
 import com.example.loquicleanarchitecture.view.login.AuthActivity
-import com.example.loquicleanarchitecture.view.main.chatlist.ChatlistActivity
-import com.example.loquicleanarchitecture.view.profile.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
-import com.stfalcon.chatkit.dialogs.DialogsListAdapter
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_header.*
 import kotlinx.android.synthetic.main.menu_row_age_range.*
@@ -37,7 +38,7 @@ import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 
-class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
+class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
     private val TAG: String? = this.javaClass.name
 
     private val appViewModelStore: ViewModelStore by lazy {
@@ -60,20 +61,77 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
 
     private lateinit var mainViewModel: MainViewModel
 
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(mToolbar)
+
+        drawerLayout = drawer_layout
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navigation_view.setupWithNavController(navController)
+        setupSideNavigationMenu(navController)
+        setupBottomNavMenu(navController)
+
         initNavigationDrawer()
-        initToolbar()
-        initAdapter()
-        initMenuReferences()
 
-        mainViewModel = viewModel(viewModelFactory) {
-            observe(getUserDataLiveData(), ::updateUserUI)
-            failure(failure, ::handleFailure)
+//
+//        navController.addOnDestinationChangedListener { _, destination, _ ->
+//            when (destination.id) {
+//                R.id.profileFragmentNav ->  hideBottomNav()
+//                // R.id.mineFragment -> showBottomNav()
+//               // else -> hideBottomNav()
+//            }
+//        }
+
+
+//        mainViewModel = viewModel(viewModelFactory) {
+//            observe(getUserDataLiveData(), ::updateUserUI)
+//            failure(failure, ::handleFailure)
+//        }
+
+//        mainViewModel.loadUser()
+    }
+
+    private fun setupSideNavigationMenu(navController: NavController) {
+        navigation_view?.let {
+            setupWithNavController(mToolbar, navController, appBarConfiguration)
         }
+    }
 
-        mainViewModel.loadUser()
+    private fun setupBottomNavMenu(navController: NavController) {
+        bottom_nav?.let {
+            setupWithNavController(it, navController)
+        }
+    }
+
+    private fun initNavigationDrawer() {
+
+        // navigation_view.getHeaderView(0).setOnClickListener {Navigation.findNavController(it).navigate(R.id.action_chatlistFragment_to_profileFragmentNav)  }
+        navigation_view.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.item_drawer_gender -> navController.navigate(R.id.dialogDrawerSearchGender)
+                R.id.item_drawer_age_range -> displayAgeRangeAlert()
+            }
+            return@setNavigationItemSelectedListener false
+        }
+    }
+
+    private fun showBottomNav() {
+        //   bottomNav.visibility = View.VISIBLE
+
+    }
+
+    private fun hideBottomNav() {
+        bottom_nav.visibility = View.GONE
+        navigation_view.visibility = View.GONE
+
     }
 
     private fun updateUserUI(user: UserEntity) {
@@ -120,56 +178,33 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
         return true
     }
 
-    private fun initToolbar() {
-        // Setup Actionbar / Toolbar
-        setSupportActionBar(mToolbar as Toolbar?)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(true)
 
-        // Setup Navigation Drawer Layout
-        mDrawerToggle =
-            object : ActionBarDrawerToggle(
-                this,
-                drawer_layout,
-                mToolbar as Toolbar,
-                R.string.drawer_open,
-                R.string.drawer_close
-            ) {
+//    private fun initAdapter() {
+//        super.dialogsAdapter = DialogsListAdapter(super.imageLoader)
+//        super.dialogsAdapter.setItems(DialogsFixtures.dialogs)
+//
+//        super.dialogsAdapter.setOnDialogClickListener(this)
+//        super.dialogsAdapter.setOnDialogLongClickListener(this)
+//
+//        dialogsList.setAdapter(super.dialogsAdapter)
+//    }
 
-            }
-        drawer_layout.addDrawerListener(mDrawerToggle)
-
-        drawer_layout.post { mDrawerToggle.syncState() }
-    }
-
-    private fun initAdapter() {
-        super.dialogsAdapter = DialogsListAdapter(super.imageLoader)
-        super.dialogsAdapter.setItems(DialogsFixtures.dialogs)
-
-        super.dialogsAdapter.setOnDialogClickListener(this)
-        super.dialogsAdapter.setOnDialogLongClickListener(this)
-
-        dialogsList.setAdapter(super.dialogsAdapter)
-    }
-
-    private fun initNavigationDrawer() {
-        navigation_view.getHeaderView(0).setOnClickListener { startFragment() }
-        navigation_view.setNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.item_drawer_gender -> displayGenderAlert()
-                R.id.item_drawer_age_range -> displayAgeRangeAlert()
-            }
-            return@setNavigationItemSelectedListener false
+    override fun onBackPressed() {
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+            drawer_layout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
         }
     }
 
-    private fun startFragment() {
-        val manager = supportFragmentManager
-        val transaction = manager.beginTransaction()
-        transaction.add(R.id.frameLayoutMain, ProfileFragment(), "ProfileFragment")
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
+
+//    private fun startFragment() {
+//        val manager = supportFragmentManager
+//        val transaction = manager.beginTransaction()
+//        transaction.add(R.id.frameLayoutMain, ProfileFragment(), "ProfileFragment")
+//        transaction.addToBackStack(null)
+//        transaction.commit()
+//    }
 
     private fun initMenuReferences() {
         textViewAgerange = navigation_view.menu.findItem(R.id.item_drawer_age_range)
@@ -193,17 +228,6 @@ class MainActivity : ChatlistActivity(), ViewModelStoreOwner {
         FirebaseAuth.getInstance().signOut()
         startActivity(intentFor<AuthActivity>().noHistory())
         finish()
-    }
-
-    override fun onBackPressed() {
-        val count = supportFragmentManager.backStackEntryCount
-
-        if (count == 0) {
-            moveTaskToBack(true)
-
-        } else {
-            super.onBackPressed()
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

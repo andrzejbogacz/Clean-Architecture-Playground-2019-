@@ -13,7 +13,6 @@ import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
 import com.example.loquicleanarchitecture.view.main.MainViewModel
 import dagger.android.support.DaggerDialogFragment
 import kotlinx.android.synthetic.main.dialog_drawer_gender.view.*
-import org.jetbrains.anko.support.v4.toast
 import javax.inject.Inject
 
 
@@ -28,12 +27,15 @@ class DialogDrawerSearchGender : DaggerDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_drawer_gender, null)
 
-        mainViewModel = ViewModelProvider(activity!!.viewModelStore, viewModelFactory).get(MainViewModel::class.java)
-        val genderPreference = mainViewModel.getUserDataLiveData().value!!.preferences_gender
+        mainViewModel = ViewModelProvider(
+            activity!!.viewModelStore,
+            viewModelFactory
+        ).get(MainViewModel::class.java)
+//        val genderPreference = mainViewModel.getUserDataLiveData().value!!.preferences_gender
 
-        toast(genderPreference.name)
+        //  toast(genderPreference.name)
 
-        setCheckedRadioButton(genderPreference, view)
+        // setCheckedRadioButton(genderPreference, view)
 
         return activity?.let {
 
