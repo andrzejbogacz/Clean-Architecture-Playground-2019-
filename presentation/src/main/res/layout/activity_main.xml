@@ -60,10 +60,7 @@
 					app:layout_constraintStart_toStartOf="parent"
 					app:menu="@menu/menu_navigation"
 					/>
-
-
 		</LinearLayout>
-
 
 		<com.google.android.material.navigation.NavigationView
 				android:id="@+id/navigation_view"
@@ -74,8 +71,6 @@
 				app:headerLayout="@layout/drawer_header"
 				app:menu="@menu/drawer"
 				/>
-
-
 	</androidx.drawerlayout.widget.DrawerLayout>
 </layout>
 

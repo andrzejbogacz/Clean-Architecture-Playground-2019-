@@ -6,7 +6,7 @@
 		app:startDestination="@id/chatlistFragment">
 
 	<fragment
-			android:id="@+id/profileFragmentNav"
+			android:id="@+id/profileFragment"
 			android:name="com.example.loquicleanarchitecture.view.profile.ProfileFragment"
 			android:label="Profile"
 			tools:layout="@layout/fragment_profile">
@@ -22,16 +22,22 @@
 			tools:layout="@layout/fragment_chatlist">
 		<action
 				android:id="@+id/action_chatlistFragment_to_profileFragmentNav"
-				app:destination="@+id/profileFragmentNav"
-				app:enterAnim="@anim/nav_default_pop_enter_anim"
-				app:exitAnim="@anim/nav_default_pop_exit_anim"
-				app:popEnterAnim="@anim/fragment_open_enter"
+				app:destination="@id/profileFragment"
+				app:enterAnim="@anim/nav_default_enter_anim"
+				app:exitAnim="@anim/nav_default_exit_anim"
+				app:launchSingleTop="false"
+				app:popEnterAnim="@anim/fui_slide_in_right"
 				app:popExitAnim="@anim/fragment_open_exit"
-				app:popUpTo="@+id/profileFragmentNav" />
+				app:popUpTo="@id/profileFragment" />
 	</fragment>
 	<dialog
 			android:id="@+id/dialogDrawerSearchGender"
 			android:name="com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchGender"
 			android:label="DialogDrawerSearchGender"
 			tools:layout="@layout/dialog_drawer_gender" />
+	<dialog
+			android:id="@+id/dialogDrawerSearchAge"
+			android:name="com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchAge"
+			android:label="DialogDrawerSearchAge"
+			tools:layout="@layout/dialog_drawer_age_range_choice" />
 </navigation>

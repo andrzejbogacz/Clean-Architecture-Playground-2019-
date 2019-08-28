@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/item_drawer_gender"
-            android:icon="@drawable/ic_gender_white"
-            android:title="@string/profile_gender_title"
-            app:actionLayout="@layout/menu_row_gender" />
-        <item
-            android:id="@+id/item_drawer_age_range"
-            android:icon="@drawable/ic_range_age_black"
-            android:title="@string/age_title"
-            app:actionLayout="@layout/menu_row_age_range" />
+		xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    </group>
+	<item android:title="@string/search_for">
+		<menu>
+			<group android:checkableBehavior="single">
+				<item
+						android:id="@+id/item_drawer_gender"
+						android:icon="@drawable/ic_gender_white"
+						android:title="@string/profile_gender_title"
+						app:actionLayout="@layout/menu_row_gender" />
+				<item
+						android:id="@+id/item_drawer_age_range"
+						android:icon="@drawable/ic_range_age_black"
+						android:title="@string/age_title"
+						app:actionLayout="@layout/menu_row_age_range" />
+			</group>
+		</menu>
+	</item>
+
+	<item android:title="@string/settings">
+		<menu>
+
+			<item
+					android:id="@+id/item_destination_profile"
+					android:icon="@drawable/ic_profile_box_white_24dp"
+					android:title="Profile" />
+		</menu>
+	</item>
 </menu>

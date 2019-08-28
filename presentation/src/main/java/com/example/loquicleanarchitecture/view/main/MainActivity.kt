@@ -7,8 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.core.view.MenuCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
@@ -23,8 +23,6 @@ import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
-import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchAge
-import com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchGender
 import com.example.loquicleanarchitecture.view.login.AuthActivity
 import com.google.firebase.auth.FirebaseAuth
 import dagger.android.support.DaggerAppCompatActivity
@@ -49,7 +47,6 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         return appViewModelStore
     }
 
-    private lateinit var mDrawerToggle: ActionBarDrawerToggle
     private lateinit var textViewAgerange: TextView
     private lateinit var textViewGenderValue: TextView
 
@@ -78,17 +75,17 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         navigation_view.setupWithNavController(navController)
         setupSideNavigationMenu(navController)
         setupBottomNavMenu(navController)
-
         initNavigationDrawer()
 
 //
-//        navController.addOnDestinationChangedListener { _, destination, _ ->
-//            when (destination.id) {
-//                R.id.profileFragmentNav ->  hideBottomNav()
-//                // R.id.mineFragment -> showBottomNav()
-//               // else -> hideBottomNav()
-//            }
-//        }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.chatlistFragment -> showBottomNav()
+                R.id.profileFragment -> {
+                    hideBottomNav(); }
+                // else -> hideBottomNav()
+            }
+        }
 
 
 //        mainViewModel = viewModel(viewModelFactory) {
@@ -112,19 +109,23 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
     }
 
     private fun initNavigationDrawer() {
-
-        // navigation_view.getHeaderView(0).setOnClickListener {Navigation.findNavController(it).navigate(R.id.action_chatlistFragment_to_profileFragmentNav)  }
         navigation_view.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.item_drawer_gender -> navController.navigate(R.id.dialogDrawerSearchGender)
-                R.id.item_drawer_age_range -> displayAgeRangeAlert()
+                R.id.item_drawer_gender -> navController.navigate(R.id.action_chatlistFragment_to_dialogDrawerSearchGender)
+                R.id.item_drawer_age_range -> navController.navigate(R.id.dialogDrawerSearchAge)
+                R.id.item_destination_profile -> {
+                    navController.navigate(R.id.action_chatlistFragment_to_profileFragmentNav);drawerLayout.closeDrawer(
+                        GravityCompat.START
+                    )
+                }
+
             }
             return@setNavigationItemSelectedListener false
         }
     }
 
     private fun showBottomNav() {
-        //   bottomNav.visibility = View.VISIBLE
+        bottom_nav.visibility = View.VISIBLE
 
     }
 
@@ -164,47 +165,25 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         //   textView_profile_nickname_value?.text = user.nickname
     }
 
-    private fun displayGenderAlert() {
-        DialogDrawerSearchGender().show(supportFragmentManager, "gender")
-    }
-
-    private fun displayAgeRangeAlert() {
-
-        DialogDrawerSearchAge().show(supportFragmentManager, "ageRange")
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
+        MenuCompat.setGroupDividerEnabled(menu, false)
         return true
     }
 
 
-//    private fun initAdapter() {
-//        super.dialogsAdapter = DialogsListAdapter(super.imageLoader)
-//        super.dialogsAdapter.setItems(DialogsFixtures.dialogs)
-//
-//        super.dialogsAdapter.setOnDialogClickListener(this)
-//        super.dialogsAdapter.setOnDialogLongClickListener(this)
-//
-//        dialogsList.setAdapter(super.dialogsAdapter)
-//    }
-
     override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
+        val count = supportFragmentManager.backStackEntryCount
+
+        when {
+            drawer_layout.isDrawerOpen(GravityCompat.START) -> drawer_layout.closeDrawer(
+                GravityCompat.START
+            )
+            count == 0 -> moveTaskToBack(true)
+            else -> super.onBackPressed()
         }
     }
-
-
-//    private fun startFragment() {
-//        val manager = supportFragmentManager
-//        val transaction = manager.beginTransaction()
-//        transaction.add(R.id.frameLayoutMain, ProfileFragment(), "ProfileFragment")
-//        transaction.addToBackStack(null)
-//        transaction.commit()
-//    }
 
     private fun initMenuReferences() {
         textViewAgerange = navigation_view.menu.findItem(R.id.item_drawer_age_range)

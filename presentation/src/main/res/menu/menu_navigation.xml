@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<item
-			android:id="@+id/destination_home"
+			android:id="@+id/destination_chats"
 			android:icon="@drawable/ic_message_white_24dp"
 			android:title="Chats" />
 	<item
-			android:id="@+id/destination_camera"
+			android:id="@+id/destination_friends"
 			android:icon="@drawable/ic_group_white_24dp"
 			android:title="Friends" />
+
+
 </menu>

@@ -42,4 +42,6 @@
 	<string name="profile_dialog_nickname_title">Twój pseudonim:</string>
 	<string name="profile_age_title">Twój wiek:</string>
 	<string name="profile_nickname_hint">pseudonim</string>
+	<string name="search_for">Szukaj:</string>
+	<string name="settings">Settings :</string>
 </resources>
