@@ -111,7 +111,7 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
     private fun initNavigationDrawer() {
         navigation_view.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.item_drawer_gender -> navController.navigate(R.id.action_chatlistFragment_to_dialogDrawerSearchGender)
+                R.id.item_drawer_gender -> navController.navigate(R.id.dialogDrawerSearchGender)
                 R.id.item_drawer_age_range -> navController.navigate(R.id.dialogDrawerSearchAge)
                 R.id.item_destination_profile -> {
                     navController.navigate(R.id.action_chatlistFragment_to_profileFragmentNav);drawerLayout.closeDrawer(
