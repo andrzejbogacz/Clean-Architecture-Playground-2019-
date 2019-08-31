@@ -7,7 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
-import com.example.loquicleanarchitecture.view.main.MainViewModel
+import com.example.loquicleanarchitecture.view.main.SharedViewModel
 import dagger.android.support.DaggerDialogFragment
 import javax.inject.Inject
 
@@ -18,12 +18,15 @@ class DialogProfileAgeChoice : DaggerDialogFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProviderFactory
 
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        mainViewModel = ViewModelProvider(activity!!.viewModelStore, viewModelFactory).get(MainViewModel::class.java)
-        val userAge = mainViewModel.getUserDataLiveData().value!!.age
+        sharedViewModel = ViewModelProvider(
+            activity!!.viewModelStore,
+            viewModelFactory
+        ).get(SharedViewModel::class.java)
+        val userAge = sharedViewModel.getUserDataLiveData().value!!.age
 
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_profile_age_choice, null)
 
@@ -41,7 +44,7 @@ class DialogProfileAgeChoice : DaggerDialogFragment() {
                 .setPositiveButton(
                     R.string.confirm
                 ) { _, _ ->
-                    mainViewModel.changeProfileUserAge(numberPicker.value)
+                    sharedViewModel.changeProfileUserAge(numberPicker.value)
                 }
                 .setNegativeButton(
                     R.string.cancel

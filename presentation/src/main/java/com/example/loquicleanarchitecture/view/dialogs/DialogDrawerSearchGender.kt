@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.domain.entities.GenderPreference
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
-import com.example.loquicleanarchitecture.view.main.MainViewModel
+import com.example.loquicleanarchitecture.view.main.SharedViewModel
 import dagger.android.support.DaggerDialogFragment
 import kotlinx.android.synthetic.main.dialog_drawer_gender.view.*
 import javax.inject.Inject
@@ -22,7 +22,7 @@ class DialogDrawerSearchGender : DaggerDialogFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProviderFactory
 
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var mainViewModel: SharedViewModel
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_drawer_gender, null)
@@ -30,8 +30,8 @@ class DialogDrawerSearchGender : DaggerDialogFragment() {
         mainViewModel = ViewModelProvider(
             activity!!.viewModelStore,
             viewModelFactory
-        ).get(MainViewModel::class.java)
-//        val genderPreference = mainViewModel.getUserDataLiveData().value!!.preferences_gender
+        ).get(SharedViewModel::class.java)
+//        val genderPreference = sharedViewModel.getUserDataLiveData().value!!.preferences_gender
 
         //  toast(genderPreference.name)
 

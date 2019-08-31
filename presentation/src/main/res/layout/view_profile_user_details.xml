@@ -1,205 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:background="#FFFFFF"
-		android:elevation="5dp"
-		android:orientation="vertical"
-		android:paddingBottom="20dp"
 		>
 
-	<androidx.constraintlayout.widget.ConstraintLayout
-			android:id="@+id/layout_constraint_profile_gender"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="16dp"
-			android:layout_marginEnd="20dp"
-			android:padding="10dp"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintHorizontal_bias="0.0"
-			app:layout_constraintStart_toStartOf="@+id/constraintLayoutAge"
-			app:layout_constraintTop_toBottomOf="@+id/constraintLayoutAge"
-			>
+	<data>
 
-		<TextView
-				android:id="@+id/textView_profile_gender_title"
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:text="@string/profile_gender_title"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintEnd_toStartOf="@+id/textView_profile_gender_value"
-				app:layout_constraintHorizontal_bias="0.5"
-				app:layout_constraintStart_toEndOf="@+id/imageView_profile_gender_icon"
-				app:layout_constraintTop_toTopOf="parent"
-				tools:ignore="NestedWeights"
+		<variable
+				name="sharedViewModel"
+				type="com.example.loquicleanarchitecture.view.main.SharedViewModel"
 				/>
-
-		<ImageView
-				android:id="@+id/imageView_profile_gender_icon"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginEnd="8dp"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintEnd_toStartOf="@+id/textView_profile_gender_title"
-				app:layout_constraintHorizontal_bias="0.5"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent"
-				app:srcCompat="@drawable/ic_range_age_black"
-				/>
-
-		<TextView
-				android:id="@+id/textView_profile_gender_value"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="@string/not_specified"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintHorizontal_bias="0.5"
-				app:layout_constraintStart_toEndOf="@+id/textView_profile_gender_title"
-				app:layout_constraintTop_toTopOf="parent"
-				/>
-	</androidx.constraintlayout.widget.ConstraintLayout>
-
-	<TextView
-			android:id="@+id/textView_profile_text_details"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="16dp"
-			android:layout_marginTop="8dp"
-			android:text="@string/profile_details_title"
-			android:textSize="16sp"
-			android:textStyle="bold"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			/>
+	</data>
 
 	<androidx.constraintlayout.widget.ConstraintLayout
-			android:id="@+id/constraintLayoutAge"
-			android:layout_width="0dp"
+			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="16dp"
-			android:layout_marginEnd="20dp"
-			android:padding="10dp"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintHorizontal_bias="0.233"
-			app:layout_constraintStart_toStartOf="@+id/constraintLayoutNickname"
-			app:layout_constraintTop_toBottomOf="@+id/constraintLayoutNickname"
+			android:background="#FFFFFF"
+			android:elevation="5dp"
+			android:orientation="vertical"
+			android:paddingBottom="20dp"
 			>
 
-		<TextView
-				android:id="@+id/textView_profile_age_range_title"
+		<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/layout_constraint_profile_gender"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:layout_marginEnd="8dp"
-				android:layout_weight="1"
-				android:text="@string/age_title"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintEnd_toStartOf="@+id/textView_profile_age_value"
-				app:layout_constraintStart_toEndOf="@+id/imageView_profile_age_range_icon"
-				app:layout_constraintTop_toTopOf="parent"
-				tools:ignore="NestedWeights"
-				/>
+				android:layout_marginTop="16dp"
+				android:layout_marginEnd="20dp"
+				android:padding="10dp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintHorizontal_bias="0.0"
+				app:layout_constraintStart_toStartOf="@+id/constraintLayoutAge"
+				app:layout_constraintTop_toBottomOf="@+id/constraintLayoutAge"
+				>
 
-		<ImageView
-				android:id="@+id/imageView_profile_age_range_icon"
+			<TextView
+					android:id="@+id/textView_profile_gender_title"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="@string/profile_gender_title"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toStartOf="@+id/textView_profile_gender_value"
+					app:layout_constraintHorizontal_bias="0.5"
+					app:layout_constraintStart_toEndOf="@+id/imageView_profile_gender_icon"
+					app:layout_constraintTop_toTopOf="parent"
+					tools:ignore="NestedWeights"
+					/>
+
+			<ImageView
+					android:id="@+id/imageView_profile_gender_icon"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginEnd="8dp"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toStartOf="@+id/textView_profile_gender_title"
+					app:layout_constraintHorizontal_bias="0.5"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					app:srcCompat="@drawable/ic_range_age_black"
+					/>
+
+			<TextView
+					android:id="@+id/textView_profile_gender_value"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/not_specified"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintHorizontal_bias="0.5"
+					app:layout_constraintStart_toEndOf="@+id/textView_profile_gender_title"
+					app:layout_constraintTop_toTopOf="parent"
+					/>
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+		<TextView
+				android:id="@+id/textView_profile_text_details"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginEnd="8dp"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintEnd_toStartOf="@+id/textView_profile_age_range_title"
-				app:layout_constraintHorizontal_bias="0.5"
+				android:layout_marginStart="16dp"
+				android:layout_marginTop="8dp"
+				android:text="@string/profile_details_title"
+				android:textSize="16sp"
+				android:textStyle="bold"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent"
-				app:srcCompat="@drawable/ic_gender_black"
 				/>
 
-		<TextView
-				android:id="@+id/textView_profile_age_value"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="@string/not_specified"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintTop_toTopOf="parent"
-				/>
-	</androidx.constraintlayout.widget.ConstraintLayout>
-
-	<androidx.constraintlayout.widget.ConstraintLayout
-			android:id="@+id/constraintLayoutNickname"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="8dp"
-			android:layout_marginEnd="20dp"
-			android:padding="10dp"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="@+id/textView_profile_text_details"
-			app:layout_constraintTop_toBottomOf="@+id/textView_profile_text_details"
-			>
-
-
-		<TextView
-				android:id="@+id/textView_profile_nickname_title"
+		<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/constraintLayoutAge"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:text="@string/profile_nickname_title"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintEnd_toStartOf="@+id/textView_profile_nickname_value"
-				app:layout_constraintHorizontal_bias="0.5"
-				app:layout_constraintStart_toEndOf="@+id/imageView_profile_nickname_icon"
-				app:layout_constraintTop_toTopOf="parent"
-				tools:ignore="NestedWeights"
-				/>
+				android:layout_marginTop="16dp"
+				android:layout_marginEnd="20dp"
+				android:padding="10dp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintHorizontal_bias="0.233"
+				app:layout_constraintStart_toStartOf="@+id/constraintLayoutNickname"
+				app:layout_constraintTop_toBottomOf="@+id/constraintLayoutNickname"
+				>
 
-		<ImageView
-				android:id="@+id/imageView_profile_nickname_icon"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginEnd="8dp"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintEnd_toStartOf="@+id/textView_profile_nickname_title"
-				app:layout_constraintHorizontal_bias="0.5"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent"
-				app:srcCompat="@drawable/ic_person_black"
-				/>
+			<TextView
+					android:id="@+id/textView_profile_age_range_title"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_marginEnd="8dp"
+					android:layout_weight="1"
+					android:text="@string/age_title"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toStartOf="@+id/textView_profile_age_value"
+					app:layout_constraintStart_toEndOf="@+id/imageView_profile_age_range_icon"
+					app:layout_constraintTop_toTopOf="parent"
+					tools:ignore="NestedWeights"
+					/>
 
-		<TextView
-				android:id="@+id/textView_profile_nickname_value"
+			<ImageView
+					android:id="@+id/imageView_profile_age_range_icon"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginEnd="8dp"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toStartOf="@+id/textView_profile_age_range_title"
+					app:layout_constraintHorizontal_bias="0.5"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					app:srcCompat="@drawable/ic_gender_black"
+					/>
+
+			<TextView
+					android:id="@+id/textView_profile_age_value"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/not_specified"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					/>
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/constraintLayoutNickname"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:gravity="end"
-				android:text="@string/profile_nickname"
-				app:layout_constraintBottom_toBottomOf="parent"
+				android:layout_marginTop="8dp"
+				android:layout_marginEnd="20dp"
+				android:padding="10dp"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintStart_toStartOf="@+id/textView_profile_text_details"
+				app:layout_constraintTop_toBottomOf="@+id/textView_profile_text_details"
+				>
+
+
+			<TextView
+					android:id="@+id/textView_profile_nickname_title"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="@string/profile_nickname_title"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toStartOf="@+id/textView_profile_nickname_value"
+					app:layout_constraintHorizontal_bias="0.5"
+					app:layout_constraintStart_toEndOf="@+id/imageView_profile_nickname_icon"
+					app:layout_constraintTop_toTopOf="parent"
+					tools:ignore="NestedWeights"
+					/>
+
+			<ImageView
+					android:id="@+id/imageView_profile_nickname_icon"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginEnd="8dp"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toStartOf="@+id/textView_profile_nickname_title"
+					app:layout_constraintHorizontal_bias="0.5"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					app:srcCompat="@drawable/ic_person_black"
+					/>
+
+			<TextView
+					android:id="@+id/textView_profile_nickname_value"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:gravity="end"
+					android:text="@string/profile_nickname"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					/>
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+		<View
+				android:id="@+id/divider"
+				android:layout_width="0dp"
+				android:layout_height="1dp"
+				android:layout_marginTop="8dp"
+				android:background="?android:attr/listDivider"
+				app:layout_constraintEnd_toEndOf="@+id/constraintLayoutNickname"
+				app:layout_constraintHorizontal_bias="0.0"
+				app:layout_constraintStart_toStartOf="@+id/constraintLayoutNickname"
+				app:layout_constraintTop_toBottomOf="@+id/constraintLayoutNickname"
+				/>
+
+		<View
+				android:id="@+id/divider2"
+				android:layout_width="343dp"
+				android:layout_height="1dp"
+				android:layout_marginTop="8dp"
+				android:background="?android:attr/listDivider"
+				app:layout_constraintEnd_toEndOf="@+id/constraintLayoutAge"
+				app:layout_constraintStart_toStartOf="@+id/constraintLayoutAge"
+				app:layout_constraintTop_toBottomOf="@+id/constraintLayoutAge"
 				/>
 	</androidx.constraintlayout.widget.ConstraintLayout>
-
-	<View
-			android:id="@+id/divider"
-			android:layout_width="0dp"
-			android:layout_height="1dp"
-			android:layout_marginTop="8dp"
-			android:background="?android:attr/listDivider"
-			app:layout_constraintEnd_toEndOf="@+id/constraintLayoutNickname"
-			app:layout_constraintHorizontal_bias="0.0"
-			app:layout_constraintStart_toStartOf="@+id/constraintLayoutNickname"
-			app:layout_constraintTop_toBottomOf="@+id/constraintLayoutNickname"
-			/>
-
-	<View
-			android:id="@+id/divider2"
-			android:layout_width="343dp"
-			android:layout_height="1dp"
-			android:layout_marginTop="8dp"
-			android:background="?android:attr/listDivider"
-			app:layout_constraintEnd_toEndOf="@+id/constraintLayoutAge"
-			app:layout_constraintStart_toStartOf="@+id/constraintLayoutAge"
-			app:layout_constraintTop_toBottomOf="@+id/constraintLayoutAge"
-			/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
 

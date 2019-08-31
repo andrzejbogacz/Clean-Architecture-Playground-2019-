@@ -14,6 +14,7 @@ import com.example.loquicleanarchitecture.di.main.MainScope
 import com.example.loquicleanarchitecture.di.main.MainViewModelsModule
 import com.example.loquicleanarchitecture.di.profile.ProfileModule
 import com.example.loquicleanarchitecture.di.profile.ProfileScope
+import com.example.loquicleanarchitecture.di.profile.ProfileViewModelsModule
 import com.example.loquicleanarchitecture.view.chat.ChatActivity
 import com.example.loquicleanarchitecture.view.dialogs.*
 import com.example.loquicleanarchitecture.view.login.AuthActivity
@@ -62,7 +63,7 @@ abstract class ActivityBuildersModule {
     internal abstract fun contributeChatActivity(): ChatActivity
 
     @ProfileScope
-    @ContributesAndroidInjector(modules = [ProfileModule::class, MainViewModelsModule::class])
+    @ContributesAndroidInjector(modules = [ProfileModule::class, ProfileViewModelsModule::class])
     internal abstract fun contributeProfileActivity(): ProfileFragment
 
     @ChatlistScope

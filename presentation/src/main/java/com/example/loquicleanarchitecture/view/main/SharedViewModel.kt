@@ -1,6 +1,7 @@
 package com.example.loquicleanarchitecture.view.main
 
 import android.util.Log
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import arrow.core.Failure
 import arrow.core.None
@@ -14,7 +15,7 @@ import com.example.domain.exception.UserFirebaseException
 import com.example.loquicleanarchitecture.view.BaseViewModel
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
+class SharedViewModel @Inject constructor(
     val createUser: CreateUser,
     val loadUser: LoadUser,
     val changeUserAgePreference: ChangeUserAgePreference,
@@ -30,15 +31,7 @@ class MainViewModel @Inject constructor(
 
     private val userData: MutableLiveData<UserEntity> = MutableLiveData()
 
-    private fun createUser() = createUser(None) { it.fold(::handleFailure, ::handleSuccess) }
-
-    fun loadUser() = loadUser(None) { it.fold(::handleFailure, ::handleSuccess) }
-
-    fun changeUserAgePreference(pair: Pair<Int, Int>) =
-        changeUserAgePreference(pair) { it.fold(::handleFailure, ::handleSuccess) }
-
-    fun changeUserGenderPreference(gender: GenderPreference) =
-        changeUserGenderPreference(gender) { it.fold(::handleFailure, ::handleSuccess) }
+    private val userDataMediator: MediatorLiveData<UserEntity> = MediatorLiveData()
 
     fun changeProfileUserNickname(nickname: String) =
         changeProfileUserNickname(nickname) { it.fold(::handleFailure, ::handleSuccess) }
@@ -51,6 +44,17 @@ class MainViewModel @Inject constructor(
 
     fun uploadProfileUserPhoto(imageUri: String) =
         uploadProfileUserPhoto(imageUri) { it.fold(::handleFailure, ::handleSuccess) }
+
+
+    private fun createUser() = createUser(None) { it.fold(::handleFailure, ::handleSuccess) }
+
+    fun loadUser() = loadUser(None) { it.fold(::handleFailure, ::handleSuccess) }
+
+    fun changeUserAgePreference(pair: Pair<Int, Int>) =
+        changeUserAgePreference(pair) { it.fold(::handleFailure, ::handleSuccess) }
+
+    fun changeUserGenderPreference(gender: GenderPreference) =
+        changeUserGenderPreference(gender) { it.fold(::handleFailure, ::handleSuccess) }
 
     fun handleFailure(e: Failure) {
         Log.d(TAG, "Failed Loading user with Exception: ${e.exception.javaClass.simpleName}")
@@ -117,7 +121,6 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getUserDataLiveData(): MutableLiveData<UserEntity> {
-        return userData
-    }
+    fun getUserDataLiveData() = userData
+
 }

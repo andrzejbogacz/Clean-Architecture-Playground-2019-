@@ -6,11 +6,9 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.core.view.MenuCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -22,7 +20,11 @@ import com.example.domain.entities.Gender
 import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
 import com.example.loquicleanarchitecture.R
+import com.example.loquicleanarchitecture.databinding.DrawerHeaderBinding
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
+import com.example.loquicleanarchitecture.helper.failure
+import com.example.loquicleanarchitecture.helper.observe
+import com.example.loquicleanarchitecture.helper.viewModel
 import com.example.loquicleanarchitecture.view.login.AuthActivity
 import com.google.firebase.auth.FirebaseAuth
 import dagger.android.support.DaggerAppCompatActivity
@@ -39,24 +41,13 @@ import javax.inject.Inject
 class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
     private val TAG: String? = this.javaClass.name
 
-    private val appViewModelStore: ViewModelStore by lazy {
-        ViewModelStore()
-    }
-
-    override fun getViewModelStore(): ViewModelStore {
-        return appViewModelStore
-    }
-
-    private lateinit var textViewAgerange: TextView
-    private lateinit var textViewGenderValue: TextView
-
     @Inject
     lateinit var viewModelFactory: ViewModelProviderFactory
 
     @Inject
     lateinit var auth: FirebaseAuth
 
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var mainViewModel: SharedViewModel
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navController: NavController
@@ -76,8 +67,22 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         setupSideNavigationMenu(navController)
         setupBottomNavMenu(navController)
         initNavigationDrawer()
+        initOnDestinationChangedListener()
 
-//
+        mainViewModel = viewModel(viewModelFactory) {
+            observe(getUserDataLiveData(), ::updateUserUI)
+            failure(failure, ::handleFailure)
+        }
+        mainViewModel.loadUser()
+
+        val viewHeader = navigation_view.getHeaderView(0)
+        val navViewHeaderBinding = DrawerHeaderBinding.bind(viewHeader)
+
+        navViewHeaderBinding.vm = mainViewModel
+        navViewHeaderBinding.lifecycleOwner = this
+    }
+
+    private fun initOnDestinationChangedListener() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.chatlistFragment -> showBottomNav()
@@ -86,14 +91,6 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
                 // else -> hideBottomNav()
             }
         }
-
-
-//        mainViewModel = viewModel(viewModelFactory) {
-//            observe(getUserDataLiveData(), ::updateUserUI)
-//            failure(failure, ::handleFailure)
-//        }
-
-//        mainViewModel.loadUser()
     }
 
     private fun setupSideNavigationMenu(navController: NavController) {
@@ -137,8 +134,7 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
 
     private fun updateUserUI(user: UserEntity) {
         Log.d(TAG, "UpdateUserUI")
-        textView_header_nickname.text = user.nickname
-        textView_header_age.text = user.age.toString()
+        // nickname and age databinded
 
         when (user.preferences_gender) {
             GenderPreference.FEMALE -> textView_menu_genderValue.text =
@@ -162,7 +158,6 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
                 user.preferences_age_range_max
             )
 
-        //   textView_profile_nickname_value?.text = user.nickname
     }
 
 
@@ -183,13 +178,6 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
             count == 0 -> moveTaskToBack(true)
             else -> super.onBackPressed()
         }
-    }
-
-    private fun initMenuReferences() {
-        textViewAgerange = navigation_view.menu.findItem(R.id.item_drawer_age_range)
-            .actionView.findViewById(R.id.textView_menu_ageRangeValue)
-        textViewGenderValue = navigation_view.menu.findItem(R.id.item_drawer_gender)
-            .actionView.findViewById(R.id.textView_menu_genderValue)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

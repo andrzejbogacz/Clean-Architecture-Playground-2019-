@@ -19,16 +19,6 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_chatlistFragment_to_dialogDrawerSearchAge">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_chatlistFragment_to_dialogDrawerSearchGender">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
                             <entry key="action_chatlistFragment_to_profileFragmentNav">
                               <value>
                                 <LayoutPositions />
@@ -44,8 +34,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-561" />
-                            <option name="y" value="-689" />
+                            <option name="x" value="-751" />
+                            <option name="y" value="-698" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -56,14 +46,50 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-822" />
-                            <option name="y" value="-686" />
+                            <option name="x" value="-924" />
+                            <option name="y" value="-697" />
                           </Point>
                         </option>
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="profileFragmentNav">
+                  <entry key="dialogProfileAgeChoice">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-362" />
+                            <option name="y" value="138" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="dialogProfileGenderChoice">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-186" />
+                            <option name="y" value="134" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="dialogProfileNicknameChoice">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-541" />
+                            <option name="y" value="138" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="profileFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">

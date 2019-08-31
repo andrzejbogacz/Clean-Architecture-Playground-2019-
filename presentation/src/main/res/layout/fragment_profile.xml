@@ -7,6 +7,10 @@
 
 	<data>
 
+		<variable
+				name="sharedViewModel"
+				type="com.example.loquicleanarchitecture.view.main.SharedViewModel"
+				/>
 	</data>
 
 	<ScrollView

@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			xmlns:app="http://schemas.android.com/apk/res-auto"
-			xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		>
+
+	<data>
+
+		<variable
+				name="vm"
+				type="com.example.loquicleanarchitecture.view.main.SharedViewModel"
+				/>
+	</data>
+
+	<androidx.constraintlayout.widget.ConstraintLayout
 			android:id="@+id/header_layout"
 			android:layout_width="match_parent"
 			android:layout_height="150dp"
@@ -36,7 +47,7 @@
 
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="8dp"
-				android:text="@string/anonymous"
+				android:text="@{vm.userDataLiveData.component2()}"
 				android:textColor="@color/white"
 				android:textStyle="bold"
 				app:layout_constraintBottom_toTopOf="@+id/textView_header_gender"
@@ -65,7 +76,7 @@
 				android:layout_height="wrap_content"
 
 				android:layout_marginStart="16dp"
-				android:text="@string/age"
+				android:text="@{String.valueOf(vm.userDataLiveData.component4())}"
 				android:textColor="@color/white"
 				android:textSize="14sp"
 				android:textStyle="bold"
@@ -107,3 +118,4 @@
 				/>
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.domain.entities.Gender
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
-import com.example.loquicleanarchitecture.view.main.MainViewModel
+import com.example.loquicleanarchitecture.view.main.SharedViewModel
 import dagger.android.support.DaggerDialogFragment
 import kotlinx.android.synthetic.main.dialog_profile_gender_choice.view.*
 import javax.inject.Inject
@@ -21,12 +21,15 @@ class DialogProfileGenderChoice : DaggerDialogFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProviderFactory
 
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        mainViewModel = ViewModelProvider(activity!!.viewModelStore, viewModelFactory).get(MainViewModel::class.java)
-        val gender = mainViewModel.getUserDataLiveData().value!!.gender
+        sharedViewModel = ViewModelProvider(
+            activity!!.viewModelStore,
+            viewModelFactory
+        ).get(SharedViewModel::class.java)
+        val gender = sharedViewModel.getUserDataLiveData().value!!.gender
 
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_profile_gender_choice, null)
 
@@ -38,7 +41,7 @@ class DialogProfileGenderChoice : DaggerDialogFragment() {
                 .setPositiveButton(
                     R.string.confirm
                 ) { _, _ ->
-                    mainViewModel.changeProfileUserGender(getCheckedRadioButton(view))
+                    sharedViewModel.changeProfileUserGender(getCheckedRadioButton(view))
                 }
                 .setNegativeButton(
                     R.string.cancel

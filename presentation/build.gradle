@@ -111,4 +111,5 @@ dependencies {
     implementation project(':data_room')
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0-alpha01'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.0-alpha01'
+    kapt 'com.android.databinding:compiler:3.1.4'
 }

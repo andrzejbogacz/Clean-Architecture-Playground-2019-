@@ -8,16 +8,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
 import com.example.domain.entities.Gender
 import com.example.domain.entities.UserEntity
 import com.example.loquicleanarchitecture.R
+import com.example.loquicleanarchitecture.databinding.FragmentProfileBinding
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
 import com.example.loquicleanarchitecture.helper.observe
 import com.example.loquicleanarchitecture.helper.viewModel
 import com.example.loquicleanarchitecture.view.dialogs.DialogProfileAgeChoice
 import com.example.loquicleanarchitecture.view.dialogs.DialogProfileGenderChoice
-import com.example.loquicleanarchitecture.view.dialogs.DialogProfileNicknameChoice
-import com.example.loquicleanarchitecture.view.main.MainViewModel
+import com.example.loquicleanarchitecture.view.main.SharedViewModel
 import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -33,7 +35,7 @@ class ProfileFragment : DaggerFragment(),
     @Inject
     lateinit var viewModelFactory: ViewModelProviderFactory
 
-    lateinit var mainViewModel: MainViewModel
+    lateinit var sharedViewModel: SharedViewModel
 
     var currentViewHolder: ImageView? = null
 
@@ -42,19 +44,23 @@ class ProfileFragment : DaggerFragment(),
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        val binding: FragmentProfileBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
+
+        binding.sharedViewModel = sharedViewModel
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         initListeners()
-
-        mainViewModel = viewModel(viewModelFactory) {
+        sharedViewModel = viewModel(viewModelFactory) {
             observe(getUserDataLiveData(), ::updateUI)
         }
 
         // TODO Add delete button for photos https://github.com/stfalcon-studio/ChatKit/blob/master/docs/COMPONENT_MESSAGE_INPUT.MD
         // Todo Add save button on toolbar
+        // todo LIVEDATA WITH MVVM PATTERN EXAMPLES || SHOULD EVERYTHING BE OBSERVABLE?
     }
 
     private fun initListeners() {
@@ -90,10 +96,7 @@ class ProfileFragment : DaggerFragment(),
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.constraintLayoutNickname -> DialogProfileNicknameChoice().show(
-                childFragmentManager,
-                "nickname"
-            )
+            R.id.constraintLayoutNickname -> Navigation.findNavController(v).navigate(R.id.dialogProfileNicknameChoice)
             R.id.layout_constraint_profile_gender -> DialogProfileGenderChoice().show(
                 childFragmentManager,
                 "gender"
@@ -112,7 +115,7 @@ class ProfileFragment : DaggerFragment(),
             if (resultCode == Activity.RESULT_OK) {
                 val resultUri = result.uri
                 setPhoto(resultUri)
-                mainViewModel.uploadProfileUserPhoto(resultUri.toString())
+                // sharedViewModel.uploadProfileUserPhoto(resultUri.toString())
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
             }
@@ -125,4 +128,6 @@ class ProfileFragment : DaggerFragment(),
             .fit()
             .into(currentViewHolder)
     }
+
+
 }

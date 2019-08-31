@@ -40,4 +40,16 @@
 			android:name="com.example.loquicleanarchitecture.view.dialogs.DialogDrawerSearchAge"
 			android:label="DialogDrawerSearchAge"
 			tools:layout="@layout/dialog_drawer_age_range_choice" />
+	<dialog
+			android:id="@+id/dialogProfileAgeChoice"
+			android:name="com.example.loquicleanarchitecture.view.dialogs.DialogProfileAgeChoice"
+			android:label="DialogProfileAgeChoice" />
+	<dialog
+			android:id="@+id/dialogProfileNicknameChoice"
+			android:name="com.example.loquicleanarchitecture.view.dialogs.DialogProfileNicknameChoice"
+			android:label="DialogProfileNicknameChoice" />
+	<dialog
+			android:id="@+id/dialogProfileGenderChoice"
+			android:name="com.example.loquicleanarchitecture.view.dialogs.DialogProfileGenderChoice"
+			android:label="DialogProfileGenderChoice" />
 </navigation>

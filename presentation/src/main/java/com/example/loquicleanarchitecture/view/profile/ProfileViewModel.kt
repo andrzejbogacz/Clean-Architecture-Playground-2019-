@@ -1,28 +1,79 @@
 package com.example.loquicleanarchitecture.view.profile
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import arrow.core.Failure
+import com.example.data.usecases.ChangeProfileUserAge
+import com.example.data.usecases.ChangeProfileUserGender
+import com.example.data.usecases.ChangeProfileUserNickname
+import com.example.data.usecases.UploadProfileUserPhoto
+import com.example.domain.entities.Gender
+import com.example.domain.entities.UserEntity
+import com.example.domain.exception.FirebaseResult
+import com.example.domain.exception.UserFirebaseException
 import javax.inject.Inject
 
-class ProfileViewModel @Inject constructor(): ViewModel() {
+class ProfileViewModel @Inject constructor(
+    val changeProfileUserNickname: ChangeProfileUserNickname,
+    val changeProfileUserGender: ChangeProfileUserGender,
+    val changeProfileUserAge: ChangeProfileUserAge,
+    val uploadProfileUserPhoto: UploadProfileUserPhoto
+) : ViewModel() {
 
-    private val ageNumber = MutableLiveData<Int>().apply { }
-    private val nickname = MutableLiveData<String>().apply { }
-    private val gender = MutableLiveData<Int>().apply { }
+    private val TAG: String? = this.javaClass.name
+
+    private val userData: MutableLiveData<UserEntity> = MutableLiveData()
+
+    fun changeProfileUserNickname(nickname: String) =
+        changeProfileUserNickname(nickname) { it.fold(::handleFailure, ::handleSuccess) }
+
+    fun changeProfileUserGender(gender: Gender) =
+        changeProfileUserGender(gender) { it.fold(::handleFailure, ::handleSuccess) }
+
+    fun changeProfileUserAge(age: Int) =
+        changeProfileUserAge(age) { it.fold(::handleFailure, ::handleSuccess) }
+
+    fun uploadProfileUserPhoto(imageUri: String) =
+        uploadProfileUserPhoto(imageUri) { it.fold(::handleFailure, ::handleSuccess) }
 
 
-    fun setAgeNumber(num: Int) {
-        ageNumber.value = num
+    fun handleFailure(e: Failure) {
+        Log.d(TAG, "Failed Loading user with Exception: ${e.exception.javaClass.simpleName}")
+        when (e.exception) {
+            //todo catch and define new exception handlers
+            is UserFirebaseException.UnknownException -> Log.d(
+                TAG, " Unhandled exception within FirebaseRepository: check logs"
+            )
+        }
     }
 
-    fun setNicknameValue(num: String) {
-        nickname.value = num
+    private fun handleSuccess(firebaseResult: Any) {
+        when (firebaseResult) {
+            is FirebaseResult.UserAgePreferencesChanged -> Log.d(
+                TAG,
+                "handleSuccess: Successfully changed user age preference"
+            )
+            is FirebaseResult.UserProfileNicknameChanged -> Log.d(
+                TAG,
+                "handleSuccess: Successfully changed user nickname"
+            )
+            is FirebaseResult.UserProfileGenderChanged -> Log.d(
+                TAG,
+                "handleSuccess: Successfully changed user gender"
+            )
+            is FirebaseResult.UserProfileAgeChanged -> Log.d(
+                TAG,
+                "handleSuccess: Successfully changed user age"
+            )
+            is FirebaseResult.UserProfilePhotoUploaded -> Log.d(
+                TAG,
+                "handleSuccess: Successfully uploaded photo"
+            )
+        }
     }
 
-    fun setGender(num: Int) {
-        gender.value = num
+    fun getUserDataLiveData(): MutableLiveData<UserEntity> {
+        return userData
     }
-
-
-
 }

@@ -8,7 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
-import com.example.loquicleanarchitecture.view.main.MainViewModel
+import com.example.loquicleanarchitecture.view.main.SharedViewModel
 import dagger.android.support.DaggerDialogFragment
 import javax.inject.Inject
 
@@ -19,11 +19,14 @@ class DialogProfileNicknameChoice : DaggerDialogFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProviderFactory
 
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var mainViewModel: SharedViewModel
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        mainViewModel = ViewModelProvider(activity!!.viewModelStore, viewModelFactory).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(
+            activity!!.viewModelStore,
+            viewModelFactory
+        ).get(SharedViewModel::class.java)
 
         val userNickname = mainViewModel.getUserDataLiveData().value!!.nickname
 
