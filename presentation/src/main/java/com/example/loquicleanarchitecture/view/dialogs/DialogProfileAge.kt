@@ -11,7 +11,7 @@ import com.example.loquicleanarchitecture.view.main.SharedViewModel
 import dagger.android.support.DaggerDialogFragment
 import javax.inject.Inject
 
-class DialogProfileAgeChoice : DaggerDialogFragment() {
+class DialogProfileAge : DaggerDialogFragment() {
 
     private val TAG: String? = this.javaClass.name
 

@@ -46,7 +46,7 @@ abstract class ActivityBuildersModule {
 
     @MainScope
     @ContributesAndroidInjector(modules = [ChatlistModule::class, MainViewModelsModule::class])
-    internal abstract fun contributeChangeNicknameDialog(): DialogProfileNicknameChoice
+    internal abstract fun contributeChangeNicknameDialog(): DialogProfileNickname
 
     @MainScope
     @ContributesAndroidInjector(modules = [ChatlistModule::class, MainViewModelsModule::class])
@@ -54,7 +54,7 @@ abstract class ActivityBuildersModule {
 
     @MainScope
     @ContributesAndroidInjector(modules = [ChatlistModule::class, MainViewModelsModule::class])
-    internal abstract fun contributeChangeAgeDialog(): DialogProfileAgeChoice
+    internal abstract fun contributeChangeAgeDialog(): DialogProfileAge
 
     /** END OF MAIN SCOPE */
 

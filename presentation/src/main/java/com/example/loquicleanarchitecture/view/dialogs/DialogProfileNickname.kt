@@ -2,17 +2,18 @@ package com.example.loquicleanarchitecture.view.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.example.loquicleanarchitecture.R
+import com.example.loquicleanarchitecture.databinding.DialogProfileNicknameChoiceBinding
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
 import com.example.loquicleanarchitecture.view.main.SharedViewModel
 import dagger.android.support.DaggerDialogFragment
 import javax.inject.Inject
 
-class DialogProfileNicknameChoice : DaggerDialogFragment() {
+class DialogProfileNickname : DaggerDialogFragment() {
 
     private val TAG: String? = this.javaClass.name
 
@@ -33,7 +34,10 @@ class DialogProfileNicknameChoice : DaggerDialogFragment() {
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_profile_nickname_choice, null)
         val edNickname = view.findViewById<EditText>(R.id.editText_profile_nickname_value)
 
-        edNickname.setText(userNickname, TextView.BufferType.EDITABLE)
+        val dialogBinding: DialogProfileNicknameChoiceBinding =
+            DialogProfileNicknameChoiceBinding.inflate(LayoutInflater.from(context))
+
+        //edNickname.setText(userNickname, TextView.BufferType.EDITABLE)
         edNickname.setSelection(edNickname.text.length)
 
         return activity?.let {

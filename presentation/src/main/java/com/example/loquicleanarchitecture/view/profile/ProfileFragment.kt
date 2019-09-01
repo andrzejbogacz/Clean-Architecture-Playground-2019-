@@ -17,7 +17,7 @@ import com.example.loquicleanarchitecture.databinding.FragmentProfileBinding
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
 import com.example.loquicleanarchitecture.helper.observe
 import com.example.loquicleanarchitecture.helper.viewModel
-import com.example.loquicleanarchitecture.view.dialogs.DialogProfileAgeChoice
+import com.example.loquicleanarchitecture.view.dialogs.DialogProfileAge
 import com.example.loquicleanarchitecture.view.dialogs.DialogProfileGenderChoice
 import com.example.loquicleanarchitecture.view.main.SharedViewModel
 import com.squareup.picasso.Picasso
@@ -39,15 +39,14 @@ class ProfileFragment : DaggerFragment(),
 
     var currentViewHolder: ImageView? = null
 
+    lateinit var binding: FragmentProfileBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentProfileBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
-
-        binding.sharedViewModel = sharedViewModel
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
 
         return binding.root
     }
@@ -57,6 +56,7 @@ class ProfileFragment : DaggerFragment(),
         sharedViewModel = viewModel(viewModelFactory) {
             observe(getUserDataLiveData(), ::updateUI)
         }
+        binding.sharedViewModel = sharedViewModel
 
         // TODO Add delete button for photos https://github.com/stfalcon-studio/ChatKit/blob/master/docs/COMPONENT_MESSAGE_INPUT.MD
         // Todo Add save button on toolbar
@@ -101,7 +101,7 @@ class ProfileFragment : DaggerFragment(),
                 childFragmentManager,
                 "gender"
             )
-            R.id.constraintLayoutAge -> DialogProfileAgeChoice().show(childFragmentManager, "age")
+            R.id.constraintLayoutAge -> DialogProfileAge().show(childFragmentManager, "age")
             R.id.iv_photo1, R.id.iv_photo2, R.id.iv_photo3, R.id.iv_photo4, R.id.iv_photo5, R.id.iv_photo6 -> loadImagePicker(
                 v
             )

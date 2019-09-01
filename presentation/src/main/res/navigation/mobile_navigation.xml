@@ -42,11 +42,11 @@
 			tools:layout="@layout/dialog_drawer_age_range_choice" />
 	<dialog
 			android:id="@+id/dialogProfileAgeChoice"
-			android:name="com.example.loquicleanarchitecture.view.dialogs.DialogProfileAgeChoice"
+			android:name="com.example.loquicleanarchitecture.view.dialogs.DialogProfileAge"
 			android:label="DialogProfileAgeChoice" />
 	<dialog
 			android:id="@+id/dialogProfileNicknameChoice"
-			android:name="com.example.loquicleanarchitecture.view.dialogs.DialogProfileNicknameChoice"
+			android:name="com.example.loquicleanarchitecture.view.dialogs.DialogProfileNickname"
 			android:label="DialogProfileNicknameChoice" />
 	<dialog
 			android:id="@+id/dialogProfileGenderChoice"
