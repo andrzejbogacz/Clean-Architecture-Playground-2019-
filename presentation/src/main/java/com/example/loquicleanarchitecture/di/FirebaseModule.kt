@@ -38,7 +38,7 @@ class FirebaseModule {
     @Singleton
     @Provides
     fun provideFirebaseStorage(firebaseAuth: FirebaseAuth): StorageReference {
-        return FirebaseStorage.getInstance().reference.child(firebaseAuth.currentUser.toString())
+        return FirebaseStorage.getInstance().reference.child(firebaseAuth.currentUser!!.uid)
     }
 
 

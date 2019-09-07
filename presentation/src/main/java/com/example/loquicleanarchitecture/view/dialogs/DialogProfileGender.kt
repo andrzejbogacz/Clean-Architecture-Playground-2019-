@@ -29,7 +29,7 @@ class DialogProfileGenderChoice : DaggerDialogFragment() {
             activity!!.viewModelStore,
             viewModelFactory
         ).get(SharedViewModel::class.java)
-        val gender = sharedViewModel.getUserDataLiveData().value!!.gender
+        val gender = sharedViewModel.getUserDetailsLiveData().value!!.gender
 
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_profile_gender_choice, null)
 

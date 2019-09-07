@@ -1,7 +1,6 @@
 package com.example.loquicleanarchitecture.view.main
 
 import android.util.Log
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import arrow.core.Failure
 import arrow.core.None
@@ -10,6 +9,7 @@ import com.example.data.usecases.*
 import com.example.domain.entities.Gender
 import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
+import com.example.domain.entities.UserPhotos
 import com.example.domain.exception.FirebaseResult.*
 import com.example.domain.exception.UserFirebaseException
 import com.example.loquicleanarchitecture.view.BaseViewModel
@@ -29,9 +29,8 @@ class SharedViewModel @Inject constructor(
 
     private val TAG: String? = this.javaClass.name
 
-    private val userData: MutableLiveData<UserEntity> = MutableLiveData()
-
-    private val userDataMediator: MediatorLiveData<UserEntity> = MediatorLiveData()
+    private val userDetailsLiveData: MutableLiveData<UserEntity> = MutableLiveData()
+    private val userPhotosLiveData: MutableLiveData<UserPhotos> = MutableLiveData()
 
     fun changeProfileUserNickname(nickname: String) =
         changeProfileUserNickname(nickname) { it.fold(::handleFailure, ::handleSuccess) }
@@ -42,7 +41,7 @@ class SharedViewModel @Inject constructor(
     fun changeProfileUserAge(age: Int) =
         changeProfileUserAge(age) { it.fold(::handleFailure, ::handleSuccess) }
 
-    fun uploadProfileUserPhoto(imageUri: String) =
+    fun uploadProfileUserPhoto(imageUri: Pair<String,String>) =
         uploadProfileUserPhoto(imageUri) { it.fold(::handleFailure, ::handleSuccess) }
 
 
@@ -73,8 +72,8 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-    private fun listenToUserChanges() {
-        firebaseRepository.userDocument.addSnapshotListener { snapshot, e ->
+    private fun listenUserDetailsFirebaseChanges() {
+        firebaseRepository.userDetailsDocument.addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Log.w(TAG, "Listen failed.", e)
                 // throwable = e
@@ -82,7 +81,23 @@ class SharedViewModel @Inject constructor(
             }
 
             if (snapshot != null && snapshot.exists()) {
-                userData.value = snapshot.toObject(UserEntity::class.java)!!
+                userDetailsLiveData.value = snapshot.toObject(UserEntity::class.java)!!
+
+            } else {
+                Log.d(TAG, "Current data: null")
+            }
+        }
+    }
+    private fun listenUserPhotosFirebaseChanges() {
+        firebaseRepository.userPhotosDocument.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.w(TAG, "Listen failed.", e)
+                // throwable = e
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                userPhotosLiveData.value = snapshot.toObject(UserPhotos::class.java)!!
 
             } else {
                 Log.d(TAG, "Current data: null")
@@ -93,16 +108,14 @@ class SharedViewModel @Inject constructor(
     private fun handleSuccess(firebaseResult: Any) {
         when (firebaseResult) {
             is NewUserCreated -> {
-                listenToUserChanges();Log.d(
-                    TAG,
-                    "handleSuccess: Successfully saved new user to remote database"
-                )
+                listenUserDetailsFirebaseChanges()
+                listenUserPhotosFirebaseChanges()
+                Log.d(TAG, "handleSuccess: Successfully saved new user to remote database")
             }
             is ExistingUserLoaded -> {
-                listenToUserChanges(); Log.d(
-                    TAG,
-                    "handleSuccess: Successfully loaded existing user"
-                )
+                listenUserDetailsFirebaseChanges()
+                listenUserPhotosFirebaseChanges()
+                Log.d(TAG, "handleSuccess: Successfully loaded existing user")
             }
             is UserAgePreferencesChanged -> Log.d(
                 TAG,
@@ -121,6 +134,7 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-    fun getUserDataLiveData() = userData
+    fun getUserDetailsLiveData() = userDetailsLiveData
+    fun getUserPhotosLiveData() = userPhotosLiveData
 
 }

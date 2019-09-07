@@ -10,6 +10,7 @@ import com.example.domain.UserRepository
 import com.example.domain.entities.Gender
 import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
+import com.example.domain.entities.UserPhotos
 import com.example.domain.exception.FirebaseResult
 import com.example.domain.exception.FirebaseResult.*
 import com.example.domain.exception.UserFirebaseException
@@ -20,20 +21,42 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class FirebaseRepository @Inject constructor(
-    firebaseFirestore: FirebaseFirestore,
+     firebaseFirestore: FirebaseFirestore,
     val fbAuth: FirebaseAuth,
     val userStorageReference: StorageReference
 ) :
     UserRepository {
-    override suspend fun uploadProfileUserPhoto(uriString: String): Either<Failure, FirebaseResult> {
+    // todo export paths as external dagger dependency
+    private val TAG: String? = this.javaClass.name
+    var userDetailsDocument = firebaseFirestore.collection("Users").document(fbAuth.currentUser!!.uid)
+    var userPhotosDocument = firebaseFirestore.collection("Users").document(fbAuth.currentUser!!.uid)
+        .collection("Storage").document("myPhotos")
+
+    override suspend fun uploadProfileUserPhoto(uriAndTag: Pair<String, String>): Either<Failure, FirebaseResult> {
+
+        val uri = uriAndTag.first
+        val tag = uriAndTag.second
+
+        var photoDownloadLink: String? = null
+        val photoInStorageReference = userStorageReference.child("images/$tag")
 
         var isSuccess = false
+        val photoUri = Uri.parse(uri)
 
-        val photoUri = Uri.parse(uriString)
-
-        userStorageReference.putFile(photoUri)
+        val photo =  photoInStorageReference.putFile(photoUri)
             .addOnFailureListener { printUnknownException(it) }
-            .addOnSuccessListener { isSuccess = true }.await()
+            .addOnSuccessListener { isSuccess = true }
+             .await()
+
+        photo.storage.downloadUrl.addOnSuccessListener { photoDownloadLink = it.toString() }.await()
+
+        photoDownloadLink?.run {
+            userDetailsDocument
+                .collection("Storage")
+                .document("myPhotos")
+                .update(tag, photoDownloadLink)
+                .addOnFailureListener { isSuccess = false }
+                .await()}
 
         return when (isSuccess) {
             true -> Right(UserProfilePhotoUploaded)
@@ -41,13 +64,10 @@ class FirebaseRepository @Inject constructor(
         }
     }
 
-
-    private val TAG: String? = this.javaClass.name
-
     override suspend fun updateUserAge(age: Int): Either<Failure, FirebaseResult> {
         var isSuccess = false
 
-        userDocument
+        userDetailsDocument
             .update(
                 "age", age
             )
@@ -65,7 +85,7 @@ class FirebaseRepository @Inject constructor(
     override suspend fun updateProfileUserNickname(nickname: String): Either<Failure, FirebaseResult> {
         var isSuccess = false
 
-        userDocument
+        userDetailsDocument
             .update(
                 "nickname", nickname
             )
@@ -82,7 +102,7 @@ class FirebaseRepository @Inject constructor(
     override suspend fun updateUserGender(gender: Gender): Either<Failure, FirebaseResult> {
         var isSuccess = false
 
-        userDocument
+        userDetailsDocument
             .update(
                 "gender", gender
             )
@@ -97,12 +117,10 @@ class FirebaseRepository @Inject constructor(
     }
 
 
-    var userDocument = firebaseFirestore.collection("Users").document(fbAuth.currentUser!!.uid)
-
     override suspend fun updateAgePreference(preferenceRange: Pair<Int, Int>): Either<Failure, FirebaseResult> {
         var isSuccess = false
 
-        userDocument
+        userDetailsDocument
             .update(
                 "preferences_age_range_min", preferenceRange.first,
                 "preferences_age_range_max", preferenceRange.second
@@ -120,7 +138,7 @@ class FirebaseRepository @Inject constructor(
     override suspend fun updateGenderPreference(preferenceGender: GenderPreference): Either<Failure, FirebaseResult> {
         var isSuccess = false
 
-        userDocument
+        userDetailsDocument
             .update(
                 "preferences_gender", preferenceGender.name
             )
@@ -138,7 +156,7 @@ class FirebaseRepository @Inject constructor(
         var userEntity: UserEntity? = null
         lateinit var userFirebaseException: UserFirebaseException
 
-        userDocument.get().addOnSuccessListener { documentSnapshot ->
+        userDetailsDocument.get().addOnSuccessListener { documentSnapshot ->
             if (documentSnapshot != null && documentSnapshot.exists()) {
                 userEntity = documentSnapshot.toObject(UserEntity::class.java)
                 Log.d(TAG, "Document not null, loading existing user")
@@ -157,13 +175,24 @@ class FirebaseRepository @Inject constructor(
 
     override suspend fun createUser(): Either<Failure, FirebaseResult> {
         var isSuccess = false
-        val newUserEntity = UserEntity().apply { id = fbAuth.currentUser!!.uid }
 
-        userDocument
+        val newUserEntity = UserEntity().apply { id = fbAuth.currentUser!!.uid }
+        val newUserPhotos = UserPhotos()
+        userDetailsDocument
             .set(newUserEntity)
             .addOnFailureListener { printUnknownException(it) }
             .addOnSuccessListener { isSuccess = true }
             .await()
+
+        userDetailsDocument
+            .collection("Storage")
+            .document("myPhotos")
+            .set(newUserPhotos)
+            .addOnFailureListener { printUnknownException(it) }
+            .addOnSuccessListener { isSuccess = true }
+            .await()
+
+
 
         return when (isSuccess) {
             true -> Right(NewUserCreated)

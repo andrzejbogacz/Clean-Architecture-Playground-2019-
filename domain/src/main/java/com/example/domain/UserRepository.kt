@@ -24,5 +24,5 @@ interface UserRepository {
 
     suspend fun updateProfileUserNickname(nickname: String): Either<Failure, FirebaseResult>
 
-    suspend fun uploadProfileUserPhoto(uriString: String): Either<Failure, FirebaseResult>
+    suspend fun uploadProfileUserPhoto(uriAndTag : Pair<String,String>): Either<Failure, FirebaseResult>
 }

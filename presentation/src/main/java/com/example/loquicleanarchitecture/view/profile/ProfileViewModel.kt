@@ -25,19 +25,6 @@ class ProfileViewModel @Inject constructor(
 
     private val userData: MutableLiveData<UserEntity> = MutableLiveData()
 
-    fun changeProfileUserNickname(nickname: String) =
-        changeProfileUserNickname(nickname) { it.fold(::handleFailure, ::handleSuccess) }
-
-    fun changeProfileUserGender(gender: Gender) =
-        changeProfileUserGender(gender) { it.fold(::handleFailure, ::handleSuccess) }
-
-    fun changeProfileUserAge(age: Int) =
-        changeProfileUserAge(age) { it.fold(::handleFailure, ::handleSuccess) }
-
-    fun uploadProfileUserPhoto(imageUri: String) =
-        uploadProfileUserPhoto(imageUri) { it.fold(::handleFailure, ::handleSuccess) }
-
-
     fun handleFailure(e: Failure) {
         Log.d(TAG, "Failed Loading user with Exception: ${e.exception.javaClass.simpleName}")
         when (e.exception) {

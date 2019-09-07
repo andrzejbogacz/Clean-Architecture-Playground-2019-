@@ -27,7 +27,7 @@ class DialogDrawerSearchAge : DaggerDialogFragment() {
             viewModelFactory
         ).get(SharedViewModel::class.java)
 
-        val userData = mainViewModel.getUserDataLiveData().value!!
+        val userData = mainViewModel.getUserDetailsLiveData().value!!
 
         var firstValue: Int = userData.preferences_age_range_min
         var secondValue: Int = userData.preferences_age_range_max

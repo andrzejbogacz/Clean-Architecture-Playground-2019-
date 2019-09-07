@@ -47,7 +47,7 @@
 
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="8dp"
-				android:text="@{vm.userDataLiveData.component2()}"
+				android:text="@{vm.userDetailsLiveData.component2()}"
 				android:textColor="@color/white"
 				android:textStyle="bold"
 				app:layout_constraintBottom_toTopOf="@+id/textView_header_gender"
@@ -76,7 +76,7 @@
 				android:layout_height="wrap_content"
 
 				android:layout_marginStart="16dp"
-				android:text="@{String.valueOf(vm.userDataLiveData.component4())}"
+				android:text="@{String.valueOf(vm.userDetailsLiveData.component4())}"
 				android:textColor="@color/white"
 				android:textSize="14sp"
 				android:textStyle="bold"

@@ -26,7 +26,7 @@ class DialogProfileAge : DaggerDialogFragment() {
             activity!!.viewModelStore,
             viewModelFactory
         ).get(SharedViewModel::class.java)
-        val userAge = sharedViewModel.getUserDataLiveData().value!!.age
+        val userAge = sharedViewModel.getUserDetailsLiveData().value!!.age
 
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_profile_age_choice, null)
 

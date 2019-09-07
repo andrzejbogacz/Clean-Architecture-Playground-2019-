@@ -70,7 +70,7 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         initOnDestinationChangedListener()
 
         mainViewModel = viewModel(viewModelFactory) {
-            observe(getUserDataLiveData(), ::updateUserUI)
+            observe(getUserDetailsLiveData(), ::updateUserUI)
             failure(failure, ::handleFailure)
         }
         mainViewModel.loadUser()
@@ -170,7 +170,7 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
 
     override fun onBackPressed() {
         val count = supportFragmentManager.backStackEntryCount
-
+            //todo backpress from profile going back to mainActivity
         when {
             drawer_layout.isDrawerOpen(GravityCompat.START) -> drawer_layout.closeDrawer(
                 GravityCompat.START

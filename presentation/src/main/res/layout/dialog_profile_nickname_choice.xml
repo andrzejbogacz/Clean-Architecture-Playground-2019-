@@ -25,7 +25,7 @@
 				android:ems="10"
 				android:hint="@string/profile_nickname_hint"
 				android:inputType="textPersonName"
-				android:text="@{profile.sharedViewModel.userDataLiveData.component2()}"
+				android:text="@{profile.sharedViewModel.userDetailsLiveData.component2()}"
 				app:layout_constraintEnd_toStartOf="@+id/guideline8"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent"

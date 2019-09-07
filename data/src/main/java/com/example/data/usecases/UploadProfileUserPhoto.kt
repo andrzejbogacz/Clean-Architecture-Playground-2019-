@@ -11,7 +11,7 @@ import com.google.firebase.storage.StorageReference
 import javax.inject.Inject
 
 class UploadProfileUserPhoto @Inject constructor(var userRepository: UserRepository) :
-    UseCase<FirebaseResult, String>() {
+    UseCase<FirebaseResult, Pair<String,String>>() {
 
     private val TAG: String? = this.javaClass.name
     @Inject
@@ -23,7 +23,7 @@ class UploadProfileUserPhoto @Inject constructor(var userRepository: UserReposit
     @Inject
     lateinit var storageRef: StorageReference
 
-    override suspend fun run(params: String): Either<Failure, FirebaseResult> =
+    override suspend fun run(params: Pair<String,String>): Either<Failure, FirebaseResult> =
         userRepository.uploadProfileUserPhoto(params)
 }
 
