@@ -61,7 +61,7 @@ dependencies {
     implementation deps.misc.image_cropper
     implementation deps.misc.rounded_image_view
     implementation deps.misc.glide_transformation
-    
+
     kapt deps.misc.data_binding
 
     testImplementation deps.misc.junit
@@ -110,14 +110,13 @@ dependencies {
     implementation deps.lifecycle.runtime
     kapt deps.lifecycle.compiler
 
-    implementation project(':data')
-    implementation project(':domain')
-    implementation project(':data_room')
-
     implementation deps.navigation.fragment_ktx
     implementation deps.navigation.ui_ktx
 
     implementation deps.glide.runtime
-    implementation deps.glide.compiler
+    kapt deps.glide.compiler
 
+    implementation project(':data')
+    implementation project(':domain')
+    implementation project(':data_room')
 }

@@ -29,6 +29,7 @@ versions.ui_auth = '5.0.0'
 versions.admin = '6.8.1'
 versions.firestore = '20.1.0'
 versions.storage = '18.1.1'
+versions.storage_ui = '3.3.0'
 //MISC
 versions.facebook_sdk = '5.0.0'
 versions.login_buttons = '1.0.0'
@@ -49,6 +50,8 @@ versions.coroutines_play_services = '1.1.1'
 versions.arrow_version = "0.9.0"
 versions.apache_commons = "2.5"
 versions.rounded_image_view = '2.3.0'
+versions.data_binding = '3.1.4'
+versions.glide_transformation = '4.1.0'
 
 versions.arch_core = "2.0.1"
 versions.atsl_rules = "1.1.1"
@@ -61,7 +64,7 @@ versions.dagger = "2.22"
 versions.dexmaker = "2.2.0"
 versions.espresso = "3.2.0"
 versions.fragment = "1.1.0-alpha09"
-versions.glide = "4.8.0"
+versions.glide = "4.9.0"
 versions.hamcrest = "1.3"
 versions.junit = "4.12"
 versions.kotlin = "1.3.40"
@@ -70,7 +73,7 @@ versions.mockito = "2.25.0"
 versions.mockito_all = "1.10.19"
 versions.mockito_android = "2.25.0"
 versions.mockwebserver = "3.8.1"
-versions.navigation = "2.1.0-alpha04"
+versions.navigation = "2.2.0-alpha01"
 versions.okhttp_logging_interceptor = "3.9.0"
 versions.paging = "2.1.0-rc01"
 versions.retrofit = "2.3.0"
@@ -88,6 +91,7 @@ firebase.ui_auth = "com.firebaseui:firebase-ui-auth:$versions.ui_auth"
 firebase.firestore = "com.google.firebase:firebase-firestore:$versions.firestore"
 firebase.admin = "com.google.firebase:firebase-admin:$versions.admin"
 firebase.storage = "com.google.firebase:firebase-storage:$versions.storage"
+firebase.storage_ui = "com.firebaseui:firebase-ui-storage:$versions.storage_ui"
 deps.firebase = firebase
 
 def misc = [:]
@@ -106,6 +110,8 @@ misc.timber = "com.jakewharton.timber:timber:$versions.timber"
 misc.okhttp3 = "com.jakewharton.picasso:picasso2-okhttp3-downloader:$versions.okhttp3"
 misc.image_cropper = "com.theartofdev.edmodo:android-image-cropper:$versions.image_cropper"
 misc.rounded_image_view = "com.makeramen:roundedimageview:$versions.rounded_image_view"
+misc.data_binding = "com.android.databinding:compiler:$versions.databinding"
+misc.glide_transformation = "jp.wasabeef:glide-transformations:$versions.glide_transformation"
 
 deps.misc = misc
 
