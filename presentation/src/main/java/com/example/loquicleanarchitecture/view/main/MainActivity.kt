@@ -115,7 +115,6 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
                         GravityCompat.START
                     )
                 }
-
             }
             return@setNavigationItemSelectedListener false
         }
@@ -123,13 +122,11 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
 
     private fun showBottomNav() {
         bottom_nav.visibility = View.VISIBLE
-
     }
 
     private fun hideBottomNav() {
         bottom_nav.visibility = View.GONE
         navigation_view.visibility = View.GONE
-
     }
 
     private fun updateUserUI(user: UserEntity) {
@@ -157,9 +154,7 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
                 user.preferences_age_range_min,
                 user.preferences_age_range_max
             )
-
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
@@ -169,14 +164,17 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
 
 
     override fun onBackPressed() {
-        val count = supportFragmentManager.backStackEntryCount
-            //todo backpress from profile going back to mainActivity
-        when {
-            drawer_layout.isDrawerOpen(GravityCompat.START) -> drawer_layout.closeDrawer(
-                GravityCompat.START
-            )
-            count == 0 -> moveTaskToBack(true)
-            else -> super.onBackPressed()
+
+        val isDrawerOpen = drawer_layout.isDrawerOpen(GravityCompat.START)
+        val isMainScreen = navController.currentDestination?.id == R.id.chatlistFragment
+
+        when (isDrawerOpen) {
+            true -> drawer_layout.closeDrawer(GravityCompat.START)
+            false -> {
+                if (isMainScreen) {
+                    moveTaskToBack(true)
+                } else super.onBackPressed()
+            }
         }
     }
 

@@ -2,7 +2,6 @@
 <resources>
 	<string name="app_name">LoquiCleanArchitecture</string>
 	<string name="facebook_app_id">450002142492278</string>
-	<string name="fb_login_protocol_scheme">fb450002142492278</string>
 	<string name="loading">Wczytywanie…</string>
 	<string name="facebook_status_fmt">Facebook User: %s</string>
 	<string name="firebase_status_fmt">Firebase User: %s</string>

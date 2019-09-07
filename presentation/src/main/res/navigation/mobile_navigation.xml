@@ -9,6 +9,7 @@
 			android:id="@+id/profileFragment"
 			android:name="com.example.loquicleanarchitecture.view.profile.ProfileFragment"
 			android:label="Profile"
+			android:tag="Profile"
 			tools:layout="@layout/fragment_profile">
 		<action
 				android:id="@+id/action_profileFragmentNav_to_chatlistFragment"
@@ -19,6 +20,7 @@
 			android:id="@+id/chatlistFragment"
 			android:name="com.example.loquicleanarchitecture.view.main.chatlist.ChatlistFragment"
 			android:label="Home"
+			android:tag="Home"
 			tools:layout="@layout/fragment_chatlist">
 		<action
 				android:id="@+id/action_chatlistFragment_to_profileFragmentNav"

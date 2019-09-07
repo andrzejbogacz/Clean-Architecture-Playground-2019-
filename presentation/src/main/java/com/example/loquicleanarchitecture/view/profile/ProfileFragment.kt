@@ -14,7 +14,6 @@ import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.example.domain.entities.Gender
 import com.example.domain.entities.UserEntity
 import com.example.domain.entities.UserPhotos
@@ -104,7 +103,8 @@ class ProfileFragment : DaggerFragment(),
         photoLink?.run {
             Glide.with(this@ProfileFragment)
                 .load(photoLink).transform(CenterCrop(), RoundedCorners(20))
-                .placeholder(R.drawable.gif_loading)
+                    // todo gif loading
+                .placeholder(R.drawable.ic_action_copy)
                 .into(containerView.also { it.setBackgroundColor(Color.TRANSPARENT) })
         }
     }
