@@ -6,7 +6,7 @@
 		>
 
 	<data>
-
+		<import type="android.view.View"/>
 		<variable
 				name="sharedViewModel"
 				type="com.example.loquicleanarchitecture.view.main.SharedViewModel"
@@ -30,101 +30,230 @@
 				android:paddingEnd="10dp"
 				tools:context=".view.profile.ProfileFragment"
 				>
-
-			<com.makeramen.roundedimageview.RoundedImageView
-					android:id="@+id/iv_photo3"
-					android:layout_width="0dp"
-					android:layout_height="0dp"
-					android:layout_marginStart="8dp"
-					android:background="#FFFFFF"
-					android:elevation="5dp"
-					android:onClick="swapView"
-					app:layout_constraintBottom_toBottomOf="@+id/iv_photo2"
-					app:layout_constraintDimensionRatio="1:1"
-					app:layout_constraintEnd_toStartOf="@+id/iv_photo4"
-					app:layout_constraintHorizontal_bias="0.5"
-					app:layout_constraintStart_toEndOf="@+id/iv_photo2"
-					app:layout_constraintTop_toTopOf="@+id/iv_photo2"
-					/>
-
-
-			<com.makeramen.roundedimageview.RoundedImageView
-					android:id="@+id/iv_photo2"
-					android:layout_width="0dp"
-					android:layout_height="0dp"
-					android:layout_marginTop="8dp"
-					android:adjustViewBounds="true"
-					android:background="#FFFFFF"
-					android:elevation="5dp"
-					app:layout_constraintDimensionRatio="1:1"
-					app:layout_constraintEnd_toStartOf="@+id/iv_photo3"
-					app:layout_constraintHorizontal_bias="0.5"
-					app:layout_constraintStart_toStartOf="@+id/guideline6"
-					app:layout_constraintTop_toBottomOf="@+id/iv_photo1"
-					/>
-
-			<com.makeramen.roundedimageview.RoundedImageView
-					android:id="@+id/iv_photo1"
+			<FrameLayout
+					android:id="@+id/layout_frame_1"
 					android:layout_width="0dp"
 					android:layout_height="0dp"
 					android:layout_marginTop="16dp"
-					android:background="#FFFFFF"
+					android:background="@color/transparent"
+					android:clipToPadding="false"
 					android:elevation="5dp"
 					android:onClick="swapView"
-					android:scaleType="fitCenter"
+					android:outlineProvider="bounds"
+					android:contentDescription="layout_frame_1"
+
 					app:layout_constraintDimensionRatio="1:1"
-					app:layout_constraintEnd_toEndOf="@+id/iv_photo3"
+					app:layout_constraintEnd_toEndOf="@+id/layout_frame_3"
 					app:layout_constraintStart_toStartOf="@+id/guideline6"
 					app:layout_constraintTop_toTopOf="parent"
-					/>
+					>
 
-			<com.makeramen.roundedimageview.RoundedImageView
-					android:id="@+id/iv_photo4"
+				<com.makeramen.roundedimageview.RoundedImageView
+						android:id="@+id/iv_photo1"
+						android:contentDescription="photo1"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_gravity="top|end"
+						android:background="@color/white"
+						/>
+
+				<com.makeramen.roundedimageview.RoundedImageView
+						android:id="@+id/iv_photo1add"
+						android:contentDescription="photo1"
+						app:modifyIcon="@{(v) -> profileViewModel.photoStatus(v)}"
+						android:layout_width="35dp"
+						android:layout_height="35dp"
+						android:layout_gravity="top|end"
+						android:layout_marginTop="10dp"
+						android:layout_marginEnd="10dp"
+						/>
+			</FrameLayout>
+
+
+			<FrameLayout
+					android:id="@+id/layout_frame_2"
+					android:layout_width="0dp"
+					android:layout_height="0dp"
+					android:layout_marginTop="8dp"
+					android:background="@color/transparent"
+					android:clipToPadding="false"
+					android:elevation="5dp"
+					android:outlineProvider="bounds"
+					app:layout_constraintDimensionRatio="1:1"
+					app:layout_constraintEnd_toStartOf="@+id/layout_frame_3"
+					app:layout_constraintHorizontal_bias="0.5"
+					app:layout_constraintStart_toStartOf="@+id/guideline6"
+					app:layout_constraintTop_toBottomOf="@+id/layout_frame_1"
+					>
+
+				<com.makeramen.roundedimageview.RoundedImageView
+						android:id="@+id/iv_photo2"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_gravity="top|end"
+						android:background="@color/white"
+						/>
+
+				<com.makeramen.roundedimageview.RoundedImageView
+						android:id="@+id/iv_photo2add"
+						android:layout_width="25dp"
+						android:layout_height="25dp"
+						android:layout_gravity="top|end"
+						android:layout_marginTop="10dp"
+						android:layout_marginEnd="10dp"
+						android:background="@drawable/ic_add_circle_purple_300_24dp"
+						/>
+			</FrameLayout>
+
+			<FrameLayout
+					android:id="@+id/layout_frame_3"
 					android:layout_width="0dp"
 					android:layout_height="0dp"
 					android:layout_marginStart="8dp"
-					android:background="#FFFFFF"
+					android:background="@color/transparent"
+					android:clipToPadding="false"
 					android:elevation="5dp"
 					android:onClick="swapView"
-					app:layout_constraintBottom_toBottomOf="@+id/iv_photo3"
+					android:outlineProvider="bounds"
+					app:layout_constraintBottom_toBottomOf="@+id/layout_frame_2"
 					app:layout_constraintDimensionRatio="1:1"
-					app:layout_constraintEnd_toEndOf="@+id/iv_photo5"
+					app:layout_constraintEnd_toStartOf="@+id/layout_frame_4"
 					app:layout_constraintHorizontal_bias="0.5"
-					app:layout_constraintStart_toEndOf="@+id/iv_photo3"
-					app:layout_constraintTop_toTopOf="@+id/iv_photo3"
-					/>
+					app:layout_constraintStart_toEndOf="@+id/layout_frame_2"
+					app:layout_constraintTop_toTopOf="@+id/layout_frame_2"
+					>
 
-			<com.makeramen.roundedimageview.RoundedImageView
-					android:id="@+id/iv_photo5"
+				<com.makeramen.roundedimageview.RoundedImageView
+						android:id="@+id/iv_photo3"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_gravity="top|end"
+						android:background="@color/white"
+						/>
+
+				<com.makeramen.roundedimageview.RoundedImageView
+						android:id="@+id/iv_photo3add"
+						android:layout_width="25dp"
+						android:layout_height="25dp"
+						android:layout_gravity="top|end"
+						android:layout_marginTop="10dp"
+						android:layout_marginEnd="10dp"
+						android:background="@drawable/ic_add_circle_purple_300_24dp"
+						/>
+			</FrameLayout>
+
+
+			<FrameLayout
+					android:id="@+id/layout_frame_4"
+					android:layout_width="0dp"
+					android:layout_height="0dp"
+					android:layout_marginStart="8dp"
+					android:background="@color/transparent"
+					android:clipToPadding="false"
+					android:elevation="5dp"
+					android:onClick="swapView"
+
+					android:outlineProvider="bounds"
+					app:layout_constraintBottom_toBottomOf="@+id/layout_frame_3"
+					app:layout_constraintDimensionRatio="1:1"
+					app:layout_constraintEnd_toEndOf="@+id/layout_frame_5"
+					app:layout_constraintHorizontal_bias="0.5"
+					app:layout_constraintStart_toEndOf="@+id/layout_frame_3"
+					app:layout_constraintTop_toTopOf="@+id/layout_frame_3"
+					>
+
+				<com.makeramen.roundedimageview.RoundedImageView
+						android:id="@+id/iv_photo4"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_gravity="top|end"
+						android:background="@color/white"
+						/>
+
+				<com.makeramen.roundedimageview.RoundedImageView
+						android:id="@+id/iv_photo4add"
+						android:layout_width="25dp"
+						android:layout_height="25dp"
+						android:layout_gravity="top|end"
+						android:layout_marginTop="10dp"
+						android:layout_marginEnd="10dp"
+						android:background="@drawable/ic_add_circle_purple_300_24dp"
+						/>
+			</FrameLayout>
+
+			<FrameLayout
+					android:id="@+id/layout_frame_5"
 					android:layout_width="0dp"
 					android:layout_height="0dp"
 					android:layout_marginEnd="8dp"
 					android:layout_marginBottom="8dp"
-					android:background="#FFFFFF"
+					android:background="@color/transparent"
+					android:clipToPadding="false"
 					android:elevation="5dp"
 					android:onClick="swapView"
-					app:layout_constraintBottom_toTopOf="@+id/iv_photo4"
+					android:outlineProvider="bounds"
+					app:layout_constraintBottom_toTopOf="@+id/layout_frame_4"
 					app:layout_constraintDimensionRatio="1:1"
-					app:layout_constraintEnd_toEndOf="@+id/iv_photo6"
+					app:layout_constraintEnd_toEndOf="@+id/layout_frame_6"
 					app:layout_constraintEnd_toStartOf="@+id/guideline7"
-					app:layout_constraintTop_toBottomOf="@+id/iv_photo6"
-					/>
+					app:layout_constraintTop_toBottomOf="@+id/layout_frame_6"
+					>
 
-			<com.makeramen.roundedimageview.RoundedImageView
-					android:id="@+id/iv_photo6"
+				<com.makeramen.roundedimageview.RoundedImageView
+						android:id="@+id/iv_photo5"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_gravity="top|end"
+						android:background="@color/white"
+						/>
+
+				<com.makeramen.roundedimageview.RoundedImageView
+						android:id="@+id/iv_photo5add"
+						android:layout_width="25dp"
+						android:layout_height="25dp"
+						android:layout_gravity="top|end"
+						android:layout_marginTop="10dp"
+						android:layout_marginEnd="10dp"
+						android:background="@drawable/ic_add_circle_purple_300_24dp"
+						/>
+			</FrameLayout>
+
+			<FrameLayout
+					android:id="@+id/layout_frame_6"
 					android:layout_width="0dp"
 					android:layout_height="0dp"
 					android:layout_marginEnd="8dp"
 					android:layout_marginBottom="8dp"
-					android:background="#FFFFFF"
+					android:background="@color/transparent"
+					android:clipToPadding="false"
 					android:elevation="5dp"
 					android:onClick="swapView"
-					app:layout_constraintBottom_toTopOf="@+id/iv_photo5"
+					android:outlineProvider="bounds"
+					app:layout_constraintBottom_toTopOf="@+id/layout_frame_5"
 					app:layout_constraintDimensionRatio="1:1"
 					app:layout_constraintEnd_toStartOf="@+id/guideline7"
-					app:layout_constraintStart_toStartOf="@+id/iv_photo5"
-					app:layout_constraintTop_toTopOf="@+id/iv_photo1"
-					/>
+					app:layout_constraintStart_toStartOf="@+id/layout_frame_5"
+					app:layout_constraintTop_toTopOf="@+id/layout_frame_1"
+					>
+
+				<com.makeramen.roundedimageview.RoundedImageView
+						android:id="@+id/iv_photo6"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_gravity="top|end"
+						android:background="@color/white"
+						/>
+
+				<com.makeramen.roundedimageview.RoundedImageView
+						android:id="@+id/iv_photo6add"
+						android:layout_width="25dp"
+						android:layout_height="25dp"
+						android:layout_gravity="top|end"
+						android:layout_marginTop="10dp"
+						android:layout_marginEnd="10dp"
+						android:background="@drawable/ic_add_circle_purple_300_24dp"
+						/>
+			</FrameLayout>
 
 			<include
 					android:id="@+id/include"
@@ -136,7 +265,7 @@
 					app:layout_constraintBottom_toBottomOf="parent"
 					app:layout_constraintEnd_toEndOf="parent"
 					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@+id/iv_photo3"
+					app:layout_constraintTop_toBottomOf="@+id/layout_frame_3"
 					app:layout_constraintVertical_bias="0.0"
 					/>
 

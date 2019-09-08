@@ -102,7 +102,8 @@ class ProfileFragment : DaggerFragment(),
 
         photoLink?.run {
             Glide.with(this@ProfileFragment)
-                .load(photoLink).transform(CenterCrop(), RoundedCorners(20))
+                .load(photoLink)
+                .transform(CenterCrop(), RoundedCorners(20))
                     // todo gif loading
                 .placeholder(R.drawable.ic_action_copy)
                 .into(containerView.also { it.setBackgroundColor(Color.TRANSPARENT) })
@@ -122,7 +123,7 @@ class ProfileFragment : DaggerFragment(),
     }
 
     private fun updatePhotos(userPhotos: UserPhotos) {
-        loadImage(userPhotos.photo1, iv_photo1)
+       loadImage(userPhotos.photo1, iv_photo1)
         loadImage(userPhotos.photo2, iv_photo2)
         loadImage(userPhotos.photo3, iv_photo3)
         loadImage(userPhotos.photo4, iv_photo4)
