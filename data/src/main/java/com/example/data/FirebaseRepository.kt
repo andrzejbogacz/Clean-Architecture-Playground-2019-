@@ -21,16 +21,18 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class FirebaseRepository @Inject constructor(
-     firebaseFirestore: FirebaseFirestore,
+    firebaseFirestore: FirebaseFirestore,
     val fbAuth: FirebaseAuth,
     val userStorageReference: StorageReference
 ) :
     UserRepository {
     // todo export paths as external dagger dependency
     private val TAG: String? = this.javaClass.name
-    var userDetailsDocument = firebaseFirestore.collection("Users").document(fbAuth.currentUser!!.uid)
-    var userPhotosDocument = firebaseFirestore.collection("Users").document(fbAuth.currentUser!!.uid)
-        .collection("Storage").document("myPhotos")
+    var userDetailsDocument =
+        firebaseFirestore.collection("Users").document(fbAuth.currentUser!!.uid)
+    var userPhotosDocument =
+        firebaseFirestore.collection("Users").document(fbAuth.currentUser!!.uid)
+            .collection("Storage").document("myPhotos")
 
     override suspend fun uploadProfileUserPhoto(uriAndTag: Pair<String, String>): Either<Failure, FirebaseResult> {
 
@@ -43,10 +45,10 @@ class FirebaseRepository @Inject constructor(
         var isSuccess = false
         val photoUri = Uri.parse(uri)
 
-        val photo =  photoInStorageReference.putFile(photoUri)
+        val photo = photoInStorageReference.putFile(photoUri)
             .addOnFailureListener { printUnknownException(it) }
             .addOnSuccessListener { isSuccess = true }
-             .await()
+            .await()
 
         photo.storage.downloadUrl.addOnSuccessListener { photoDownloadLink = it.toString() }.await()
 
@@ -56,10 +58,30 @@ class FirebaseRepository @Inject constructor(
                 .document("myPhotos")
                 .update(tag, photoDownloadLink)
                 .addOnFailureListener { isSuccess = false }
-                .await()}
+                .await()
+        }
 
         return when (isSuccess) {
             true -> Right(UserProfilePhotoUploaded)
+            false -> Left(Failure(UserFirebaseException.UnknownException))
+        }
+    }
+
+
+    override suspend fun deleteProfileUserPhoto(viewTag: String): Either<Failure, FirebaseResult> {
+
+        var isSuccess = false
+
+        userDetailsDocument
+            .collection("Storage")
+            .document("myPhotos")
+            .update(viewTag, null)
+            .addOnFailureListener { printUnknownException(it) }
+            .addOnSuccessListener { isSuccess = true }
+            .await()
+
+        return when (isSuccess) {
+            true -> Right(UserProfilePhotoDeleted)
             false -> Left(Failure(UserFirebaseException.UnknownException))
         }
     }
