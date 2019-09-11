@@ -4,14 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
+
+        <variable
+            name="userEntity"
+            type="com.example.domain.entities.UserEntity" />
 
         <variable
             name="profileFragment"
             type="com.example.loquicleanarchitecture.view.profile.ProfileFragment" />
 
         <variable
-            name="handler"
+            name="navigationHandler"
             type="com.example.loquicleanarchitecture.utils.NavigationHandler" />
 
         <variable
@@ -34,7 +39,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="20dp"
             android:contentDescription="@string/layoutgender"
-            android:onClick="@{(view) -> handler.onNavigate(view,true)}"
+            android:onClick="@{(view) -> navigationHandler.onNavigate(view,true)}"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -71,7 +76,7 @@
                 android:id="@+id/textView_profile_gender_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/not_specified"
+                app:gender="@{sharedViewModel.userDetailsLiveData.gender}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -98,7 +103,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="20dp"
             android:contentDescription="@string/layoutage"
-            android:onClick="@{(view) -> handler.onNavigate(view,true)}"
+            android:onClick="@{(view) -> navigationHandler.onNavigate(view,true)}"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.233"
@@ -135,7 +140,7 @@
                 android:id="@+id/textView_profile_age_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/not_specified"
+                app:age="@{sharedViewModel.userDetailsLiveData.age}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -148,7 +153,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="20dp"
             android:contentDescription="@string/layoutnickname"
-            android:onClick="@{(view) -> handler.onNavigate(view,true)}"
+            android:onClick="@{(view) -> navigationHandler.onNavigate(view,true)}"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView_profile_text_details"
@@ -186,10 +191,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="end"
-                android:text="@string/profile_nickname"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:nickname="@{sharedViewModel.userDetailsLiveData.nickname}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View

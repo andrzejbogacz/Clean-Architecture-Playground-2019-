@@ -37,7 +37,7 @@ dependencies {
     implementation deps.firebase.ui_auth
     implementation deps.firebase.firestore
     implementation deps.firebase.storage
-    annotationProcessor deps.firebase.admin
+    kapt deps.firebase.admin
 
     //Functional Programming
     implementation deps.arrow.data

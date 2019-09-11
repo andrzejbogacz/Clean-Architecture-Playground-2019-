@@ -24,6 +24,7 @@ class SharedViewModel @Inject constructor(
     val changeProfileUserGender: ChangeProfileUserGender,
     val changeProfileUserAge: ChangeProfileUserAge,
     val uploadProfileUserPhoto: UploadProfileUserPhoto,
+    val deleteProfileUserPhoto: DeleteProfileUserPhoto,
     var firebaseRepository: FirebaseRepository
 ) : BaseViewModel() {
 
