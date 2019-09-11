@@ -63,7 +63,7 @@
                     android:layout_gravity="top|end"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/ic_remove_circle_red_a200_24dp"
+                    android:background="@drawable/ic_remove_circle_primary_dark_24dp"
                     android:contentDescription="@string/profile_photo_1"
                     android:onClick="@{(view) -> profileFragment.deletePhoto(view)}"
                     app:visibilityRemoveIcon="@{sharedViewModel.userPhotosLiveData}" />
@@ -115,7 +115,7 @@
                     android:layout_gravity="top|end"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/ic_remove_circle_red_a200_24dp"
+                    android:background="@drawable/ic_remove_circle_primary_dark_24dp"
                     android:contentDescription="@string/profile_photo_2"
                     android:onClick="@{(view) -> profileFragment.deletePhoto(view)}"
                     app:visibilityRemoveIcon="@{sharedViewModel.userPhotosLiveData}" />
@@ -165,7 +165,7 @@
                     android:layout_gravity="top|end"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/ic_remove_circle_red_a200_24dp"
+                    android:background="@drawable/ic_remove_circle_primary_dark_24dp"
                     android:contentDescription="@string/profile_photo_3"
                     android:onClick="@{(view) -> profileFragment.deletePhoto(view)}"
                     app:visibilityRemoveIcon="@{sharedViewModel.userPhotosLiveData}" />
@@ -216,7 +216,7 @@
                     android:layout_gravity="top|end"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/ic_remove_circle_red_a200_24dp"
+                    android:background="@drawable/ic_remove_circle_primary_dark_24dp"
                     android:contentDescription="@string/profile_photo_4"
                     android:onClick="@{(view) -> profileFragment.deletePhoto(view)}"
                     app:visibilityRemoveIcon="@{sharedViewModel.userPhotosLiveData}" />
@@ -267,7 +267,7 @@
                     android:layout_gravity="top|end"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/ic_remove_circle_red_a200_24dp"
+                    android:background="@drawable/ic_remove_circle_primary_dark_24dp"
                     android:contentDescription="@string/profile_photo_5"
                     android:onClick="@{(view) -> profileFragment.deletePhoto(view)}"
                     app:visibilityRemoveIcon="@{sharedViewModel.userPhotosLiveData}" />
@@ -317,7 +317,7 @@
                     android:layout_gravity="top|end"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
-                    android:background="@drawable/ic_remove_circle_red_a200_24dp"
+                    android:background="@drawable/ic_remove_circle_primary_dark_24dp"
                     android:contentDescription="@string/profile_photo_6"
                     android:onClick="@{(view) -> profileFragment.deletePhoto(view)}"
                     app:visibilityRemoveIcon="@{sharedViewModel.userPhotosLiveData}" />
