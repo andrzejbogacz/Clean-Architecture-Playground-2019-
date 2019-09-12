@@ -3,14 +3,12 @@ package com.example.loquicleanarchitecture.view.profile
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.databinding.FragmentProfileBinding
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
@@ -66,24 +64,16 @@ class ProfileFragment : DaggerFragment() {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
                 val resultUri = result.uri
-                //setAsLoading()
-                Log.d("TAG", currentViewHolder!!.contentDescription.toString())
+
                 val uriAndTag =
                     Pair(resultUri.toString(), currentViewHolder!!.contentDescription.toString())
+
                 sharedViewModel.uploadProfileUserPhoto(uriAndTag)
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
             }
         }
-    }
-
-    private fun setAsLoading() {
-        // todo gif not animating
-        Glide.with(this)
-            .asGif()
-            .load("https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif")
-            .into(currentViewHolder!!)
     }
 
     fun loadImagePicker(v: View) {
