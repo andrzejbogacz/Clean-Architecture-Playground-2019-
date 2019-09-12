@@ -7,10 +7,6 @@ import com.example.loquicleanarchitecture.model.User
 import java.util.ArrayList
 import java.util.Calendar
 import java.util.Date
-
-/*
- * Created by Anton Bevza on 07.09.16.
- */
 internal class DialogsFixtures private constructor() : FixturesData() {
     init {
         throw AssertionError()
@@ -37,8 +33,8 @@ internal class DialogsFixtures private constructor() : FixturesData() {
             val users = users
             return Dialog(
                 randomId,
-                if (users.size > 1) FixturesData.groupChatTitles[users.size - 2] else users[0].name,
-                if (users.size > 1) FixturesData.groupChatImages[users.size - 2] else randomAvatar,
+                if (users.size > 1) groupChatTitles[users.size - 2] else users[0].name,
+                if (users.size > 1) groupChatImages[users.size - 2] else randomAvatar,
                 users,
                 getMessage(lastMessageCreatedAt),
                 if (i < 3) 3 - i else 0
@@ -48,7 +44,7 @@ internal class DialogsFixtures private constructor() : FixturesData() {
         private val users: ArrayList<User>
             get() {
                 val users = ArrayList<User>()
-                val usersCount = 1 + FixturesData.rnd.nextInt(4)
+                val usersCount = 1 + rnd.nextInt(4)
 
                 for (i in 0 until usersCount) {
                     users.add(user)

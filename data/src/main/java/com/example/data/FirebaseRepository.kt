@@ -67,7 +67,6 @@ class FirebaseRepository @Inject constructor(
         }
     }
 
-
     override suspend fun deleteProfileUserPhoto(viewTag: String): Either<Failure, FirebaseResult> {
 
         var isSuccess = false
@@ -103,7 +102,6 @@ class FirebaseRepository @Inject constructor(
         }
     }
 
-
     override suspend fun updateProfileUserNickname(nickname: String): Either<Failure, FirebaseResult> {
         var isSuccess = false
 
@@ -137,7 +135,6 @@ class FirebaseRepository @Inject constructor(
             false -> Left(Failure(UserFirebaseException.UnknownException))
         }
     }
-
 
     override suspend fun updateAgePreference(preferenceRange: Pair<Int, Int>): Either<Failure, FirebaseResult> {
         var isSuccess = false
@@ -220,10 +217,6 @@ class FirebaseRepository @Inject constructor(
             true -> Right(NewUserCreated)
             false -> Left(Failure(UserFirebaseException.UnknownException))
         }
-    }
-
-    override suspend fun uploadPhoto() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun printUnknownException(e: Exception) {

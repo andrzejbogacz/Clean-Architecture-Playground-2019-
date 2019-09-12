@@ -8,8 +8,6 @@ import com.example.domain.exception.FirebaseResult
 
 interface UserRepository {
 
-    suspend fun uploadPhoto()
-
     suspend fun loadUser(): Either<Failure, FirebaseResult>
 
     suspend fun createUser(): Either<Failure, FirebaseResult>

@@ -6,10 +6,6 @@ import com.example.loquicleanarchitecture.model.User
 import java.util.ArrayList
 import java.util.Calendar
 import java.util.Date
-
-/*
- * Created by troy379 on 12.12.16.
- */
 internal class MessagesFixtures private constructor() : FixturesData() {
     init {
         throw AssertionError()
@@ -27,7 +23,7 @@ internal class MessagesFixtures private constructor() : FixturesData() {
         val voiceMessage: Message
             get() {
                 val message = Message(randomId, user, null)
-                message.voice = Message.Voice("http://example.com", FixturesData.rnd.nextInt(200) + 30)
+                message.voice = Message.Voice("http://example.com", rnd.nextInt(200) + 30)
                 return message
             }
 
@@ -41,7 +37,7 @@ internal class MessagesFixtures private constructor() : FixturesData() {
         fun getMessages(startDate: Date?): ArrayList<Message> {
             val messages = ArrayList<Message>()
             for (i in 0..9/*days count*/) {
-                val countPerDay = FixturesData.rnd.nextInt(5) + 1
+                val countPerDay = rnd.nextInt(5) + 1
 
                 for (j in 0 until countPerDay) {
                     val message: Message
@@ -64,11 +60,11 @@ internal class MessagesFixtures private constructor() : FixturesData() {
 
         private val user: User
             get() {
-                val even = FixturesData.rnd.nextBoolean()
+                val even = rnd.nextBoolean()
                 return User(
                     if (even) "0" else "1",
-                    if (even) FixturesData.names[0] else FixturesData.names[1],
-                    if (even) FixturesData.avatars[0] else FixturesData.avatars[1],
+                    if (even) names[0] else names[1],
+                    if (even) avatars[0] else avatars[1],
                     true
                 )
             }
