@@ -15,11 +15,11 @@ import com.example.loquicleanarchitecture.di.main.MainViewModelsModule
 import com.example.loquicleanarchitecture.di.profile.ProfileModule
 import com.example.loquicleanarchitecture.di.profile.ProfileScope
 import com.example.loquicleanarchitecture.di.profile.ProfileViewModelsModule
-import com.example.loquicleanarchitecture.view.chat.ChatActivity
+import com.example.loquicleanarchitecture.view.chat.ChatRoomFragment
+import com.example.loquicleanarchitecture.view.chatlist.ChatlistFragment
 import com.example.loquicleanarchitecture.view.dialogs.*
 import com.example.loquicleanarchitecture.view.login.AuthActivity
 import com.example.loquicleanarchitecture.view.main.MainActivity
-import com.example.loquicleanarchitecture.view.main.chatlist.ChatlistFragment
 import com.example.loquicleanarchitecture.view.profile.ProfileFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -60,7 +60,7 @@ abstract class ActivityBuildersModule {
 
     @ChatScope
     @ContributesAndroidInjector(modules = [ChatModule::class, ChatViewModelsModule::class])
-    internal abstract fun contributeChatActivity(): ChatActivity
+    internal abstract fun contributeChatRoomFragment(): ChatRoomFragment
 
     @ProfileScope
     @ContributesAndroidInjector(modules = [ProfileModule::class, ProfileViewModelsModule::class])

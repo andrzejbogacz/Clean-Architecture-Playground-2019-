@@ -18,7 +18,7 @@
 	</fragment>
 	<fragment
 			android:id="@+id/chatlistFragment"
-			android:name="com.example.loquicleanarchitecture.view.main.chatlist.ChatlistFragment"
+			android:name="com.example.loquicleanarchitecture.view.chatlist.ChatlistFragment"
 			android:label="Home"
 			android:tag="Home"
 			tools:layout="@layout/fragment_chatlist">
@@ -31,6 +31,11 @@
 				app:popEnterAnim="@anim/fui_slide_in_right"
 				app:popExitAnim="@anim/fragment_open_exit"
 				app:popUpTo="@id/profileFragment" />
+		<action
+				android:id="@+id/action_chatlistFragment_to_chatroomFragment"
+				app:destination="@id/chatroomFragment"
+				app:enterAnim="@anim/fragment_open_enter"
+				app:popExitAnim="@anim/fragment_open_exit" />
 	</fragment>
 	<dialog
 			android:id="@+id/dialogDrawerSearchGender"
@@ -54,4 +59,9 @@
 			android:id="@+id/dialogProfileGenderChoice"
 			android:name="com.example.loquicleanarchitecture.view.dialogs.DialogProfileGenderChoice"
 			android:label="DialogProfileGenderChoice" />
+	<fragment
+			android:id="@+id/chatroomFragment"
+			android:name="com.example.loquicleanarchitecture.view.chat.ChatRoomFragment"
+			android:label="ChatroomFragment"
+			tools:layout="@layout/fragment_chatroom" />
 </navigation>

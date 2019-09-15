@@ -35,7 +35,7 @@ import com.example.domain.entities.Gender
 import com.example.domain.entities.UserPhotos
 import com.example.loquicleanarchitecture.R
 
-@BindingAdapter(value = arrayOf("app:setPhoto", "app:setProgressbar"), requireAll = false)
+@BindingAdapter(value = ["app:setPhoto", "app:setProgressbar"], requireAll = false)
 fun photoSetter(view: ImageView, userPhotos: UserPhotos, progressBar: ProgressBar?) {
 
     val photoLink = getPhotoLinkForContainer(view.contentDescription.toString(), userPhotos)
@@ -99,7 +99,7 @@ private fun getPhotoLinkForContainer(
 }
 
 @BindingAdapter("app:visibilityRemoveIcon")
-fun visiblityRemoveIcon(view: ImageView, userPhotos: UserPhotos) {
+fun visibilityRemoveIcon(view: ImageView, userPhotos: UserPhotos) {
     val photoLink = getPhotoLinkForContainer(view.contentDescription.toString(), userPhotos)
 
     when (photoLink.isNullOrEmpty()) {
@@ -109,7 +109,7 @@ fun visiblityRemoveIcon(view: ImageView, userPhotos: UserPhotos) {
 }
 
 @BindingAdapter("app:visibilityAddIcon")
-fun visiblityAddIcon(view: ImageView, userPhotos: UserPhotos) {
+fun visibilityAddIcon(view: ImageView, userPhotos: UserPhotos) {
     val photoLink = getPhotoLinkForContainer(view.contentDescription.toString(), userPhotos)
 
     when (photoLink.isNullOrEmpty()) {
@@ -123,7 +123,7 @@ fun visiblityAddIcon(view: ImageView, userPhotos: UserPhotos) {
 @BindingAdapter("app:nickname")
 fun setNicknameValue(view: TextView, nickname: String) {
     val context = view.context
-    when (nickname.isNullOrEmpty()) {
+    when (nickname.isEmpty()) {
         true -> view.text = context.resources.getString(R.string.anonymous)
         false -> view.text = nickname
     }

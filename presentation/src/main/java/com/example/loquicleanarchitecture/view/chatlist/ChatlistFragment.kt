@@ -1,13 +1,15 @@
-package com.example.loquicleanarchitecture.view.main.chatlist
+package com.example.loquicleanarchitecture.view.chatlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import android.widget.Toast.makeText
+import androidx.navigation.fragment.findNavController
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.fixtures.DialogsFixtures
 import com.example.loquicleanarchitecture.model.Dialog
-import com.example.loquicleanarchitecture.utils.AppUtils
 import com.squareup.picasso.Picasso
 import com.stfalcon.chatkit.commons.ImageLoader
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter
@@ -17,7 +19,6 @@ import javax.inject.Inject
 
 class ChatlistFragment : DaggerFragment(), DialogsListAdapter.OnDialogClickListener<Dialog>,
     DialogsListAdapter.OnDialogLongClickListener<Dialog> {
-
 
     lateinit var dialogsAdapter: DialogsListAdapter<Dialog>
 
@@ -40,10 +41,6 @@ class ChatlistFragment : DaggerFragment(), DialogsListAdapter.OnDialogClickListe
         super.onViewCreated(view, savedInstanceState)
         imageLoader = ImageLoader { imageView, url, payload -> picasso.load(url).into(imageView) }
         initAdapter()
-//        goProfile.setOnClickListener {
-//             Navigation.findNavController(it).navigate(R.id.action_chatlistFragment_to_profileFragmentNav)
-//
-//        }
     }
 
     private fun initAdapter() {
@@ -57,15 +54,15 @@ class ChatlistFragment : DaggerFragment(), DialogsListAdapter.OnDialogClickListe
     }
 
     override fun onDialogLongClick(dialog: Dialog) {
-        AppUtils.showToast(
+        makeText(
             context!!.applicationContext,
             dialog.dialogName,
-            false
-        )
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     override fun onDialogClick(dialog: Dialog?) {
-        //  startActivity<ChatActivity>()
+        findNavController().navigate(R.id.chatroomFragment)
     }
 }
 

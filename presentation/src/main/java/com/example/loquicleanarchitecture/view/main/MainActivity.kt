@@ -67,6 +67,7 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         setupSideNavigationMenu(navController)
         setupBottomNavMenu(navController)
         initNavigationDrawer()
+
         initOnDestinationChangedListener()
 
         mainViewModel = viewModel(viewModelFactory) {
@@ -82,13 +83,13 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         navViewHeaderBinding.lifecycleOwner = this
     }
 
+
     private fun initOnDestinationChangedListener() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.chatlistFragment -> showBottomNav()
-                R.id.profileFragment -> {
-                    hideBottomNav(); }
-                // else -> hideBottomNav()
+                R.id.profileFragment -> hideBottomNav()
+                R.id.chatroomFragment -> hideBottomNav()
             }
         }
     }
@@ -99,6 +100,7 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         }
     }
 
+    //todo convert into tabLayout
     private fun setupBottomNavMenu(navController: NavController) {
         bottom_nav?.let {
             setupWithNavController(it, navController)
@@ -130,6 +132,7 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
     }
 
     private fun updateUserUI(user: UserEntity) {
+        // todo databinding
         Log.d(TAG, "UpdateUserUI")
         // nickname and age databinded
 

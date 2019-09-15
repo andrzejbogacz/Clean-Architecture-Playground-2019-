@@ -57,7 +57,6 @@ class ProfileFragment : DaggerFragment() {
         binding.lifecycleOwner = this
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {

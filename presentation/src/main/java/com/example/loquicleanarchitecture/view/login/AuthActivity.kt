@@ -26,7 +26,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_auth.*
-import org.jetbrains.anko.*
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.newTask
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class AuthActivity : BaseActivity(), View.OnClickListener {
@@ -157,7 +159,7 @@ class AuthActivity : BaseActivity(), View.OnClickListener {
     }
     // [END auth_with_facebook]
 
-    fun signOut() {
+    private fun signOut() {
         auth.signOut()
         LoginManager.getInstance().logOut()
         updateUI(null)

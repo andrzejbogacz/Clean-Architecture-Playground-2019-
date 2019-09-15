@@ -1,8 +1,8 @@
 package com.example.loquicleanarchitecture.di.chat
 
 import androidx.lifecycle.ViewModel
-import com.example.loquicleanarchitecture.view.chat.ChatViewModel
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelKey
+import com.example.loquicleanarchitecture.view.chat.ChatRoomViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -11,6 +11,6 @@ import dagger.multibindings.IntoMap
 abstract class ChatViewModelsModule {
     @Binds
     @IntoMap
-    @ViewModelKey(ChatViewModel::class)
-    abstract fun bindMainViewModel(viewModel: ChatViewModel): ViewModel
+    @ViewModelKey(ChatRoomViewModel::class)
+    abstract fun bindMainViewModel(viewModel: ChatRoomViewModel): ViewModel
 }
