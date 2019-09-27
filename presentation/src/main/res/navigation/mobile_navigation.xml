@@ -18,10 +18,10 @@
 	</fragment>
 	<fragment
 			android:id="@+id/chatlistFragment"
-			android:name="com.example.loquicleanarchitecture.view.chatlist.ChatlistFragment"
+			android:name="com.example.loquicleanarchitecture.view.main.viewPager.FriendsFragment"
 			android:label="Home"
 			android:tag="Home"
-			tools:layout="@layout/fragment_chatlist">
+			tools:layout="@layout/fragment_random_chats">
 		<action
 				android:id="@+id/action_chatlistFragment_to_profileFragmentNav"
 				app:destination="@id/profileFragment"

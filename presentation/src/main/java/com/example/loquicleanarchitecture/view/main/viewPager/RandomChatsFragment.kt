@@ -1,4 +1,4 @@
-package com.example.loquicleanarchitecture.view.chatlist
+package com.example.loquicleanarchitecture.view.main.viewPager
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,16 +8,15 @@ import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.navigation.fragment.findNavController
 import com.example.loquicleanarchitecture.R
-import com.example.loquicleanarchitecture.fixtures.DialogsFixtures
 import com.example.loquicleanarchitecture.model.Dialog
 import com.squareup.picasso.Picasso
 import com.stfalcon.chatkit.commons.ImageLoader
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_chatlist.*
+import kotlinx.android.synthetic.main.fragment_random_chats.*
 import javax.inject.Inject
 
-class ChatlistFragment : DaggerFragment(), DialogsListAdapter.OnDialogClickListener<Dialog>,
+class RandomChatsFragment : DaggerFragment(), DialogsListAdapter.OnDialogClickListener<Dialog>,
     DialogsListAdapter.OnDialogLongClickListener<Dialog> {
 
     lateinit var dialogsAdapter: DialogsListAdapter<Dialog>
@@ -34,7 +33,7 @@ class ChatlistFragment : DaggerFragment(), DialogsListAdapter.OnDialogClickListe
     ): View? {
         super.onCreate(savedInstanceState)
 
-        return inflater.inflate(R.layout.fragment_chatlist, container, false)
+        return inflater.inflate(R.layout.fragment_random_chats, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +44,7 @@ class ChatlistFragment : DaggerFragment(), DialogsListAdapter.OnDialogClickListe
 
     private fun initAdapter() {
         dialogsAdapter = DialogsListAdapter(imageLoader)
-        dialogsAdapter.setItems(DialogsFixtures.dialogs)
+        //dialogsAdapter.setItems(DialogsFixtures.dialogs)
 
         dialogsAdapter.setOnDialogClickListener(this)
         dialogsAdapter.setOnDialogLongClickListener(this)

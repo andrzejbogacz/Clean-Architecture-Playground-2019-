@@ -26,6 +26,7 @@ import com.example.loquicleanarchitecture.helper.failure
 import com.example.loquicleanarchitecture.helper.observe
 import com.example.loquicleanarchitecture.helper.viewModel
 import com.example.loquicleanarchitecture.view.login.AuthActivity
+import com.example.loquicleanarchitecture.view.main.viewPager.MainPagerAdapter
 import com.google.firebase.auth.FirebaseAuth
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -40,6 +41,8 @@ import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
     private val TAG: String? = this.javaClass.name
+
+    lateinit var adapter: MainPagerAdapter
 
     @Inject
     lateinit var viewModelFactory: ViewModelProviderFactory
@@ -58,6 +61,12 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         setContentView(R.layout.activity_main)
         setSupportActionBar(mToolbar)
 
+        adapter = MainPagerAdapter(
+            supportFragmentManager
+        )
+        view_pager.adapter = adapter
+        tabs.setupWithViewPager(view_pager)
+
         drawerLayout = drawer_layout
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
@@ -65,7 +74,6 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navigation_view.setupWithNavController(navController)
         setupSideNavigationMenu(navController)
-        setupBottomNavMenu(navController)
         initNavigationDrawer()
 
         initOnDestinationChangedListener()
@@ -83,27 +91,29 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         navViewHeaderBinding.lifecycleOwner = this
     }
 
-
     private fun initOnDestinationChangedListener() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.chatlistFragment -> showBottomNav()
-                R.id.profileFragment -> hideBottomNav()
-                R.id.chatroomFragment -> hideBottomNav()
+                R.id.chatlistFragment -> showViewPager()
+                R.id.profileFragment -> hideViewPager()
+                R.id.chatroomFragment -> hideViewPager()
             }
         }
+    }
+
+    private fun showViewPager() {
+        view_pager.visibility = View.VISIBLE
+        tabs.visibility = View.VISIBLE
+    }
+
+    private fun hideViewPager() {
+        view_pager.visibility = View.GONE
+        tabs.visibility = View.GONE
     }
 
     private fun setupSideNavigationMenu(navController: NavController) {
         navigation_view?.let {
             setupWithNavController(mToolbar, navController, appBarConfiguration)
-        }
-    }
-
-    //todo convert into tabLayout
-    private fun setupBottomNavMenu(navController: NavController) {
-        bottom_nav?.let {
-            setupWithNavController(it, navController)
         }
     }
 
@@ -120,15 +130,6 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
             }
             return@setNavigationItemSelectedListener false
         }
-    }
-
-    private fun showBottomNav() {
-        bottom_nav.visibility = View.VISIBLE
-    }
-
-    private fun hideBottomNav() {
-        bottom_nav.visibility = View.GONE
-        navigation_view.visibility = View.GONE
     }
 
     private fun updateUserUI(user: UserEntity) {
@@ -164,7 +165,6 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         MenuCompat.setGroupDividerEnabled(menu, false)
         return true
     }
-
 
     override fun onBackPressed() {
 
