@@ -6,8 +6,10 @@
 
 	<data>
 
+		<import type="android.view.View" />
+
 		<variable
-				name="vm"
+				name="sharedViewModel"
 				type="com.example.loquicleanarchitecture.view.main.SharedViewModel"
 				/>
 	</data>
@@ -22,7 +24,7 @@
 			android:focusableInTouchMode="true"
 			>
 
-		<ImageView
+		<com.makeramen.roundedimageview.RoundedImageView
 				android:id="@+id/imageView_profile_photo"
 				android:layout_width="0dp"
 				android:layout_height="0dp"
@@ -38,6 +40,7 @@
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent"
 				app:layout_constraintVertical_bias="0.0"
+				app:setProfilePhoto="@{sharedViewModel.userPhotosLiveData}"
 				tools:ignore="ContentDescription"
 				/>
 
@@ -47,7 +50,6 @@
 
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="8dp"
-				android:text="@{vm.userDetailsLiveData.component2()}"
 				android:textColor="@color/white"
 				android:textStyle="bold"
 				app:layout_constraintBottom_toTopOf="@+id/textView_header_gender"
@@ -60,7 +62,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginStart="16dp"
 				android:layout_marginBottom="8dp"
-				android:text="@string/profile_gender_male"
+				android:text="gender"
 				android:textColor="@color/white"
 				android:textSize="14sp"
 				android:textStyle="bold"
@@ -76,27 +78,13 @@
 				android:layout_height="wrap_content"
 
 				android:layout_marginStart="16dp"
-				android:text="@{String.valueOf(vm.userDetailsLiveData.component4())}"
+				android:text="@{String.valueOf(sharedViewModel.userDetailsLiveData.component4())}"
 				android:textColor="@color/white"
 				android:textSize="14sp"
 				android:textStyle="bold"
 				app:layout_constraintBottom_toBottomOf="@+id/textView_header_gender"
 				app:layout_constraintStart_toEndOf="@+id/textView_header_gender"
 				app:layout_constraintTop_toTopOf="@+id/textView_header_gender"
-				/>
-
-		<ImageView
-				android:id="@+id/imageView2"
-				android:layout_width="0dp"
-				android:layout_height="0dp"
-				android:layout_marginTop="16dp"
-				android:layout_marginEnd="8dp"
-				android:layout_marginBottom="16dp"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintDimensionRatio="1:1"
-				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintTop_toTopOf="@+id/guideline5"
-				app:srcCompat="@drawable/ic_settings_white"
 				/>
 
 		<androidx.constraintlayout.widget.Guideline

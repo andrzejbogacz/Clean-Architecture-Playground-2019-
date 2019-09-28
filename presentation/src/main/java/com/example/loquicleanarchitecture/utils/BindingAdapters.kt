@@ -34,6 +34,8 @@ import com.bumptech.glide.request.target.Target
 import com.example.domain.entities.Gender
 import com.example.domain.entities.UserPhotos
 import com.example.loquicleanarchitecture.R
+import com.example.loquicleanarchitecture.helper.loadCircularImage
+import com.example.loquicleanarchitecture.helper.serializeToMap
 
 @BindingAdapter(value = ["app:setPhoto", "app:setProgressbar"], requireAll = false)
 fun photoSetter(view: ImageView, userPhotos: UserPhotos, progressBar: ProgressBar?) {
@@ -45,6 +47,7 @@ fun photoSetter(view: ImageView, userPhotos: UserPhotos, progressBar: ProgressBa
         progressBar.visibility = View.VISIBLE
         progressBar.bringToFront()
     }
+
 
     photoLink.isNullOrEmpty().run { view.setImageResource(android.R.color.white) }
 
@@ -82,6 +85,33 @@ fun photoSetter(view: ImageView, userPhotos: UserPhotos, progressBar: ProgressBa
             .transform(CenterCrop(), RoundedCorners(20))
             .into(view)
     }
+}
+
+@BindingAdapter(value = ["app:setProfilePhoto"], requireAll = false)
+fun drawerPhotoSetter(view: ImageView, userPhotos: UserPhotos?) {
+
+    val photoLink = userPhotos?.let { getFirstPhotoAvailable(it) }
+
+    photoLink?.run {
+        view.loadCircularImage(photoLink, 3f, Color.WHITE)
+    }
+}
+
+fun getFirstPhotoAvailable(userPhotos: UserPhotos): String? {
+
+    val usermap: Map<String, String?> = userPhotos.serializeToMap()
+
+    var existingString: String? = null
+    for (v in usermap) {
+        v.value?.run {
+            Log.d(
+                "TAG2",
+                "found non null value of ${v.key} and  value ${v.value} "
+            ); existingString = v.value
+        }
+        break
+    }
+    return existingString
 }
 
 private fun getPhotoLinkForContainer(

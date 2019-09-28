@@ -87,7 +87,7 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         val viewHeader = navigation_view.getHeaderView(0)
         val navViewHeaderBinding = DrawerHeaderBinding.bind(viewHeader)
 
-        navViewHeaderBinding.vm = mainViewModel
+        navViewHeaderBinding.sharedViewModel = mainViewModel
         navViewHeaderBinding.lifecycleOwner = this
     }
 
