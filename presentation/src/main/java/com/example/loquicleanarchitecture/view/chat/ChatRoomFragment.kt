@@ -3,10 +3,7 @@ package com.example.loquicleanarchitecture.view.chat
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import android.widget.Toast.makeText
 import com.example.loquicleanarchitecture.R
@@ -20,6 +17,7 @@ import com.stfalcon.chatkit.messages.MessageInput
 import com.stfalcon.chatkit.messages.MessagesListAdapter
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_chatroom.*
+import org.jetbrains.anko.support.v4.toast
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -55,14 +53,22 @@ class ChatRoomFragment : DaggerFragment(), MessageInput.InputListener,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         super.onCreate(savedInstanceState)
 
         return inflater.inflate(R.layout.fragment_chatroom, container, false)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        this.menu = menu
+        activity!!.menuInflater.inflate(R.menu.chat_actions_menu, menu)
+        onSelectionChanged(0)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        imageLoader = ImageLoader { imageView, url, payload -> picasso.load(url).into(imageView) }
+        imageLoader = ImageLoader { imageView, url, _ -> picasso.load(url).into(imageView) }
         initAdapter()
 
         input.setInputListener(this)
@@ -76,7 +82,7 @@ class ChatRoomFragment : DaggerFragment(), MessageInput.InputListener,
         messagesAdapter!!.setLoadMoreListener(this)
         messagesAdapter!!.registerViewClickListener(
             R.id.messageUserAvatar
-        ) { view, message ->
+        ) { _, message ->
             makeText(
                 this.context,
                 message.user.name + " avatar click",
@@ -109,6 +115,17 @@ class ChatRoomFragment : DaggerFragment(), MessageInput.InputListener,
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_delete -> messagesAdapter!!.deleteSelectedMessages()
+            R.id.action_copy -> {
+                messagesAdapter!!.copySelectedMessagesText(activity, getMessageStringFormatter(), true)
+               toast(R.string.copied_message)
+            }
+        }
+        return true
+    }
+
     override fun onSubmit(input: CharSequence?): Boolean {
         messagesAdapter!!.addToStart(
             MessagesFixtures.getTextMessage(input.toString()), true
@@ -131,7 +148,9 @@ class ChatRoomFragment : DaggerFragment(), MessageInput.InputListener,
     }
 
     override fun onSelectionChanged(count: Int) {
-        // todo
+        this.selectionCount = count
+        menu!!.findItem(R.id.action_delete).isVisible = count > 0
+        menu!!.findItem(R.id.action_copy).isVisible = count > 0
     }
 
     override fun onLoadMore(page: Int, totalItemsCount: Int) {
@@ -140,4 +159,5 @@ class ChatRoomFragment : DaggerFragment(), MessageInput.InputListener,
             loadMessages()
         }
     }
+
 }

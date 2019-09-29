@@ -183,7 +183,7 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         when (item?.itemId) {
             R.id.action_logout -> logout()
         }
-        return true
+        return false
     }
 
 
