@@ -2,7 +2,6 @@ package com.example.loquicleanarchitecture.view.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -16,7 +15,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.domain.entities.Gender
 import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
 import com.example.loquicleanarchitecture.R
@@ -30,7 +28,6 @@ import com.example.loquicleanarchitecture.view.main.viewPager.MainPagerAdapter
 import com.google.firebase.auth.FirebaseAuth
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.drawer_header.*
 import kotlinx.android.synthetic.main.menu_row_age_range.*
 import kotlinx.android.synthetic.main.menu_row_gender.*
 import org.jetbrains.anko.intentFor
@@ -79,13 +76,14 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         initOnDestinationChangedListener()
 
         mainViewModel = viewModel(viewModelFactory) {
-            observe(getUserDetailsLiveData(), ::updateUserUI)
+            observe(getUserDetailsLiveData(), ::updateMenuUI)
             failure(failure, ::handleFailure)
         }
         mainViewModel.loadUser()
 
         val viewHeader = navigation_view.getHeaderView(0)
         val navViewHeaderBinding = DrawerHeaderBinding.bind(viewHeader)
+
 
         navViewHeaderBinding.sharedViewModel = mainViewModel
         navViewHeaderBinding.lifecycleOwner = this
@@ -123,19 +121,15 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
                 R.id.item_drawer_gender -> navController.navigate(R.id.dialogDrawerSearchGender)
                 R.id.item_drawer_age_range -> navController.navigate(R.id.dialogDrawerSearchAge)
                 R.id.item_destination_profile -> {
-                    navController.navigate(R.id.action_chatlistFragment_to_profileFragmentNav);drawerLayout.closeDrawer(
-                        GravityCompat.START
-                    )
+                    navController.navigate(R.id.action_chatlistFragment_to_profileFragmentNav)
+                    drawerLayout.closeDrawer(GravityCompat.START)
                 }
             }
             return@setNavigationItemSelectedListener false
         }
     }
 
-    private fun updateUserUI(user: UserEntity) {
-        // todo databinding
-        Log.d(TAG, "UpdateUserUI")
-        // nickname and age databinded
+    private fun updateMenuUI(user: UserEntity) {
 
         when (user.preferences_gender) {
             GenderPreference.FEMALE -> textView_menu_genderValue.text =
@@ -146,18 +140,22 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
                 getString(R.string.drawer_dialog_genderBoth)
         }
 
-        when (user.gender) {
-            Gender.FEMALE -> textView_header_gender.text =
-                getString(R.string.drawer_dialog_genderFemale)
-            Gender.MALE -> textView_header_gender.text =
-                getString(R.string.drawer_dialog_genderMale)
-        }
         textView_menu_ageRangeValue.text =
             getString(
                 R.string.preferences_age_range,
                 user.preferences_age_range_min,
                 user.preferences_age_range_max
             )
+    }
+
+    fun showId(v: View) {
+        toast(v.id)
+    }
+
+    private fun logout() {
+        FirebaseAuth.getInstance().signOut()
+        startActivity(intentFor<AuthActivity>().noHistory())
+        finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -188,15 +186,6 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         return true
     }
 
-    fun showId(v: View) {
-        toast(v.id)
-    }
-
-    private fun logout() {
-        FirebaseAuth.getInstance().signOut()
-        startActivity(intentFor<AuthActivity>().noHistory())
-        finish()
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

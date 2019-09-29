@@ -47,13 +47,13 @@
 		<TextView
 				android:id="@+id/textView_header_nickname"
 				android:layout_width="wrap_content"
-
 				android:layout_height="wrap_content"
 				android:layout_marginBottom="8dp"
 				android:textColor="@color/white"
 				android:textStyle="bold"
 				app:layout_constraintBottom_toTopOf="@+id/textView_header_gender"
 				app:layout_constraintStart_toStartOf="@+id/textView_header_gender"
+				app:setNickname="@{sharedViewModel.userDetailsLiveData.nickname}"
 				/>
 
 		<TextView
@@ -70,21 +70,21 @@
 				app:layout_constraintEnd_toStartOf="@+id/textView_header_age"
 				app:layout_constraintHorizontal_bias="0.5"
 				app:layout_constraintStart_toEndOf="@+id/imageView_profile_photo"
+				app:setGender="@{sharedViewModel.userDetailsLiveData.gender}"
 				/>
 
 		<TextView
 				android:id="@+id/textView_header_age"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-
 				android:layout_marginStart="16dp"
-				android:text="@{String.valueOf(sharedViewModel.userDetailsLiveData.component4())}"
 				android:textColor="@color/white"
 				android:textSize="14sp"
 				android:textStyle="bold"
 				app:layout_constraintBottom_toBottomOf="@+id/textView_header_gender"
 				app:layout_constraintStart_toEndOf="@+id/textView_header_gender"
 				app:layout_constraintTop_toTopOf="@+id/textView_header_gender"
+				app:setAge="@{sharedViewModel.userDetailsLiveData.age}"
 				/>
 
 		<androidx.constraintlayout.widget.Guideline

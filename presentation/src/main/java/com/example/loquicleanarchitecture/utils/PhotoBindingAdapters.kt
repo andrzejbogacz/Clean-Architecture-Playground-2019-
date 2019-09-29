@@ -22,7 +22,6 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -31,7 +30,6 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.example.domain.entities.Gender
 import com.example.domain.entities.UserPhotos
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.helper.loadCircularImage
@@ -43,11 +41,9 @@ fun photoSetter(view: ImageView, userPhotos: UserPhotos, progressBar: ProgressBa
     val photoLink = getPhotoLinkForContainer(view.contentDescription.toString(), userPhotos)
 
     if (progressBar != null && !photoLink.isNullOrEmpty()) {
-        Log.d("TAG", "progress bar and photo link are not empty : bring to front")
         progressBar.visibility = View.VISIBLE
         progressBar.bringToFront()
     }
-
 
     photoLink.isNullOrEmpty().run { view.setImageResource(android.R.color.white) }
 
@@ -89,42 +85,20 @@ fun photoSetter(view: ImageView, userPhotos: UserPhotos, progressBar: ProgressBa
 
 @BindingAdapter(value = ["app:setProfilePhoto"], requireAll = false)
 fun drawerPhotoSetter(view: ImageView, userPhotos: UserPhotos?) {
+    val context = view.context
 
     val photoLink = userPhotos?.let { getFirstPhotoAvailable(it) }
 
+    if (photoLink.isNullOrEmpty()) {
+        view.loadCircularImage(
+            context.resources.getDrawable(R.drawable.ic_profile_white),
+            3f,
+            Color.WHITE
+        )
+    }
+
     photoLink?.run {
         view.loadCircularImage(photoLink, 3f, Color.WHITE)
-    }
-}
-
-fun getFirstPhotoAvailable(userPhotos: UserPhotos): String? {
-
-    val usermap: Map<String, String?> = userPhotos.serializeToMap()
-
-    var existingString: String? = null
-    for (v in usermap) {
-        v.value?.run {
-            Log.d(
-                "TAG2",
-                "found non null value of ${v.key} and  value ${v.value} "
-            ); existingString = v.value
-        }
-        break
-    }
-    return existingString
-}
-
-private fun getPhotoLinkForContainer(
-    photoTag: String, userPhotos: UserPhotos
-): String? {
-    return when (photoTag) {
-        "photo1" -> return userPhotos.photo1
-        "photo2" -> return userPhotos.photo2
-        "photo3" -> return userPhotos.photo3
-        "photo4" -> return userPhotos.photo4
-        "photo5" -> return userPhotos.photo5
-        "photo6" -> return userPhotos.photo6
-        else -> null
     }
 }
 
@@ -150,26 +124,33 @@ fun visibilityAddIcon(view: ImageView, userPhotos: UserPhotos) {
     }
 }
 
-@BindingAdapter("app:nickname")
-fun setNicknameValue(view: TextView, nickname: String) {
-    val context = view.context
-    when (nickname.isEmpty()) {
-        true -> view.text = context.resources.getString(R.string.anonymous)
-        false -> view.text = nickname
+private fun getPhotoLinkForContainer(
+    photoTag: String, userPhotos: UserPhotos
+): String? {
+    return when (photoTag) {
+        "photo1" -> return userPhotos.photo1
+        "photo2" -> return userPhotos.photo2
+        "photo3" -> return userPhotos.photo3
+        "photo4" -> return userPhotos.photo4
+        "photo5" -> return userPhotos.photo5
+        "photo6" -> return userPhotos.photo6
+        else -> null
     }
 }
 
-@BindingAdapter("app:age")
-fun setAgeValue(view: TextView, age: Int) {
-    view.text = age.toString()
-}
+fun getFirstPhotoAvailable(userPhotos: UserPhotos): String? {
 
-@BindingAdapter("app:gender")
-fun setGenderValue(view: TextView, gender: Gender) {
-    val context = view.context
-    when (gender) {
-        Gender.FEMALE -> view.text = context.resources.getString(R.string.profile_gender_female)
-        Gender.MALE -> view.text = context.resources.getString(R.string.profile_gender_male)
+    val usermap: Map<String, String?> = userPhotos.serializeToMap()
+
+    var existingString: String? = null
+    for (v in usermap) {
+        v.value?.run {
+            Log.d(
+                "TAG2",
+                "found non null value of ${v.key} and  value ${v.value} "
+            ); existingString = v.value
+        }
+        break
     }
+    return existingString
 }
-
