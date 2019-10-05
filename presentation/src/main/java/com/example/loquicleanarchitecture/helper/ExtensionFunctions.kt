@@ -14,7 +14,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlin.reflect.KFunction1
 
-
 fun <T : Any, L : LiveData<T>> LifecycleOwner.observe(liveData: L, body: KFunction1<T, Unit>) =
     liveData.observe(this, Observer(body))
 

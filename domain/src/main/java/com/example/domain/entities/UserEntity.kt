@@ -1,6 +1,6 @@
 package com.example.domain.entities
 
-data class UserEntity(
+open class UserEntity(
     var id: String? = null,
     var nickname: String? = "anonymous",
     var gender: Gender = Gender.MALE,
@@ -9,3 +9,5 @@ data class UserEntity(
     var preferences_age_range_min: Int = 20,
     var preferences_age_range_max: Int = 40
 )
+
+class FoundNewUser : UserEntity()

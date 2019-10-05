@@ -2,12 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		>
+
 	<data>
+
 		<variable
 				name="profile"
 				type="com.example.loquicleanarchitecture.view.profile.ProfileFragment"
 				/>
 	</data>
+
 	<androidx.constraintlayout.widget.ConstraintLayout
 			android:id="@+id/constraint"
 			android:layout_width="match_parent"
@@ -25,7 +28,7 @@
 				android:ems="10"
 				android:hint="@string/profile_nickname_hint"
 				android:inputType="textPersonName"
-				android:text="@{profile.sharedViewModel.userDetailsLiveData.component2()}"
+				android:text="@{profile.sharedViewModel.userDetailsLiveData.nickname}"
 				app:layout_constraintEnd_toStartOf="@+id/guideline8"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent"

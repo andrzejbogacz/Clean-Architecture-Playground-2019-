@@ -3,16 +3,16 @@ package com.example.data.usecases
 import arrow.core.Either
 import arrow.core.Failure
 import com.example.data.interactor.UseCase
-import com.example.domain.UserDetailsRepository
-import com.example.domain.entities.Gender
-import com.example.domain.exception.FirebaseResult
+import com.example.domain.SearchRepository
+import com.example.domain.entities.FoundNewUser
+import com.example.domain.entities.UserEntity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
 import javax.inject.Inject
 
-class ChangeProfileUserGender @Inject constructor(var userRepository: UserDetailsRepository) :
-    UseCase<FirebaseResult, Gender>() {
+class QueryUsers @Inject constructor(var searchRepository: SearchRepository) :
+    UseCase<FoundNewUser?, UserEntity>() {
 
     private val TAG: String? = this.javaClass.name
     @Inject
@@ -24,7 +24,7 @@ class ChangeProfileUserGender @Inject constructor(var userRepository: UserDetail
     @Inject
     lateinit var storageRef: StorageReference
 
-    override suspend fun run(params: Gender): Either<Failure, FirebaseResult> =
-        userRepository.updateUserGender(params)
+    override suspend fun run(params: UserEntity): Either<Failure, FoundNewUser?> =
+        searchRepository.findNextUser(params)
 }
 

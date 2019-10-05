@@ -6,7 +6,7 @@ import arrow.core.Either
 import arrow.core.Failure
 import arrow.core.Left
 import arrow.core.Right
-import com.example.domain.UserRepository
+import com.example.domain.UserDetailsRepository
 import com.example.domain.entities.Gender
 import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
@@ -20,12 +20,12 @@ import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class FirebaseRepository @Inject constructor(
-    firebaseFirestore: FirebaseFirestore,
+class FirebaseRepositoryImpl @Inject constructor(
+    val firebaseFirestore: FirebaseFirestore,
     val fbAuth: FirebaseAuth,
     val userStorageReference: StorageReference
 ) :
-    UserRepository {
+    UserDetailsRepository {
     // todo export paths as external dagger dependency
     private val TAG: String? = this.javaClass.name
     var userDetailsDocument =
@@ -211,11 +211,23 @@ class FirebaseRepository @Inject constructor(
             .addOnSuccessListener { isSuccess = true }
             .await()
 
-
-
         return when (isSuccess) {
             true -> Right(NewUserCreated)
             false -> Left(Failure(UserFirebaseException.UnknownException))
+        }
+    }
+
+    fun createDummyUser() {
+
+        fun newUserEntity(int: Int) =
+            UserEntity().apply { id = fbAuth.currentUser!!.uid + int.toString() }
+
+        for (x in 1..10) {
+            firebaseFirestore.collection("Users").document(fbAuth.currentUser!!.uid + x.toString())
+                .set(newUserEntity(x))
+                .addOnFailureListener { printUnknownException(it) }
+                .addOnSuccessListener { Log.d(TAG, "successDummyUsers") }
+
         }
     }
 

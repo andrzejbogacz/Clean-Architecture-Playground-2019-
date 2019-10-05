@@ -6,7 +6,7 @@ import com.example.domain.entities.Gender
 import com.example.domain.entities.GenderPreference
 import com.example.domain.exception.FirebaseResult
 
-interface UserRepository {
+interface UserDetailsRepository {
 
     suspend fun loadUser(): Either<Failure, FirebaseResult>
 

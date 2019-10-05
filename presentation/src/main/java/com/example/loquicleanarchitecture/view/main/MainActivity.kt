@@ -77,6 +77,7 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
 
         mainViewModel = viewModel(viewModelFactory) {
             observe(getUserDetailsLiveData(), ::updateMenuUI)
+            observe(getNextUserLiveData(), ::startNewRandomChat)
             failure(failure, ::handleFailure)
         }
         mainViewModel.loadUser()
@@ -87,6 +88,10 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
 
         navViewHeaderBinding.sharedViewModel = mainViewModel
         navViewHeaderBinding.lifecycleOwner = this
+    }
+
+    fun createUsers(v: View) {
+        mainViewModel.queryUsers()
     }
 
     private fun initOnDestinationChangedListener() {
@@ -146,6 +151,11 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
                 user.preferences_age_range_min,
                 user.preferences_age_range_max
             )
+    }
+
+    private fun startNewRandomChat(user: UserEntity) {
+        //todo pass user as args
+        navController.navigate(R.id.chatroomFragment)
     }
 
     fun showId(v: View) {

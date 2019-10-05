@@ -1,7 +1,9 @@
 package com.example.loquicleanarchitecture.di
 
-import com.example.data.FirebaseRepository
-import com.example.domain.UserRepository
+import com.example.data.FirebaseRepositoryImpl
+import com.example.data.SearchRepositoryImpl
+import com.example.domain.SearchRepository
+import com.example.domain.UserDetailsRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -19,8 +21,16 @@ class FirebaseModule {
         firebaseFirestore: FirebaseFirestore,
         firebaseAuth: FirebaseAuth,
         firebaseStorage: StorageReference
-    ): UserRepository {
-        return FirebaseRepository(firebaseFirestore, firebaseAuth, firebaseStorage)
+    ): UserDetailsRepository {
+        return FirebaseRepositoryImpl(firebaseFirestore, firebaseAuth, firebaseStorage)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSearchRepository(
+        firebaseFirestore: FirebaseFirestore
+    ): SearchRepository {
+        return SearchRepositoryImpl(firebaseFirestore)
     }
 
     @Singleton
