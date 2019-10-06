@@ -21,7 +21,9 @@
  **/
 ext.deps = [:]
 def versions = [:]
-versions.android_gradle_plugin = '3.4.1'
+versions.kotlin = "1.3.50"
+versions.android_gradle_plugin = '3.5.0'
+
 versions.multidex = '1.0.3'
 versions.google_services = '4.2.0'
 //Firebase
@@ -67,13 +69,12 @@ versions.fragment = "1.1.0-alpha09"
 versions.glide = "4.9.0"
 versions.hamcrest = "1.3"
 versions.junit = "4.12"
-versions.kotlin = "1.3.40"
 versions.lifecycle = "2.2.0-alpha03"
 versions.mockito = "2.25.0"
 versions.mockito_all = "1.10.19"
 versions.mockito_android = "2.25.0"
 versions.mockwebserver = "3.8.1"
-versions.navigation = "2.2.0-alpha01"
+versions.navigation = "2.2.0-alpha03"
 versions.okhttp_logging_interceptor = "3.9.0"
 versions.paging = "2.1.0-rc01"
 versions.retrofit = "2.3.0"
@@ -130,12 +131,12 @@ deps.kotlin = kotlin
 
 def arrow = [:]
 arrow.data = "io.arrow-kt:arrow-core-data:$versions.arrow_version"
-arrow.extensions= "io.arrow-kt:arrow-core-extensions:$versions.arrow_version"
-arrow.syntax ="io.arrow-kt:arrow-syntax:$versions.arrow_version"
-arrow.typeclasses =  "io.arrow-kt:arrow-typeclasses:$versions.arrow_version"
-arrow.extras_data= "io.arrow-kt:arrow-extras-data:$versions.arrow_version"
-arrow.extras_extensions= "io.arrow-kt:arrow-extras-extensions:$versions.arrow_version"
-arrow.meta=  "io.arrow-kt:arrow-meta:$versions.arrow_version"
+arrow.extensions = "io.arrow-kt:arrow-core-extensions:$versions.arrow_version"
+arrow.syntax = "io.arrow-kt:arrow-syntax:$versions.arrow_version"
+arrow.typeclasses = "io.arrow-kt:arrow-typeclasses:$versions.arrow_version"
+arrow.extras_data = "io.arrow-kt:arrow-extras-data:$versions.arrow_version"
+arrow.extras_extensions = "io.arrow-kt:arrow-extras-extensions:$versions.arrow_version"
+arrow.meta = "io.arrow-kt:arrow-meta:$versions.arrow_version"
 deps.arrow = arrow
 
 def support = [:]
@@ -150,8 +151,8 @@ support.core_ktx = "androidx.core:core-ktx:$versions.core_ktx"
 support.fragment_runtime = "androidx.fragment:fragment:$versions.fragment"
 support.fragment_runtime_ktx = "androidx.fragment:fragment-ktx:$versions.fragment"
 support.fragment_testing = "androidx.fragment:fragment-testing:$versions.fragment"
-support.drawer_layout =  "androidx.drawerlayout:drawerlayout:$versions.drawer_layout"
-support.percent =  "androidx.percentlayout:percentlayout:$versions.percent"
+support.drawer_layout = "androidx.drawerlayout:drawerlayout:$versions.drawer_layout"
+support.percent = "androidx.percentlayout:percentlayout:$versions.percent"
 deps.support = support
 
 def room = [:]
@@ -251,4 +252,5 @@ def addRepos(RepositoryHandler handler) {
     handler.jcenter()
     handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
+
 ext.addRepos = this.&addRepos

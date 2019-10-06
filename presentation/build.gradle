@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 28
@@ -71,7 +72,7 @@ dependencies {
     implementation deps.firebase.firestore
     implementation deps.firebase.storage
     implementation deps.firebase.storage_ui
-    annotationProcessor deps.firebase.admin
+    kapt deps.firebase.admin
 
     //SUPPORT
     implementation deps.support.app_compat
@@ -84,6 +85,7 @@ dependencies {
     implementation deps.kotlin.stdlib
     implementation deps.kotlin.anko_constraint
     implementation deps.kotlin.coroutines
+    implementation deps.kotlin.stdlib8
 
     // Dagger2 core
     implementation deps.dagger.runtime

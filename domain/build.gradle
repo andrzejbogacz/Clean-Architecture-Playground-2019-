@@ -1,6 +1,8 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -18,7 +20,7 @@ dependencies {
     implementation deps.firebase.ui_auth
     implementation deps.firebase.firestore
     implementation deps.firebase.storage
-    annotationProcessor deps.firebase.admin
+    kapt deps.firebase.admin
 
     // Dagger2 core
     implementation deps.dagger.runtime
@@ -36,7 +38,7 @@ dependencies {
 sourceCompatibility = "7"
 targetCompatibility = "7"
 buildscript {
-    ext.kotlin_version = '1.3.40'
+    ext.kotlin_version = '1.3.50'
     repositories {
         mavenCentral()
     }
