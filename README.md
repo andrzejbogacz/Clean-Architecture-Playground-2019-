@@ -60,7 +60,7 @@ TODO
 
 ## Upcoming improvements
 
-* Implementing chat rooms
+* Implementing randomizing users
 * Add test coverage
 * Improve error handling
 * UI tests
