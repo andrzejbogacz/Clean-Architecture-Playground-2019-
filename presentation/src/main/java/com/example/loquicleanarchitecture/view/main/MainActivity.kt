@@ -15,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.data.entity.mapToDataLayer
 import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
 import com.example.loquicleanarchitecture.R
@@ -25,6 +26,7 @@ import com.example.loquicleanarchitecture.helper.observe
 import com.example.loquicleanarchitecture.helper.viewModel
 import com.example.loquicleanarchitecture.view.login.AuthActivity
 import com.example.loquicleanarchitecture.view.main.viewPager.MainPagerAdapter
+import com.example.loquicleanarchitecture.view.main.viewPager.RandomChatsFragmentDirections
 import com.google.firebase.auth.FirebaseAuth
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -97,7 +99,7 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
     private fun initOnDestinationChangedListener() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.chatlistFragment -> showViewPager()
+                R.id.randomChatsFragment -> showViewPager()
                 R.id.profileFragment -> hideViewPager()
                 R.id.chatroomFragment -> hideViewPager()
             }
@@ -155,7 +157,11 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
 
     private fun startNewRandomChat(user: UserEntity) {
         //todo pass user as args
-        navController.navigate(R.id.chatroomFragment)
+        val userParcelable = user.mapToDataLayer()
+
+        val action =
+            RandomChatsFragmentDirections.actionChatlistFragmentToChatroomFragment(userParcelable)
+        navController.navigate(action)
     }
 
     fun showId(v: View) {
@@ -177,7 +183,7 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
     override fun onBackPressed() {
 
         val isDrawerOpen = drawer_layout.isDrawerOpen(GravityCompat.START)
-        val isMainScreen = navController.currentDestination?.id == R.id.chatlistFragment
+        val isMainScreen = navController.currentDestination?.id == R.id.randomChatsFragment
 
         when (isDrawerOpen) {
             true -> drawer_layout.closeDrawer(GravityCompat.START)

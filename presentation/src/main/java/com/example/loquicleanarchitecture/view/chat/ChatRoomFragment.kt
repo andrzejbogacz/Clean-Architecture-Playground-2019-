@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import android.widget.Toast.makeText
+import com.example.data.entity.UserEntityParcelable
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.fixtures.MessagesFixtures
 import com.example.loquicleanarchitecture.model.Dialog
@@ -27,6 +28,7 @@ class ChatRoomFragment : DaggerFragment(), MessageInput.InputListener,
     MessageInput.TypingListener,
     MessagesListAdapter.SelectionListener,
     MessagesListAdapter.OnLoadMoreListener {
+    private val TAG: String? = this.javaClass.name
 
     private val TOTAL_MESSAGES_COUNT = 100
 
@@ -74,6 +76,13 @@ class ChatRoomFragment : DaggerFragment(), MessageInput.InputListener,
         input.setInputListener(this)
         input.setTypingListener(this)
         input.setAttachmentsListener(this)
+
+        arguments?.run {
+            val args = ChatRoomFragmentArgs.fromBundle(arguments!!)
+            val user: UserEntityParcelable? = args.parcelableUser
+            Log.d(TAG, user.toString())
+
+        }
     }
 
     private fun initAdapter() {
@@ -119,8 +128,12 @@ class ChatRoomFragment : DaggerFragment(), MessageInput.InputListener,
         when (item.itemId) {
             R.id.action_delete -> messagesAdapter!!.deleteSelectedMessages()
             R.id.action_copy -> {
-                messagesAdapter!!.copySelectedMessagesText(activity, getMessageStringFormatter(), true)
-               toast(R.string.copied_message)
+                messagesAdapter!!.copySelectedMessagesText(
+                    activity,
+                    getMessageStringFormatter(),
+                    true
+                )
+                toast(R.string.copied_message)
             }
         }
         return true

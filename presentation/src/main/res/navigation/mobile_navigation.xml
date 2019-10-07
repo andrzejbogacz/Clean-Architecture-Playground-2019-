@@ -3,7 +3,7 @@
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		xmlns:tools="http://schemas.android.com/tools"
 		android:id="@+id/mobile_navigation"
-		app:startDestination="@id/chatlistFragment">
+		app:startDestination="@id/randomChatsFragment">
 
 	<fragment
 			android:id="@+id/profileFragment"
@@ -13,12 +13,12 @@
 			tools:layout="@layout/fragment_profile">
 		<action
 				android:id="@+id/action_profileFragmentNav_to_chatlistFragment"
-				app:destination="@id/chatlistFragment"
-				app:popUpTo="@+id/chatlistFragment" />
+				app:destination="@id/randomChatsFragment"
+				app:popUpTo="@+id/randomChatsFragment" />
 	</fragment>
 	<fragment
-			android:id="@+id/chatlistFragment"
-			android:name="com.example.loquicleanarchitecture.view.main.viewPager.FriendsFragment"
+			android:id="@+id/randomChatsFragment"
+			android:name="com.example.loquicleanarchitecture.view.main.viewPager.RandomChatsFragment"
 			android:label="Home"
 			android:tag="Home"
 			tools:layout="@layout/fragment_random_chats">
@@ -33,7 +33,7 @@
 				app:popUpTo="@id/profileFragment" />
 		<action
 				android:id="@+id/action_chatlistFragment_to_chatroomFragment"
-				app:destination="@id/chatroomFragment"
+				app:destination="@+id/chatroomFragment"
 				app:enterAnim="@anim/fragment_open_enter"
 				app:popExitAnim="@anim/fragment_open_exit" />
 	</fragment>
@@ -63,5 +63,11 @@
 			android:id="@+id/chatroomFragment"
 			android:name="com.example.loquicleanarchitecture.view.chat.ChatRoomFragment"
 			android:label="ChatroomFragment"
-			tools:layout="@layout/fragment_chatroom" />
+			tools:layout="@layout/fragment_chatroom">
+		<argument
+				android:name="parcelableUser"
+				android:defaultValue="@null"
+				app:argType="com.example.data.entity.UserEntityParcelable"
+				app:nullable="true" />
+	</fragment>
 </navigation>

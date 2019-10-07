@@ -8,39 +8,13 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="chatlistFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-869" />
-                            <option name="y" value="-261" />
-                          </Point>
-                        </option>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_chatlistFragment_to_chatroomFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                            <entry key="action_chatlistFragment_to_profileFragmentNav">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
                   <entry key="chatroomFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-1134" />
-                            <option name="y" value="-700" />
+                            <option name="x" value="-1090" />
+                            <option name="y" value="-631" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -51,8 +25,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-751" />
-                            <option name="y" value="-698" />
+                            <option name="x" value="-669" />
+                            <option name="y" value="-628" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -63,8 +37,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-924" />
-                            <option name="y" value="-697" />
+                            <option name="x" value="-842" />
+                            <option name="y" value="-627" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -75,8 +49,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-362" />
-                            <option name="y" value="138" />
+                            <option name="x" value="-842" />
+                            <option name="y" value="-4" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -87,8 +61,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-186" />
-                            <option name="y" value="134" />
+                            <option name="x" value="-666" />
+                            <option name="y" value="-8" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -99,8 +73,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-541" />
-                            <option name="y" value="138" />
+                            <option name="x" value="-1021" />
+                            <option name="y" value="-4" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -111,13 +85,39 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-376" />
-                            <option name="y" value="-206" />
+                            <option name="x" value="-835" />
+                            <option name="y" value="-319" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_profileFragmentNav_to_chatlistFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="randomChatsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-1333" />
+                            <option name="y" value="-337" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_chatlistFragment_to_chatroomFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_chatlistFragment_to_profileFragmentNav">
                               <value>
                                 <LayoutPositions />
                               </value>

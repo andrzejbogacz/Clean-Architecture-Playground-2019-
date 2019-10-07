@@ -64,7 +64,9 @@ class SearchRepositoryImpl @Inject constructor(
                     }
                 }
             }
-            .addOnFailureListener { printUnknownException(it) }.await()
+            .addOnFailureListener {
+                printUnknownException(it)
+            }.await()
 
         return when (isSuccess) {
             true -> Right(nextUser)
