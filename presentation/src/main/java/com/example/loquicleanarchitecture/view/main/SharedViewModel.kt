@@ -30,7 +30,7 @@ class SharedViewModel @Inject constructor(
 
     private val userDetailsLiveData: MutableLiveData<UserEntity> = MutableLiveData()
     private val userPhotosLiveData: MutableLiveData<UserPhotos> = MutableLiveData()
-    private val nextUser = MutableLiveData<UserEntity>()
+    private val nextUser = MutableLiveData<Pair<*,*>>()
 
 
     fun uploadProfileUserPhoto(imageUri: Pair<String, String>) =
@@ -62,7 +62,7 @@ class SharedViewModel @Inject constructor(
 
     private fun handleSuccess(firebaseResult: Any?) {
         when (firebaseResult) {
-            is FoundNewUser? -> {
+            is Pair<*, *> -> {
                 firebaseResult?.run { nextUser.value = firebaseResult }
             }
 

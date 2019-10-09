@@ -7,18 +7,19 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.view.GravityCompat
 import androidx.core.view.MenuCompat
+import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupWithNavController
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.data.entity.mapToDataLayer
 import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
+import com.example.loquicleanarchitecture.BaseActivity
 import com.example.loquicleanarchitecture.R
+import com.example.loquicleanarchitecture.databinding.ActivityMainBinding
 import com.example.loquicleanarchitecture.databinding.DrawerHeaderBinding
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
 import com.example.loquicleanarchitecture.helper.failure
@@ -26,9 +27,7 @@ import com.example.loquicleanarchitecture.helper.observe
 import com.example.loquicleanarchitecture.helper.viewModel
 import com.example.loquicleanarchitecture.view.login.AuthActivity
 import com.example.loquicleanarchitecture.view.main.viewPager.MainPagerAdapter
-import com.example.loquicleanarchitecture.view.main.viewPager.RandomChatsFragmentDirections
 import com.google.firebase.auth.FirebaseAuth
-import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.menu_row_age_range.*
 import kotlinx.android.synthetic.main.menu_row_gender.*
@@ -38,7 +37,7 @@ import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 
-class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
+class MainActivity : BaseActivity(), ViewModelStoreOwner {
     private val TAG: String? = this.javaClass.name
 
     lateinit var adapter: MainPagerAdapter
@@ -57,8 +56,10 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(mToolbar)
+
+        val binding: ActivityMainBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setSupportActionBar(mMainToolbar)
 
         adapter = MainPagerAdapter(
             supportFragmentManager
@@ -67,10 +68,12 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         tabs.setupWithViewPager(view_pager)
 
         drawerLayout = drawer_layout
+
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        super.setNavvController(navController)
+
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
 
-        setupActionBarWithNavController(navController, appBarConfiguration)
         navigation_view.setupWithNavController(navController)
         setupSideNavigationMenu(navController)
         initNavigationDrawer()
@@ -79,7 +82,7 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
 
         mainViewModel = viewModel(viewModelFactory) {
             observe(getUserDetailsLiveData(), ::updateMenuUI)
-            observe(getNextUserLiveData(), ::startNewRandomChat)
+            observe(getNextUserLiveData(), ::startChat)
             failure(failure, ::handleFailure)
         }
         mainViewModel.loadUser()
@@ -87,9 +90,11 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
         val viewHeader = navigation_view.getHeaderView(0)
         val navViewHeaderBinding = DrawerHeaderBinding.bind(viewHeader)
 
-
         navViewHeaderBinding.sharedViewModel = mainViewModel
         navViewHeaderBinding.lifecycleOwner = this
+
+        binding.mChatToolbar.sharedViewModel = mainViewModel
+        binding.lifecycleOwner = this
     }
 
     fun createUsers(v: View) {
@@ -99,9 +104,15 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
     private fun initOnDestinationChangedListener() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.randomChatsFragment -> showViewPager()
+                R.id.randomChatsFragment -> {
+                    showViewPager()
+                    super.showMainToolbar(navController, appBarConfiguration)
+                }
                 R.id.profileFragment -> hideViewPager()
-                R.id.chatroomFragment -> hideViewPager()
+                R.id.chatroomFragment -> {
+                    hideViewPager()
+                    super.showChatToolbar(navController, appBarConfiguration)
+                }
             }
         }
     }
@@ -118,7 +129,7 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
 
     private fun setupSideNavigationMenu(navController: NavController) {
         navigation_view?.let {
-            setupWithNavController(mToolbar, navController, appBarConfiguration)
+            setupWithNavController(mMainToolbar, navController, appBarConfiguration)
         }
     }
 
@@ -153,15 +164,6 @@ class MainActivity : DaggerAppCompatActivity(), ViewModelStoreOwner {
                 user.preferences_age_range_min,
                 user.preferences_age_range_max
             )
-    }
-
-    private fun startNewRandomChat(user: UserEntity) {
-        //todo pass user as args
-        val userParcelable = user.mapToDataLayer()
-
-        val action =
-            RandomChatsFragmentDirections.actionChatlistFragmentToChatroomFragment(userParcelable)
-        navController.navigate(action)
     }
 
     fun showId(v: View) {

@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import android.widget.Toast.makeText
-import com.example.data.entity.UserEntityParcelable
+import androidx.databinding.ObservableField
+import com.example.domain.entities.UserEntity
+import com.example.domain.entities.UserPhotos
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.fixtures.MessagesFixtures
 import com.example.loquicleanarchitecture.model.Dialog
@@ -45,10 +47,11 @@ class ChatRoomFragment : DaggerFragment(), MessageInput.InputListener,
     @Inject
     lateinit var picasso: Picasso
 
-    override fun onStart() {
-        super.onStart()
-        messagesAdapter!!.addToStart(MessagesFixtures.textMessage, true)
-    }
+    private val userDetails = ObservableField<UserEntity>()
+    private val userPhotos = ObservableField<UserPhotos>()
+
+    fun getChatUserDetails() = userDetails
+    fun getChatUserPhotos() = userPhotos
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,11 +81,19 @@ class ChatRoomFragment : DaggerFragment(), MessageInput.InputListener,
         input.setAttachmentsListener(this)
 
         arguments?.run {
-            val args = ChatRoomFragmentArgs.fromBundle(arguments!!)
-            val user: UserEntityParcelable? = args.parcelableUser
-            Log.d(TAG, user.toString())
+            val userAndPhotos: Pair<*, *> = arguments!!.get("userAndPhotos") as Pair<*, *>
+            userDetails.set(userAndPhotos.first as UserEntity)
+            userPhotos.set(userAndPhotos.second as UserPhotos)
 
+            Log.d(TAG, userAndPhotos.first.toString())
+            Log.d(TAG, userAndPhotos.second.toString())
         }
+    }
+
+    override fun onStart() {
+
+        super.onStart()
+        messagesAdapter!!.addToStart(MessagesFixtures.textMessage, true)
     }
 
     private fun initAdapter() {

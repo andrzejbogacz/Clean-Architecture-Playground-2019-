@@ -10,4 +10,4 @@ open class UserEntity(
     var preferences_age_range_max: Int = 40
 )
 
-class FoundNewUser : UserEntity()
+class FoundUserDetails : UserEntity()

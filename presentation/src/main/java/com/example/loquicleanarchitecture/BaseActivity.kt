@@ -1,19 +1,63 @@
 package com.example.loquicleanarchitecture
 
 import android.app.ProgressDialog
-import android.content.Context
 import android.os.Bundle
-import android.view.Menu
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.widget.Toolbar
+import androidx.databinding.ObservableField
+import androidx.navigation.NavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import com.example.domain.entities.UserEntity
+import com.example.domain.entities.UserPhotos
 import com.google.firebase.FirebaseApp
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 abstract class BaseActivity : DaggerAppCompatActivity() {
+
+
+    private val userDetails = ObservableField<UserEntity>()
+    private val userPhotos = ObservableField<UserPhotos>()
+
+    private lateinit var _navController: NavController
+    fun setNavvController(navController: NavController) {
+        _navController = navController
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         FirebaseApp.initializeApp(this)
         super.onCreate(savedInstanceState)
+    }
+
+    fun startChat(pair: Pair<*, *>) {
+        //todo pass user as args
+        val bundle: Bundle = Bundle().apply { putSerializable("userAndPhotos", pair) }
+
+        //todo 1.prepareChatToolbar(photos, userDetails)
+
+        _navController.navigate(R.id.action_chatlistFragment_to_chatroomFragment, bundle)
+    }
+
+    fun showMainToolbar(navController: NavController, appBarConfiguration: AppBarConfiguration) {
+        mMainToolbar.visibility = View.VISIBLE
+        mChatToolbar.visibility = View.GONE
+        setSupportActionBar(mMainToolbar)
+        mMainToolbar.setupWithNavController(navController, appBarConfiguration)
+    }
+
+    protected fun showChatToolbar(
+        navController: NavController,
+        appBarConfiguration: AppBarConfiguration
+    ) {
+
+        mMainToolbar.visibility = View.GONE
+        mChatToolbar.visibility = View.VISIBLE
+        setSupportActionBar(mChatToolbar as Toolbar)
+        (mChatToolbar as Toolbar).setupWithNavController(navController, appBarConfiguration)
+
+
     }
 
     @VisibleForTesting
@@ -33,15 +77,9 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
         }
     }
 
-    fun hideKeyboard(view: View) {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
-    }
-
     public override fun onStop() {
         super.onStop()
         hideProgressDialog()
     }
-
 
 }

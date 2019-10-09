@@ -6,9 +6,10 @@ import arrow.core.Failure
 import arrow.core.Left
 import arrow.core.Right
 import com.example.domain.SearchRepository
-import com.example.domain.entities.FoundNewUser
+import com.example.domain.entities.FoundUserDetails
 import com.example.domain.entities.GenderPreference.BOTH
 import com.example.domain.entities.UserEntity
+import com.example.domain.entities.UserPhotos
 import com.example.domain.exception.UserFirebaseException
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -26,10 +27,11 @@ class SearchRepositoryImpl @Inject constructor(
     var alreadyFoundUsers: MutableList<String> =
         mutableListOf()
 
-    override suspend fun findNextUser(currentUser: UserEntity): Either<Failure, FoundNewUser?> {
+    override suspend fun findNextUser(currentUser: UserEntity): Either<Failure, Pair<UserEntity, UserPhotos>> {
 
-        var isSuccess = false
-        var nextUser: FoundNewUser? = null
+        var isUserFound = false
+        lateinit var foundUser: UserEntity
+        var nextUserPhotos: UserPhotos?
 
         usersCollection
             //check Age compatibility
@@ -39,7 +41,6 @@ class SearchRepositoryImpl @Inject constructor(
             .whereEqualTo("gender", currentUser.preferences_gender)
             .get()
             .addOnSuccessListener { documents ->
-                isSuccess = true
                 for (document in documents) {
 
                     if (!alreadyFoundUsers.contains(document.id)) {
@@ -52,11 +53,10 @@ class SearchRepositoryImpl @Inject constructor(
                             document.data["preferences_gender"].toString() == BOTH.toString() || document.data["preferences_gender"] == currentUser.gender.toString()
 
                         if (maxAge && minAge && prefGender) {
-                            nextUser = document.toObject(FoundNewUser::class.java)
-
+                            foundUser = document.toObject(FoundUserDetails::class.java)
                             //todo check if it's working
                             alreadyFoundUsers.add(document.id)
-
+                            isUserFound = true
                             return@addOnSuccessListener
 
                             //todo if user not found, reset list and try again
@@ -68,8 +68,36 @@ class SearchRepositoryImpl @Inject constructor(
                 printUnknownException(it)
             }.await()
 
+        return when (isUserFound) {
+            //true -> Right(nextUser)
+            true -> combineUserWithPhotos(foundUser)
+            //todo false
+            false -> Left(Failure(UserFirebaseException.UnknownException))
+        }
+    }
+
+    private suspend fun combineUserWithPhotos(userEntity: UserEntity): Either<Failure, Pair<UserEntity, UserPhotos>> {
+        var isSuccess = false
+        var userPhotos: UserPhotos? = null
+        val user = userEntity
+        lateinit var pairUserAndPhotos: Pair<UserEntity, UserPhotos>
+
+        usersCollection.document(user.id!!)
+            .collection("Storage")
+            .document("myPhotos")
+            .get()
+            .addOnSuccessListener { documentSnapshot ->
+                userPhotos = documentSnapshot.toObject(UserPhotos::class.java)
+                pairUserAndPhotos = Pair(userEntity, userPhotos!!)
+                isSuccess = true
+
+                Log.e(TAG, pairUserAndPhotos.toString())
+
+            }.await()
+
         return when (isSuccess) {
-            true -> Right(nextUser)
+            true -> Right(pairUserAndPhotos)
+            //todo false
             false -> Left(Failure(UserFirebaseException.UnknownException))
         }
     }

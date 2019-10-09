@@ -36,50 +36,52 @@ import com.example.loquicleanarchitecture.helper.loadCircularImage
 import com.example.loquicleanarchitecture.helper.serializeToMap
 
 @BindingAdapter(value = ["app:setPhoto", "app:setProgressbar"], requireAll = false)
-fun photoSetter(view: ImageView, userPhotos: UserPhotos, progressBar: ProgressBar?) {
+fun photoSetter(view: ImageView, userPhotos: UserPhotos?, progressBar: ProgressBar?) {
 
-    val photoLink = getPhotoLinkForContainer(view.contentDescription.toString(), userPhotos)
+    userPhotos?.run {
+        val photoLink = getPhotoLinkForContainer("photo1", userPhotos)
 
-    if (progressBar != null && !photoLink.isNullOrEmpty()) {
-        progressBar.visibility = View.VISIBLE
-        progressBar.bringToFront()
-    }
+        if (progressBar != null && !photoLink.isNullOrEmpty()) {
+            progressBar.visibility = View.VISIBLE
+            progressBar.bringToFront()
+        }
 
-    photoLink.isNullOrEmpty().run { view.setImageResource(android.R.color.white) }
+        photoLink.isNullOrEmpty().run { view.setImageResource(android.R.color.white) }
 
-    photoLink?.run {
-        Glide
-            .with(view.context)
-            .load(this)
-            .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
-
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    Log.d("TAG", "on Resource Ready...")
-
-                    if (progressBar != null) {
-                        Log.d("TAG", "Loaded photo : hide progress bar")
-                        progressBar.visibility = View.GONE
-                        view.setBackgroundColor(Color.TRANSPARENT)
+        photoLink?.run {
+            Glide
+                .with(view.context)
+                .load(this)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                     }
-                    return false
-                }
-            })
-            .transform(CenterCrop(), RoundedCorners(20))
-            .into(view)
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        Log.d("TAG", "on Resource Ready...")
+
+                        if (progressBar != null) {
+                            Log.d("TAG", "Loaded photo : hide progress bar")
+                            progressBar.visibility = View.GONE
+                            view.setBackgroundColor(Color.TRANSPARENT)
+                        }
+                        return false
+                    }
+                })
+                .transform(CenterCrop(), RoundedCorners(20))
+                .into(view)
+        }
     }
 }
 

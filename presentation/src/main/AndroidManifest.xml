@@ -59,13 +59,10 @@
 		<activity
 				android:name="com.example.loquicleanarchitecture.view.main.MainActivity"
 				android:theme="@style/AppTheme.NoActionBar"
-				></activity>
+				/>
+
 		<activity
 				android:name="com.example.loquicleanarchitecture.view.profile.ProfileFragment"
-				android:theme="@style/AppTheme"
-				/>
-		<activity
-				android:name="com.example.loquicleanarchitecture.view.chat.ChatActivity"
 				android:theme="@style/AppTheme"
 				/>
 

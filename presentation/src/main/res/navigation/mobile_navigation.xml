@@ -64,10 +64,6 @@
 			android:name="com.example.loquicleanarchitecture.view.chat.ChatRoomFragment"
 			android:label="ChatroomFragment"
 			tools:layout="@layout/fragment_chatroom">
-		<argument
-				android:name="parcelableUser"
-				android:defaultValue="@null"
-				app:argType="com.example.data.entity.UserEntityParcelable"
-				app:nullable="true" />
+		<argument android:name="pairUserAndPhotos" />
 	</fragment>
 </navigation>
