@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
 import com.example.loquicleanarchitecture.view.main.SharedViewModel
+import com.example.loquicleanarchitecture.view.profile.ProfileViewModel
 import dagger.android.support.DaggerDialogFragment
 import javax.inject.Inject
 
@@ -19,16 +20,24 @@ class DialogProfileNickname : DaggerDialogFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProviderFactory
 
-    private lateinit var mainViewModel: SharedViewModel
+    private lateinit var sharedViewModel: SharedViewModel
+
+    private lateinit var profileViewModel: ProfileViewModel
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-        mainViewModel = ViewModelProvider(
+        profileViewModel = ViewModelProvider(
+            activity!!.viewModelStore,
+            viewModelFactory
+        ).get(ProfileViewModel::class.java)
+
+        sharedViewModel = ViewModelProvider(
             activity!!.viewModelStore,
             viewModelFactory
         ).get(SharedViewModel::class.java)
 
-        val userNickname = mainViewModel.getUserDetailsLiveData().value!!.nickname
+        val userNickname = sharedViewModel.getUserDetailsLiveData().value!!.nickname
 
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_profile_nickname_choice, null)
         val edNickname = view.findViewById<EditText>(R.id.editText_profile_nickname_value)
@@ -43,7 +52,7 @@ class DialogProfileNickname : DaggerDialogFragment() {
                 .setPositiveButton(
                     R.string.confirm
                 ) { _, _ ->
-                    mainViewModel.changeProfileUserNickname(edNickname.text.toString())
+                    profileViewModel.changeProfileUserNickname(edNickname.text.toString())
 
                 }
                 .setNegativeButton(

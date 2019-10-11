@@ -5,8 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import arrow.core.Failure
 import arrow.core.None
 import com.example.data.FirebaseRepositoryImpl
-import com.example.data.usecases.*
-import com.example.domain.entities.*
+import com.example.data.usecases.ChangeUserAgePreference
+import com.example.data.usecases.ChangeUserGenderPreference
+import com.example.data.usecases.CreateUser
+import com.example.data.usecases.LoadUser
+import com.example.domain.entities.GenderPreference
+import com.example.domain.entities.UserEntity
+import com.example.domain.entities.UserPhotos
 import com.example.domain.exception.FirebaseResult.*
 import com.example.domain.exception.UserFirebaseException
 import com.example.loquicleanarchitecture.view.BaseViewModel
@@ -17,12 +22,6 @@ class SharedViewModel @Inject constructor(
     val loadUser: LoadUser,
     val changeUserAgePreference: ChangeUserAgePreference,
     val changeUserGenderPreference: ChangeUserGenderPreference,
-    val changeProfileUserNickname: ChangeProfileUserNickname,
-    val changeProfileUserGender: ChangeProfileUserGender,
-    val changeProfileUserAge: ChangeProfileUserAge,
-    val uploadProfileUserPhoto: UploadProfileUserPhoto,
-    val deleteProfileUserPhoto: DeleteProfileUserPhoto,
-    val queryUsers: QueryUsers,
     private var firebaseRepository: FirebaseRepositoryImpl
 ) : BaseViewModel() {
 
@@ -30,31 +29,14 @@ class SharedViewModel @Inject constructor(
 
     private val userDetailsLiveData: MutableLiveData<UserEntity> = MutableLiveData()
     private val userPhotosLiveData: MutableLiveData<UserPhotos> = MutableLiveData()
-    private val nextUser = MutableLiveData<Pair<*,*>>()
-
-
-    fun uploadProfileUserPhoto(imageUri: Pair<String, String>) =
-        uploadProfileUserPhoto(imageUri) { it.fold(::handleFailure, ::handleSuccess) }
-
-    fun changeUserGenderPreference(gender: GenderPreference) =
-        changeUserGenderPreference(gender) { it.fold(::handleFailure, ::handleSuccess) }
-
-    fun changeProfileUserNickname(nickname: String) =
-        changeProfileUserNickname(nickname) { it.fold(::handleFailure, ::handleSuccess) }
+    private val nextUser = MutableLiveData<Pair<*, *>>()
 
     fun changeUserAgePreference(pair: Pair<Int, Int>) =
         changeUserAgePreference(pair) { it.fold(::handleFailure, ::handleSuccess) }
 
-    fun changeProfileUserGender(gender: Gender) =
-        changeProfileUserGender(gender) { it.fold(::handleFailure, ::handleSuccess) }
+    fun changeUserGenderPreference(gender: GenderPreference) =
+        changeUserGenderPreference(gender) { it.fold(::handleFailure, ::handleSuccess) }
 
-    fun changeProfileUserAge(age: Int) =
-        changeProfileUserAge(age) { it.fold(::handleFailure, ::handleSuccess) }
-
-    fun queryUsers() =
-        queryUsers(getUserDetailsLiveData().value!!) { it.fold(::handleFailure, ::handleSuccess) }
-
-    fun createDummyUsers() = firebaseRepository.createDummyUser()
 
     private fun createUser() = createUser(None) { it.fold(::handleFailure, ::handleSuccess) }
 
@@ -63,7 +45,7 @@ class SharedViewModel @Inject constructor(
     private fun handleSuccess(firebaseResult: Any?) {
         when (firebaseResult) {
             is Pair<*, *> -> {
-                firebaseResult?.run { nextUser.value = firebaseResult }
+                firebaseResult.run { nextUser.value = firebaseResult }
             }
 
             is NewUserCreated -> {
@@ -80,16 +62,6 @@ class SharedViewModel @Inject constructor(
                 TAG,
                 "handleSuccess: Successfully changed user age preference"
             )
-            is UserProfileNicknameChanged -> Log.d(
-                TAG,
-                "handleSuccess: Successfully changed user nickname"
-            )
-            is UserProfileGenderChanged -> Log.d(
-                TAG,
-                "handleSuccess: Successfully changed user gender"
-            )
-            is UserProfileAgeChanged -> Log.d(TAG, "handleSuccess: Successfully changed user age")
-            is UserProfilePhotoUploaded -> Log.d(TAG, "handleSuccess: Successfully uploaded photo")
         }
     }
 

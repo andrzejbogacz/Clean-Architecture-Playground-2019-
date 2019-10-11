@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.databinding.FragmentProfileBinding
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
+import com.example.loquicleanarchitecture.helper.viewModel
 import com.example.loquicleanarchitecture.utils.NavigationHandler
 import com.example.loquicleanarchitecture.view.main.SharedViewModel
 import com.theartofdev.edmodo.cropper.CropImage
@@ -20,7 +21,8 @@ import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 
-class ProfileFragment : DaggerFragment() {
+class ProfileFragment @Inject constructor(
+) : DaggerFragment() {
 
     private val TAG: String? = this.javaClass.name
 
@@ -33,12 +35,19 @@ class ProfileFragment : DaggerFragment() {
 
     private lateinit var binding: FragmentProfileBinding
 
+    lateinit var profileViewModel: ProfileViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
+
+        sharedViewModel = viewModel(viewModelFactory) {}
+
+        profileViewModel = viewModel(viewModelFactory) {}
+
         return binding.root
     }
 
@@ -67,7 +76,7 @@ class ProfileFragment : DaggerFragment() {
                 val uriAndTag =
                     Pair(resultUri.toString(), currentViewHolder!!.contentDescription.toString())
 
-                sharedViewModel.uploadProfileUserPhoto(uriAndTag)
+                profileViewModel.uploadProfileUserPhoto(uriAndTag)
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
@@ -83,5 +92,5 @@ class ProfileFragment : DaggerFragment() {
     }
 
     fun deletePhoto(view: View) =
-        sharedViewModel.deleteProfileUserPhoto(view.contentDescription.toString())
+        profileViewModel.deleteProfileUserPhoto(view.contentDescription.toString())
 }

@@ -9,12 +9,10 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.MenuCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -108,9 +106,6 @@ class MainActivity : BaseActivity(), ViewModelStoreOwner {
         binding.lifecycleOwner = this
     }
 
-    fun createUsers(v: View) {
-        mainViewModel.queryUsers()
-    }
 
     private fun initOnDestinationChangedListener() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
