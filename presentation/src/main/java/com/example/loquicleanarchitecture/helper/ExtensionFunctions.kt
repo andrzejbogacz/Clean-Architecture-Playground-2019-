@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.example.loquicleanarchitecture.view.main.MainActivity
+import com.example.loquicleanarchitecture.view.main.viewPager.RandomChatsFragment
 import com.example.loquicleanarchitecture.view.profile.ProfileFragment
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -24,7 +25,7 @@ inline fun <reified T : ViewModel> MainActivity.viewModel(
     factory: ViewModelProvider.Factory,
     body: T.() -> Unit
 ): T {
-    val vm = ViewModelProvider(this, factory)[T::class.java]
+    val vm = ViewModelProvider(viewModelStore, factory)[T::class.java]
     vm.body()
     return vm
 }
@@ -34,6 +35,15 @@ inline fun <reified T : ViewModel> ProfileFragment.viewModel(
     body: T.() -> Unit
 ): T {
     val vm = ViewModelProvider(activity!!.viewModelStore, factory)[T::class.java]
+    vm.body()
+    return vm
+}
+
+inline fun <reified T : ViewModel> RandomChatsFragment.viewModel(
+    factory: ViewModelProvider.Factory,
+    body: T.() -> Unit
+): T {
+    val vm = ViewModelProvider(this, factory)[T::class.java]
     vm.body()
     return vm
 }

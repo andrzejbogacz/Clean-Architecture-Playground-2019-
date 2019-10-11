@@ -23,6 +23,9 @@
 			android:tag="Home"
 			tools:layout="@layout/fragment_random_chats">
 		<action
+				android:id="@+id/action_register_to_registered"
+				app:destination="@id/chatroomFragment"/>
+		<action
 				android:id="@+id/action_chatlistFragment_to_profileFragmentNav"
 				app:destination="@id/profileFragment"
 				app:enterAnim="@anim/nav_default_enter_anim"

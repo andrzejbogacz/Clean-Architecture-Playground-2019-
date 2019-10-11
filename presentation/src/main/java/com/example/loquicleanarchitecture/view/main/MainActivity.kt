@@ -9,9 +9,12 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.MenuCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -39,6 +42,14 @@ import javax.inject.Inject
 
 class MainActivity : BaseActivity(), ViewModelStoreOwner {
     private val TAG: String? = this.javaClass.name
+
+    private val appViewModelStore: ViewModelStore by lazy {
+        ViewModelStore()
+    }
+
+    override fun getViewModelStore(): ViewModelStore {
+        return appViewModelStore
+    }
 
     lateinit var adapter: MainPagerAdapter
 

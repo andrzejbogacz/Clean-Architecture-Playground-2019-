@@ -14,7 +14,6 @@
 			app:srcCompat= "@drawable/ic_add_white_48dp"
 			android:layout_marginEnd="16dp"
 			android:layout_marginBottom="16dp"
-			android:onClick="createUsers"
 			app:fabSize="normal"
 			app:useCompatPadding="true"
 			/>
