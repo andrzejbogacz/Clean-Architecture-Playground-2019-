@@ -39,7 +39,7 @@ import com.example.loquicleanarchitecture.helper.serializeToMap
 fun photoSetter(view: ImageView, userPhotos: UserPhotos?, progressBar: ProgressBar?) {
 
     userPhotos?.run {
-        val photoLink = getPhotoLinkForContainer("photo1", userPhotos)
+        val photoLink = getPhotoLinkForContainer(view.contentDescription.toString(), userPhotos)
 
         if (progressBar != null && !photoLink.isNullOrEmpty()) {
             progressBar.visibility = View.VISIBLE
