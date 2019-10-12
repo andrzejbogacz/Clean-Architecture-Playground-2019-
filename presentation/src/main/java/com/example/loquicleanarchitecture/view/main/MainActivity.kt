@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.MenuCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
@@ -86,12 +87,10 @@ class MainActivity : BaseActivity(), ViewModelStoreOwner {
         navigation_view.setupWithNavController(navController)
         setupSideNavigationMenu(navController)
         initNavigationDrawer()
-
         initOnDestinationChangedListener()
 
         mainViewModel = viewModel(viewModelFactory) {
             observe(getUserDetailsLiveData(), ::updateMenuUI)
-            //  observe(getNextUserLiveData(), ::startChat)
             failure(failure, ::handleFailure)
         }
         mainViewModel.loadUser()

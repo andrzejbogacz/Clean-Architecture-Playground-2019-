@@ -51,7 +51,6 @@ class MainActivityViewModel @Inject constructor(
             is UserFirebaseException.UserNotExisting -> {
                 createUser(); Log.d(TAG, "Starting attempt to create new User")
             }
-
             //todo catch and define new exception handlers
             is UserFirebaseException.UnknownException -> Log.d(
                 TAG,
@@ -91,8 +90,6 @@ class MainActivityViewModel @Inject constructor(
         }
     }
 
-    //fun getNextUserLiveData() = nextUser
     fun getUserDetailsLiveData() = userDetailsLiveData
-
     fun getUserPhotosLiveData() = userPhotosLiveData
 }

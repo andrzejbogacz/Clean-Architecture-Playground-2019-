@@ -37,6 +37,7 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
         mChatToolbar.visibility = View.VISIBLE
         setSupportActionBar(mChatToolbar as Toolbar)
         (mChatToolbar as Toolbar).setupWithNavController(navController, appBarConfiguration)
+        hideViewPager()
     }
 
     @VisibleForTesting

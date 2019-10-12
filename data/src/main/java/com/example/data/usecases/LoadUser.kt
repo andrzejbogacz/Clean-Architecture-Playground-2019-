@@ -14,16 +14,6 @@ import javax.inject.Inject
 class LoadUser @Inject constructor(var userRepository: UserDetailsRepository) :
     UseCase<FirebaseResult, None>() {
 
-    private val TAG: String? = this.javaClass.name
-    @Inject
-    lateinit var fbAuth: FirebaseAuth
-
-    @Inject
-    lateinit var firestore: FirebaseFirestore
-
-    @Inject
-    lateinit var storageRef: StorageReference
-
     override suspend fun run(params: None): Either<Failure, FirebaseResult> =
         userRepository.loadUser()
 }

@@ -14,16 +14,6 @@ import javax.inject.Inject
 class ChangeProfileUserGender @Inject constructor(var userRepository: UserDetailsRepository) :
     UseCase<FirebaseResult, Gender>() {
 
-    private val TAG: String? = this.javaClass.name
-    @Inject
-    lateinit var fbAuth: FirebaseAuth
-
-    @Inject
-    lateinit var firestore: FirebaseFirestore
-
-    @Inject
-    lateinit var storageRef: StorageReference
-
     override suspend fun run(params: Gender): Either<Failure, FirebaseResult> =
         userRepository.updateUserGender(params)
 }

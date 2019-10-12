@@ -19,15 +19,16 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import javax.inject.Named
 
 class FirebaseRepositoryImpl @Inject constructor(
-    val firebaseFirestore: FirebaseFirestore,
+    private val firebaseFirestore: FirebaseFirestore,
     val fbAuth: FirebaseAuth,
-    val userStorageReference: StorageReference
+    @Named("currentUserStorage") private val userStorageReference: StorageReference
 ) :
     UserDetailsRepository {
-    // todo export paths as external dagger dependency
     private val TAG: String? = this.javaClass.name
+
     var userDetailsDocument =
         firebaseFirestore.collection("Users").document(fbAuth.currentUser!!.uid)
     var userPhotosDocument =

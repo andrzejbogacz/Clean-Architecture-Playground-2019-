@@ -35,7 +35,7 @@ class ProfileFragment @Inject constructor(
 
     private lateinit var binding: FragmentProfileBinding
 
-    lateinit var profileViewModel: ProfileViewModel
+    private lateinit var profileViewModel: ProfileViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,

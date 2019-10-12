@@ -13,16 +13,6 @@ import javax.inject.Inject
 class ChangeProfileUserAge @Inject constructor(var userRepository: UserDetailsRepository) :
     UseCase<FirebaseResult, Int>() {
 
-    private val TAG: String? = this.javaClass.name
-    @Inject
-    lateinit var fbAuth: FirebaseAuth
-
-    @Inject
-    lateinit var firestore: FirebaseFirestore
-
-    @Inject
-    lateinit var storageRef: StorageReference
-
     override suspend fun run(params: Int): Either<Failure, FirebaseResult> =
         userRepository.updateUserAge(params)
 }

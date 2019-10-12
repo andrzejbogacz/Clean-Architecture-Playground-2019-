@@ -13,16 +13,6 @@ import javax.inject.Inject
 class DeleteProfileUserPhoto @Inject constructor(var userRepository: UserDetailsRepository) :
     UseCase<FirebaseResult, String>() {
 
-    private val TAG: String? = this.javaClass.name
-    @Inject
-    lateinit var fbAuth: FirebaseAuth
-
-    @Inject
-    lateinit var firestore: FirebaseFirestore
-
-    @Inject
-    lateinit var storageRef: StorageReference
-
     override suspend fun run(params: String): Either<Failure, FirebaseResult> =
         userRepository.deleteProfileUserPhoto(params)
 }

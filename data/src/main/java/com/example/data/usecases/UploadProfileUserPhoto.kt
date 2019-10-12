@@ -13,16 +13,6 @@ import javax.inject.Inject
 class UploadProfileUserPhoto @Inject constructor(var userRepository: UserDetailsRepository) :
     UseCase<FirebaseResult, Pair<String, String>>() {
 
-    private val TAG: String? = this.javaClass.name
-    @Inject
-    lateinit var fbAuth: FirebaseAuth
-
-    @Inject
-    lateinit var firestore: FirebaseFirestore
-
-    @Inject
-    lateinit var storageRef: StorageReference
-
     override suspend fun run(params: Pair<String, String>): Either<Failure, FirebaseResult> =
         userRepository.uploadProfileUserPhoto(params)
 }
