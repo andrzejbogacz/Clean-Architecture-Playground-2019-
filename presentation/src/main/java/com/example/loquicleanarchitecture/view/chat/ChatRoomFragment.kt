@@ -81,12 +81,13 @@ class ChatRoomFragment : DaggerFragment(), MessageInput.InputListener,
         input.setAttachmentsListener(this)
 
         arguments?.run {
- /*           val userAndPhotos: Pair<*, *> = arguments!!.get("userAndPhotos") as Pair<*, *>
+            //todo what if null, is it nullable anyway?
+            val userAndPhotos: Pair<*, *> = arguments!!.get("userAndPhotos") as Pair<*, *>
             userDetails.set(userAndPhotos.first as UserEntity)
             userPhotos.set(userAndPhotos.second as UserPhotos)
 
             Log.d(TAG, userAndPhotos.first.toString())
-            Log.d(TAG, userAndPhotos.second.toString())*/
+            Log.d(TAG, userAndPhotos.second.toString())
         }
     }
 

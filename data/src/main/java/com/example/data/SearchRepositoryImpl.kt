@@ -16,7 +16,7 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(
-    val firebaseFirestore: FirebaseFirestore
+    firebaseFirestore: FirebaseFirestore
 ) :
     SearchRepository {
     // todo export paths as external dagger dependency
@@ -31,7 +31,6 @@ class SearchRepositoryImpl @Inject constructor(
 
         var isUserFound = false
         lateinit var foundUser: UserEntity
-        var nextUserPhotos: UserPhotos?
 
         usersCollection
             //check Age compatibility
@@ -69,7 +68,6 @@ class SearchRepositoryImpl @Inject constructor(
             }.await()
 
         return when (isUserFound) {
-            //true -> Right(nextUser)
             true -> combineUserWithPhotos(foundUser)
             //todo false
             false -> Left(Failure(UserFirebaseException.UnknownException))

@@ -7,7 +7,5 @@ import com.example.domain.entities.UserPhotos
 
 interface SearchRepository {
 
-
     suspend fun findNextUser(currentUser: UserEntity): Either<Failure, Pair<UserEntity, UserPhotos>>
-
 }
