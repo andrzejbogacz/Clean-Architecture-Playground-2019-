@@ -20,7 +20,7 @@
 
 		<variable
 				name="sharedViewModel"
-				type="com.example.loquicleanarchitecture.view.main.SharedViewModel"
+				type="com.example.loquicleanarchitecture.view.main.MainActivityViewModel"
 				/>
 	</data>
 

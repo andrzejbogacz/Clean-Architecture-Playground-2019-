@@ -5,23 +5,19 @@ import androidx.lifecycle.MutableLiveData
 import arrow.core.Failure
 import arrow.core.None
 import com.example.data.FirebaseRepositoryImpl
-import com.example.data.usecases.ChangeUserAgePreference
-import com.example.data.usecases.ChangeUserGenderPreference
 import com.example.data.usecases.CreateUser
 import com.example.data.usecases.LoadUser
-import com.example.domain.entities.GenderPreference
 import com.example.domain.entities.UserEntity
 import com.example.domain.entities.UserPhotos
-import com.example.domain.exception.FirebaseResult.*
+import com.example.domain.exception.FirebaseResult.ExistingUserLoaded
+import com.example.domain.exception.FirebaseResult.NewUserCreated
 import com.example.domain.exception.UserFirebaseException
 import com.example.loquicleanarchitecture.view.BaseViewModel
 import javax.inject.Inject
 
-class SharedViewModel @Inject constructor(
+class MainActivityViewModel @Inject constructor(
     val createUser: CreateUser,
     val loadUser: LoadUser,
-    val changeUserAgePreference: ChangeUserAgePreference,
-    val changeUserGenderPreference: ChangeUserGenderPreference,
     private var firebaseRepository: FirebaseRepositoryImpl
 ) : BaseViewModel() {
 
@@ -29,14 +25,6 @@ class SharedViewModel @Inject constructor(
 
     private val userDetailsLiveData: MutableLiveData<UserEntity> = MutableLiveData()
     private val userPhotosLiveData: MutableLiveData<UserPhotos> = MutableLiveData()
-    private val nextUser = MutableLiveData<Pair<*, *>>()
-
-    fun changeUserAgePreference(pair: Pair<Int, Int>) =
-        changeUserAgePreference(pair) { it.fold(::handleFailure, ::handleSuccess) }
-
-    fun changeUserGenderPreference(gender: GenderPreference) =
-        changeUserGenderPreference(gender) { it.fold(::handleFailure, ::handleSuccess) }
-
 
     private fun createUser() = createUser(None) { it.fold(::handleFailure, ::handleSuccess) }
 
@@ -44,9 +32,6 @@ class SharedViewModel @Inject constructor(
 
     private fun handleSuccess(firebaseResult: Any?) {
         when (firebaseResult) {
-            is Pair<*, *> -> {
-                firebaseResult.run { nextUser.value = firebaseResult }
-            }
 
             is NewUserCreated -> {
                 listenUserDetailsFirebaseChanges(); listenUserPhotosFirebaseChanges()
@@ -57,11 +42,6 @@ class SharedViewModel @Inject constructor(
                 listenUserDetailsFirebaseChanges(); listenUserPhotosFirebaseChanges()
                 Log.d(TAG, "handleSuccess: Successfully loaded existing user")
             }
-
-            is UserAgePreferencesChanged -> Log.d(
-                TAG,
-                "handleSuccess: Successfully changed user age preference"
-            )
         }
     }
 
@@ -111,7 +91,8 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-    fun getNextUserLiveData() = nextUser
+    //fun getNextUserLiveData() = nextUser
     fun getUserDetailsLiveData() = userDetailsLiveData
+
     fun getUserPhotosLiveData() = userPhotosLiveData
 }

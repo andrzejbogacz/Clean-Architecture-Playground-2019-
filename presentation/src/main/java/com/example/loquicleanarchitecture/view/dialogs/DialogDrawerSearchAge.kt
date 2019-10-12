@@ -7,7 +7,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
-import com.example.loquicleanarchitecture.view.main.SharedViewModel
+import com.example.loquicleanarchitecture.view.main.MainActivityViewModel
+import com.example.loquicleanarchitecture.view.profile.ProfileViewModel
 import dagger.android.support.DaggerDialogFragment
 import kotlinx.android.synthetic.main.dialog_drawer_age_range_choice.view.*
 import javax.inject.Inject
@@ -18,14 +19,21 @@ class DialogDrawerSearchAge : DaggerDialogFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProviderFactory
 
-    private lateinit var mainViewModel: SharedViewModel
+    private lateinit var mainViewModel: MainActivityViewModel
+
+    private lateinit var profileViewModel: ProfileViewModel
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
+        profileViewModel = ViewModelProvider(
+            activity!!.viewModelStore,
+            viewModelFactory
+        ).get(ProfileViewModel::class.java)
 
         mainViewModel = ViewModelProvider(
             activity!!.viewModelStore,
             viewModelFactory
-        ).get(SharedViewModel::class.java)
+        ).get(MainActivityViewModel::class.java)
 
         val userData = mainViewModel.getUserDetailsLiveData().value!!
 
@@ -59,7 +67,7 @@ class DialogDrawerSearchAge : DaggerDialogFragment() {
                 .setPositiveButton(
                     R.string.confirm
                 ) { _, _ ->
-                    mainViewModel.changeUserAgePreference(Pair(firstValue, secondValue))
+                    profileViewModel.changeUserAgePreference(Pair(firstValue, secondValue))
                 }
                 .setNegativeButton(
                     R.string.cancel

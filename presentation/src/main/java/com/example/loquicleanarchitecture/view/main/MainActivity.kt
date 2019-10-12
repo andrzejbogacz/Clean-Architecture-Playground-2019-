@@ -57,7 +57,7 @@ class MainActivity : BaseActivity(), ViewModelStoreOwner {
     @Inject
     lateinit var auth: FirebaseAuth
 
-    private lateinit var mainViewModel: SharedViewModel
+    private lateinit var mainViewModel: MainActivityViewModel
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navController: NavController
@@ -79,7 +79,7 @@ class MainActivity : BaseActivity(), ViewModelStoreOwner {
         drawerLayout = drawer_layout
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        super.setNavvController(navController)
+        super.setBaseActivityNavController(navController)
 
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
 
@@ -91,7 +91,7 @@ class MainActivity : BaseActivity(), ViewModelStoreOwner {
 
         mainViewModel = viewModel(viewModelFactory) {
             observe(getUserDetailsLiveData(), ::updateMenuUI)
-            observe(getNextUserLiveData(), ::startChat)
+            //  observe(getNextUserLiveData(), ::startChat)
             failure(failure, ::handleFailure)
         }
         mainViewModel.loadUser()
@@ -110,27 +110,11 @@ class MainActivity : BaseActivity(), ViewModelStoreOwner {
     private fun initOnDestinationChangedListener() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.randomChatsFragment -> {
-                    showViewPager()
-                    super.showMainToolbar(navController, appBarConfiguration)
-                }
+                R.id.randomChatsFragment -> showMainToolbar(navController, appBarConfiguration)
                 R.id.profileFragment -> hideViewPager()
-                R.id.chatroomFragment -> {
-                    hideViewPager()
-                    super.showChatToolbar(navController, appBarConfiguration)
-                }
+                R.id.chatroomFragment -> showChatToolbar(navController, appBarConfiguration)
             }
         }
-    }
-
-    private fun showViewPager() {
-        view_pager.visibility = View.VISIBLE
-        tabs.visibility = View.VISIBLE
-    }
-
-    private fun hideViewPager() {
-        view_pager.visibility = View.GONE
-        tabs.visibility = View.GONE
     }
 
     private fun setupSideNavigationMenu(navController: NavController) {

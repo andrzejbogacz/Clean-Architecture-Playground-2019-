@@ -23,11 +23,9 @@ class RandomChatsViewModel @Inject constructor(val queryUsers: QueryUsers) : Vie
 
         when (firebaseResult) {
             is Pair<*, *> -> {
-                firebaseResult?.run { nextUser.value = firebaseResult }
+                firebaseResult.run { nextUser.value = firebaseResult }
             }
         }
-
-
     }
 
     private fun handleFailure(firebaseResult: Any?) {}

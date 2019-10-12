@@ -8,7 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
-import com.example.loquicleanarchitecture.view.main.SharedViewModel
+import com.example.loquicleanarchitecture.view.main.MainActivityViewModel
 import com.example.loquicleanarchitecture.view.profile.ProfileViewModel
 import dagger.android.support.DaggerDialogFragment
 import javax.inject.Inject
@@ -20,7 +20,7 @@ class DialogProfileNickname : DaggerDialogFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProviderFactory
 
-    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var sharedViewModel: MainActivityViewModel
 
     private lateinit var profileViewModel: ProfileViewModel
 
@@ -35,7 +35,7 @@ class DialogProfileNickname : DaggerDialogFragment() {
         sharedViewModel = ViewModelProvider(
             activity!!.viewModelStore,
             viewModelFactory
-        ).get(SharedViewModel::class.java)
+        ).get(MainActivityViewModel::class.java)
 
         val userNickname = sharedViewModel.getUserDetailsLiveData().value!!.nickname
 

@@ -10,7 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.domain.entities.GenderPreference
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
-import com.example.loquicleanarchitecture.view.main.SharedViewModel
+import com.example.loquicleanarchitecture.view.main.MainActivityViewModel
+import com.example.loquicleanarchitecture.view.profile.ProfileViewModel
 import dagger.android.support.DaggerDialogFragment
 import kotlinx.android.synthetic.main.dialog_drawer_gender.view.*
 import javax.inject.Inject
@@ -22,7 +23,8 @@ class DialogDrawerSearchGender : DaggerDialogFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProviderFactory
 
-    private lateinit var mainViewModel: SharedViewModel
+    private lateinit var mainViewModel: MainActivityViewModel
+    private lateinit var profileViewModel: ProfileViewModel
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_drawer_gender, null)
@@ -30,21 +32,23 @@ class DialogDrawerSearchGender : DaggerDialogFragment() {
         mainViewModel = ViewModelProvider(
             activity!!.viewModelStore,
             viewModelFactory
-        ).get(SharedViewModel::class.java)
-//        val genderPreference = sharedViewModel.getUserDetailsLiveData().value!!.preferences_gender
+        ).get(MainActivityViewModel::class.java)
 
-        //  toast(genderPreference.name)
+        profileViewModel = ViewModelProvider(
+            activity!!.viewModelStore,
+            viewModelFactory
+        ).get(ProfileViewModel::class.java)
 
-        // setCheckedRadioButton(genderPreference, view)
 
         return activity?.let {
+            setCheckedRadioButton(mainViewModel.getUserDetailsLiveData().value?.preferences_gender, view)
 
             val builder = AlertDialog.Builder(it).setView(view)
             builder.setTitle(R.string.drawer_dialog_genderTitle)
                 .setPositiveButton(
                     R.string.confirm
                 ) { dialog, id ->
-                    mainViewModel.changeUserGenderPreference(getSelectedGender(view))
+                    profileViewModel.changeUserGenderPreference(getSelectedGender(view))
                 }
                 .setNegativeButton(
                     R.string.cancel
@@ -69,14 +73,14 @@ fun getSelectedGender(view: View): GenderPreference {
     }
 }
 
-fun setCheckedRadioButton(genderPreference: GenderPreference, view: View) {
+fun setCheckedRadioButton(genderPreference: GenderPreference?, view: View) {
     val maleId = view.findViewById<RadioButton>(R.id.radioButton_drawer_dialog_genderMale)
     val femaleId = view.findViewById<RadioButton>(R.id.radioButton_drawer_dialog_genderFemale)
     val bothId = view.findViewById<RadioButton>(R.id.radioButton_drawer_dialog_genderBoth)
     val radioButtonID = view.radioGroup
     radioButtonID.clearCheck()
 
-    with(genderPreference.name)
+    with(genderPreference?.name)
     {
         when {
             equals("FEMALE") -> {

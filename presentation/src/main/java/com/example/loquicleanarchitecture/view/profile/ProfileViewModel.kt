@@ -1,12 +1,11 @@
 package com.example.loquicleanarchitecture.view.profile
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import arrow.core.Failure
 import com.example.data.usecases.*
 import com.example.domain.entities.Gender
-import com.example.domain.entities.UserEntity
+import com.example.domain.entities.GenderPreference
 import com.example.domain.exception.FirebaseResult
 import com.example.domain.exception.UserFirebaseException
 import javax.inject.Inject
@@ -16,12 +15,12 @@ class ProfileViewModel @Inject constructor(
     val changeProfileUserGender: ChangeProfileUserGender,
     val changeProfileUserAge: ChangeProfileUserAge,
     val uploadProfileUserPhoto: UploadProfileUserPhoto,
-    val deleteProfileUserPhoto: DeleteProfileUserPhoto
+    val deleteProfileUserPhoto: DeleteProfileUserPhoto,
+    val changeUserAgePreference: ChangeUserAgePreference,
+    val changeUserGenderPreference: ChangeUserGenderPreference
 ) : ViewModel() {
 
     private val TAG: String? = this.javaClass.name
-
-    private val userData: MutableLiveData<UserEntity> = MutableLiveData()
 
     fun uploadProfileUserPhoto(imageUri: Pair<String, String>) =
         uploadProfileUserPhoto(imageUri) { it.fold(::handleFailure, ::handleSuccess) }
@@ -34,6 +33,12 @@ class ProfileViewModel @Inject constructor(
 
     fun changeProfileUserAge(age: Int) =
         changeProfileUserAge(age) { it.fold(::handleFailure, ::handleSuccess) }
+
+    fun changeUserAgePreference(pair: Pair<Int, Int>) =
+        changeUserAgePreference(pair) { it.fold(::handleFailure, ::handleSuccess) }
+
+    fun changeUserGenderPreference(gender: GenderPreference) =
+        changeUserGenderPreference(gender) { it.fold(::handleFailure, ::handleSuccess) }
 
     fun handleFailure(e: Failure) {
         Log.d(TAG, "Failed Loading user with Exception: ${e.exception.javaClass.simpleName}")
@@ -57,10 +62,8 @@ class ProfileViewModel @Inject constructor(
                 TAG,
                 "handleSuccess: Successfully changed user nickname"
             )
-            is FirebaseResult.UserProfileGenderChanged -> Log.d(
-                TAG,
-                "handleSuccess: Successfully changed user gender"
-            )
+            is FirebaseResult.UserProfileGenderChanged ->
+                Log.d(TAG, "handleSuccess: Successfully changed user gender")
             is FirebaseResult.UserProfileAgeChanged -> Log.d(
                 TAG,
                 "handleSuccess: Successfully changed user age"
@@ -72,7 +75,4 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun getUserDataLiveData(): MutableLiveData<UserEntity> {
-        return userData
-    }
 }

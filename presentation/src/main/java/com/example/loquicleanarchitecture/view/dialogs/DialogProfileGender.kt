@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.domain.entities.Gender
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
-import com.example.loquicleanarchitecture.view.main.SharedViewModel
+import com.example.loquicleanarchitecture.view.main.MainActivityViewModel
 import com.example.loquicleanarchitecture.view.profile.ProfileViewModel
 import dagger.android.support.DaggerDialogFragment
 import kotlinx.android.synthetic.main.dialog_profile_gender_choice.view.*
@@ -22,7 +22,7 @@ class DialogProfileGenderChoice : DaggerDialogFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProviderFactory
 
-    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var sharedViewModel: MainActivityViewModel
     private lateinit var profileViewModel: ProfileViewModel
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -30,7 +30,7 @@ class DialogProfileGenderChoice : DaggerDialogFragment() {
         sharedViewModel = ViewModelProvider(
             activity!!.viewModelStore,
             viewModelFactory
-        ).get(SharedViewModel::class.java)
+        ).get(MainActivityViewModel::class.java)
 
         profileViewModel = ViewModelProvider(
             activity!!.viewModelStore,

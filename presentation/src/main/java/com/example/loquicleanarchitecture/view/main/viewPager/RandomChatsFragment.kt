@@ -15,15 +15,14 @@ import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
 import com.example.loquicleanarchitecture.helper.observe
 import com.example.loquicleanarchitecture.helper.viewModel
 import com.example.loquicleanarchitecture.model.Dialog
-import com.example.loquicleanarchitecture.view.main.SharedViewModel
+import com.example.loquicleanarchitecture.view.main.MainActivityViewModel
 import com.squareup.picasso.Picasso
 import com.stfalcon.chatkit.commons.ImageLoader
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_random_chats.*
 import javax.inject.Inject
 
-class RandomChatsFragment : DaggerFragment(), DialogsListAdapter.OnDialogClickListener<Dialog>,
+class RandomChatsFragment : ChatManager(), DialogsListAdapter.OnDialogClickListener<Dialog>,
     DialogsListAdapter.OnDialogLongClickListener<Dialog> {
 
     @Inject
@@ -40,7 +39,7 @@ class RandomChatsFragment : DaggerFragment(), DialogsListAdapter.OnDialogClickLi
 
     lateinit var chatViewModel: RandomChatsViewModel
 
-    lateinit var sharedViewModel: SharedViewModel
+    lateinit var sharedViewModel: MainActivityViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +52,7 @@ class RandomChatsFragment : DaggerFragment(), DialogsListAdapter.OnDialogClickLi
         sharedViewModel = ViewModelProvider(
             activity!!.viewModelStore,
             viewModelFactory
-        )[SharedViewModel::class.java]
+        )[MainActivityViewModel::class.java]
 
         navController = NavHostFragment.findNavController(this)
         chatViewModel = viewModel(viewModelFactory) {
@@ -73,16 +72,6 @@ class RandomChatsFragment : DaggerFragment(), DialogsListAdapter.OnDialogClickLi
 
         initAdapter()
     }
-
-    fun startChat(pair: Pair<*, *>) {
-        //todo pass user as args
-        val bundle: Bundle = Bundle().apply { putSerializable("userAndPhotos", pair) }
-
-        //todo 1.prepareChatToolbar(photos, userDetails)
-
-        navController.navigate(R.id.action_register_to_registered)
-    }
-
 
     fun findUser() {
 

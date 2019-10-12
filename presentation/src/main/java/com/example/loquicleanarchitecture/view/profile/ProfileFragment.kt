@@ -14,7 +14,7 @@ import com.example.loquicleanarchitecture.databinding.FragmentProfileBinding
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
 import com.example.loquicleanarchitecture.helper.viewModel
 import com.example.loquicleanarchitecture.utils.NavigationHandler
-import com.example.loquicleanarchitecture.view.main.SharedViewModel
+import com.example.loquicleanarchitecture.view.main.MainActivityViewModel
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.android.support.DaggerFragment
@@ -29,7 +29,7 @@ class ProfileFragment @Inject constructor(
     @Inject
     lateinit var viewModelFactory: ViewModelProviderFactory
 
-    lateinit var sharedViewModel: SharedViewModel
+    lateinit var sharedViewModel: MainActivityViewModel
 
     private var currentViewHolder: ImageView? = null
 
@@ -55,7 +55,7 @@ class ProfileFragment @Inject constructor(
         sharedViewModel = ViewModelProvider(
             activity!!.viewModelStore,
             viewModelFactory
-        ).get(SharedViewModel::class.java)
+        ).get(MainActivityViewModel::class.java)
 
         binding.include.navigationHandler = NavigationHandler()
 
