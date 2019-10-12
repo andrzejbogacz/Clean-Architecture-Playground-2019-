@@ -59,6 +59,7 @@ fun photoSetter(view: ImageView, userPhotos: UserPhotos?, progressBar: ProgressB
                         target: Target<Drawable>?,
                         isFirstResource: Boolean
                     ): Boolean {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                     }
 
                     override fun onResourceReady(
