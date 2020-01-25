@@ -82,12 +82,18 @@ class ChatRoomFragment : DaggerFragment(), MessageInput.InputListener,
 
         arguments?.run {
             //todo what if null, is it nullable anyway?
-            val userAndPhotos: Pair<*, *> = arguments!!.get("userAndPhotos") as Pair<*, *>
+
+            //todo cz w ogole para to dobry pomysl, najpierw sprawdzic dialogi oc tam jest bo i tak przekazywane?
+            //todo
+            //todo
+            //todo
+
+/*            val userAndPhotos: Pair<*, *> = arguments!!.get("userAndPhotos") as Pair<*, *>
             userDetails.set(userAndPhotos.first as UserEntity)
             userPhotos.set(userAndPhotos.second as UserPhotos)
 
             Log.d(TAG, userAndPhotos.first.toString())
-            Log.d(TAG, userAndPhotos.second.toString())
+            Log.d(TAG, userAndPhotos.second.toString())*/
         }
     }
 

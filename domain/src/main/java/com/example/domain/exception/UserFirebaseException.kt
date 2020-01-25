@@ -6,6 +6,7 @@ sealed class Exceptions : Throwable()
 sealed class UserFirebaseException : Exceptions() {
     object UserNotExisting : UserFirebaseException()
     object UnknownException : UserFirebaseException()
+    object UserNotFound : UserFirebaseException()
 
 /**
  * Potential FirebaseFirestore exceptions to be handled :

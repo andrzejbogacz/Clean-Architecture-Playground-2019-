@@ -17,7 +17,7 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_random_chats.*
 import javax.inject.Inject
 
-class FriendsFragment : DaggerFragment(), DialogsListAdapter.OnDialogClickListener<Dialog>,
+class FriendsFragment : ChatManager(), DialogsListAdapter.OnDialogClickListener<Dialog>,
     DialogsListAdapter.OnDialogLongClickListener<Dialog> {
 
     lateinit var dialogsAdapter: DialogsListAdapter<Dialog>
@@ -62,7 +62,8 @@ class FriendsFragment : DaggerFragment(), DialogsListAdapter.OnDialogClickListen
     }
 
     override fun onDialogClick(dialog: Dialog?) {
-        findNavController().navigate(R.id.chatroomFragment)
+        //todo DIALOG info, co skad dlaczego czy sie przyda i czy cos zmieniac
+        //startChat(Pair(1,1))
     }
 }
 

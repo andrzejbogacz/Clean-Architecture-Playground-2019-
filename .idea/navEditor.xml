@@ -122,6 +122,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_register_to_registered">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>

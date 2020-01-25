@@ -37,25 +37,22 @@ class RandomChatsFragment : ChatManager(), DialogsListAdapter.OnDialogClickListe
 
     lateinit var navController: NavController
 
-    lateinit var chatViewModel: RandomChatsViewModel
+    lateinit var randomChatsViewModel: RandomChatsViewModel
 
-    lateinit var sharedViewModel: MainActivityViewModel
+    lateinit var mainActivityViewModel: MainActivityViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        super.onCreate(savedInstanceState)
+        ): View? {
+            super.onCreate(savedInstanceState)
 
 
-        sharedViewModel = ViewModelProvider(
-            activity!!.viewModelStore,
-            viewModelFactory
-        )[MainActivityViewModel::class.java]
+        mainActivityViewModel = ViewModelProvider(activity!!.viewModelStore, viewModelFactory)[MainActivityViewModel::class.java]
 
         navController = NavHostFragment.findNavController(this)
-        chatViewModel = viewModel(viewModelFactory) {
+        randomChatsViewModel = viewModel(viewModelFactory) {
             observe(getNextUserLiveData(), ::startChat)
         }
 
@@ -67,7 +64,8 @@ class RandomChatsFragment : ChatManager(), DialogsListAdapter.OnDialogClickListe
         imageLoader = ImageLoader { imageView, url, payload -> picasso.load(url).into(imageView) }
 
         floatingActionButton.setOnClickListener {
-            findUser()
+           findUser()
+            mainActivityViewModel.createDialogs()
         }
 
         initAdapter()
@@ -75,7 +73,7 @@ class RandomChatsFragment : ChatManager(), DialogsListAdapter.OnDialogClickListe
 
     fun findUser() {
 
-        chatViewModel.queryUsers(sharedViewModel.getUserDetailsLiveData().value!!)
+        randomChatsViewModel.queryUsers(mainActivityViewModel.getUserDetailsLiveData().value!!)
     }
 
     private fun initAdapter() {
@@ -97,6 +95,8 @@ class RandomChatsFragment : ChatManager(), DialogsListAdapter.OnDialogClickListe
     }
 
     override fun onDialogClick(dialog: Dialog?) {
+        //todo DIALOG info, co skad dlaczego czy sie przyda i czy cos zmieniac
+
         findNavController().navigate(R.id.chatroomFragment)
     }
 }

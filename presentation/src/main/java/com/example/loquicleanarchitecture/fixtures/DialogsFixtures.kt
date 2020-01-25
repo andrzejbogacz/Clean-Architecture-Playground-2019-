@@ -31,10 +31,11 @@ internal class DialogsFixtures private constructor() : FixturesData() {
 
         private fun getDialog(i: Int, lastMessageCreatedAt: Date): Dialog {
             val users = users
+            val message = getMessage(lastMessageCreatedAt)
             return Dialog(
                 randomId,
-                if (users.size > 1) groupChatTitles[users.size - 2] else users[0].name,
-                if (users.size > 1) groupChatImages[users.size - 2] else randomAvatar,
+                users[0].name,
+                randomAvatar,
                 users,
                 getMessage(lastMessageCreatedAt),
                 if (i < 3) 3 - i else 0

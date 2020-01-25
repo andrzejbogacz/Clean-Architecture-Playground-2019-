@@ -70,7 +70,7 @@ class SearchRepositoryImpl @Inject constructor(
         return when (isUserFound) {
             true -> combineUserWithPhotos(foundUser)
             //todo false
-            false -> Left(Failure(UserFirebaseException.UnknownException))
+            false -> Left(Failure(UserFirebaseException.UserNotFound))
         }
     }
 

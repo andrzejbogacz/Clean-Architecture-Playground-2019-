@@ -12,8 +12,11 @@ import com.example.domain.entities.UserPhotos
 import com.example.domain.exception.FirebaseResult.ExistingUserLoaded
 import com.example.domain.exception.FirebaseResult.NewUserCreated
 import com.example.domain.exception.UserFirebaseException
+import com.example.loquicleanarchitecture.fixtures.DialogsFixtures
+import com.example.loquicleanarchitecture.model.Dialog
 import com.example.loquicleanarchitecture.view.BaseViewModel
 import javax.inject.Inject
+import kotlin.random.Random
 
 class MainActivityViewModel @Inject constructor(
     val createUser: CreateUser,
@@ -25,6 +28,7 @@ class MainActivityViewModel @Inject constructor(
 
     private val userDetailsLiveData: MutableLiveData<UserEntity> = MutableLiveData()
     private val userPhotosLiveData: MutableLiveData<UserPhotos> = MutableLiveData()
+    private val userFriendDialogsLiveData: MutableLiveData<Dialog> = MutableLiveData()
 
     private fun createUser() = createUser(None) { it.fold(::handleFailure, ::handleSuccess) }
 
@@ -32,17 +36,24 @@ class MainActivityViewModel @Inject constructor(
 
     private fun handleSuccess(firebaseResult: Any?) {
         when (firebaseResult) {
-
-            is NewUserCreated -> {
-                listenUserDetailsFirebaseChanges(); listenUserPhotosFirebaseChanges()
-                Log.d(TAG, "handleSuccess: Successfully saved new user to remote database")
-            }
-
-            is ExistingUserLoaded -> {
-                listenUserDetailsFirebaseChanges(); listenUserPhotosFirebaseChanges()
-                Log.d(TAG, "handleSuccess: Successfully loaded existing user")
-            }
+            is NewUserCreated -> Log.d(TAG, "handleSuccess:  saved new user to remote database")
+            is ExistingUserLoaded -> Log.d(TAG, "handleSuccess: Successfully loaded existing user")
         }
+        listenUserDetailsFirebaseChanges()
+        listenUserPhotosFirebaseChanges()
+    }
+
+    fun createDialogs()
+    {
+        val dialogs = DialogsFixtures.dialogs
+
+       // firebaseRepository.userFriendsCollection.document("ELO").set(dialogs[0])
+
+//        for (dialog in dialogs)
+//        {
+//            firebaseRepository.userFriendsCollection.document(Random.nextInt(0,10000).toString()).set(dialog)
+//        }
+
     }
 
     fun handleFailure(e: Failure) {
@@ -52,10 +63,7 @@ class MainActivityViewModel @Inject constructor(
                 createUser(); Log.d(TAG, "Starting attempt to create new User")
             }
             //todo catch and define new exception handlers
-            is UserFirebaseException.UnknownException -> Log.d(
-                TAG,
-                " Unhandled exception within FirebaseRepository: check logs"
-            )
+            is UserFirebaseException.UnknownException -> Log.d(TAG, " Unhandled exception within FirebaseRepository: check logs")
             //TODO implement timeout exception with retry loadinguser few times
         }
     }
@@ -73,7 +81,6 @@ class MainActivityViewModel @Inject constructor(
             } else Log.d(TAG, "Current data: null")
         }
     }
-
     private fun listenUserPhotosFirebaseChanges() {
         firebaseRepository.userPhotosDocument.addSnapshotListener { snapshot, e ->
             if (e != null) {

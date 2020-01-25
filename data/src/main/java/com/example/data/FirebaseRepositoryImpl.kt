@@ -24,16 +24,21 @@ import javax.inject.Named
 class FirebaseRepositoryImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore,
     val fbAuth: FirebaseAuth,
-    @Named("currentUserStorage") private val userStorageReference: StorageReference
+    private val userStorageReference: StorageReference
 ) :
     UserDetailsRepository {
     private val TAG: String? = this.javaClass.name
 
+    //todo czy jest sens je exportowac dagerem, jesli tak to gdzie jeszcze bylyby powtorki
     var userDetailsDocument =
         firebaseFirestore.collection("Users").document(fbAuth.currentUser!!.uid)
     var userPhotosDocument =
         firebaseFirestore.collection("Users").document(fbAuth.currentUser!!.uid)
             .collection("Storage").document("myPhotos")
+
+    var userFriendsCollection =
+        firebaseFirestore.collection("Users").document(fbAuth.currentUser!!.uid)
+            .collection("Friends")
 
     override suspend fun uploadProfileUserPhoto(uriAndTag: Pair<String, String>): Either<Failure, FirebaseResult> {
 
