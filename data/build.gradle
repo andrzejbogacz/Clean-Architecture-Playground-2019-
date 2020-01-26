@@ -28,6 +28,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation deps.misc.chatkit
+
     // Misc
     implementation deps.support.app_compat
     implementation deps.support.core_ktx

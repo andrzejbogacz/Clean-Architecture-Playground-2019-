@@ -14,7 +14,7 @@ import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.di.viewmodels.ViewModelProviderFactory
 import com.example.loquicleanarchitecture.helper.observe
 import com.example.loquicleanarchitecture.helper.viewModel
-import com.example.loquicleanarchitecture.model.Dialog
+import com.example.data.model.Dialog
 import com.example.loquicleanarchitecture.view.main.MainActivityViewModel
 import com.squareup.picasso.Picasso
 import com.stfalcon.chatkit.commons.ImageLoader
