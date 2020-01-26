@@ -6,15 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.makeText
-import androidx.navigation.fragment.findNavController
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.fixtures.DialogsFixtures
-import com.example.loquicleanarchitecture.model.Dialog
+import com.example.domain.entities.Dialog
 import com.squareup.picasso.Picasso
 import com.stfalcon.chatkit.commons.ImageLoader
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter
-import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_random_chats.*
 import javax.inject.Inject
 
 class FriendsFragment : ChatManager(), DialogsListAdapter.OnDialogClickListener<Dialog>,
@@ -40,10 +37,20 @@ class FriendsFragment : ChatManager(), DialogsListAdapter.OnDialogClickListener<
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         imageLoader = ImageLoader { imageView, url, payload -> picasso.load(url).into(imageView) }
-        initAdapter()
+        initDummyAdapter()
     }
 
-    private fun initAdapter() {
+    private fun initRealAdapter() {
+        dialogsAdapter = DialogsListAdapter(imageLoader)
+        dialogsAdapter.setItems(DialogsFixtures.dialogs)
+
+        dialogsAdapter.setOnDialogClickListener(this)
+        dialogsAdapter.setOnDialogLongClickListener(this)
+
+        dialogsList.setAdapter(dialogsAdapter)
+    }
+
+    private fun initDummyAdapter() {
         dialogsAdapter = DialogsListAdapter(imageLoader)
         dialogsAdapter.setItems(DialogsFixtures.dialogs)
 

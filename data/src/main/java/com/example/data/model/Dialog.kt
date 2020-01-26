@@ -1,4 +1,4 @@
-package com.example.loquicleanarchitecture.model
+package com.example.data.model
 
 import com.stfalcon.chatkit.commons.models.IDialog
 import java.util.*

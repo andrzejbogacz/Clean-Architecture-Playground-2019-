@@ -5,6 +5,7 @@ sealed class Result
 
 sealed class FirebaseResult : Result() {
     object UserAgePreferencesChanged : FirebaseResult()
+    object MessageSent : FirebaseResult()
     object ExistingUserLoaded : FirebaseResult()
     object NewUserCreated : FirebaseResult()
     object UserGenderPreferencesChanged : FirebaseResult()

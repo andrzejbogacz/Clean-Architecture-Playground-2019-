@@ -13,10 +13,9 @@ import com.example.domain.exception.FirebaseResult.ExistingUserLoaded
 import com.example.domain.exception.FirebaseResult.NewUserCreated
 import com.example.domain.exception.UserFirebaseException
 import com.example.loquicleanarchitecture.fixtures.DialogsFixtures
-import com.example.loquicleanarchitecture.model.Dialog
+import com.example.data.model.Dialog
 import com.example.loquicleanarchitecture.view.BaseViewModel
 import javax.inject.Inject
-import kotlin.random.Random
 
 class MainActivityViewModel @Inject constructor(
     val createUser: CreateUser,

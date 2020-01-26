@@ -1,7 +1,7 @@
 package com.example.loquicleanarchitecture.fixtures
 
-import com.example.loquicleanarchitecture.model.Message
-import com.example.loquicleanarchitecture.model.User
+import com.example.data.model.Message
+import com.example.data.model.User
 
 import java.util.ArrayList
 import java.util.Calendar

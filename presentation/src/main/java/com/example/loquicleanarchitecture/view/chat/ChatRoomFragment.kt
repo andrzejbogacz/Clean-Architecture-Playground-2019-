@@ -11,8 +11,8 @@ import com.example.domain.entities.UserEntity
 import com.example.domain.entities.UserPhotos
 import com.example.loquicleanarchitecture.R
 import com.example.loquicleanarchitecture.fixtures.MessagesFixtures
-import com.example.loquicleanarchitecture.model.Dialog
-import com.example.loquicleanarchitecture.model.Message
+import com.example.data.model.Dialog
+import com.example.data.model.Message
 import com.squareup.picasso.Picasso
 import com.stfalcon.chatkit.commons.ImageLoader
 import com.stfalcon.chatkit.dialogs.DialogsListAdapter

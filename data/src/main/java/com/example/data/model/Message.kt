@@ -1,4 +1,4 @@
-package com.example.loquicleanarchitecture.model
+package com.example.data.model
 
 import com.stfalcon.chatkit.commons.models.IMessage
 import com.stfalcon.chatkit.commons.models.MessageContentType
